@@ -14,4 +14,5 @@ Le travail sera réalisé **en binôme** et comprend à la fois :
 - la **conception du système**
 - le **développement de l’application**
 - la **rédaction de la documentation du projet**
+- la **préparation de la présentation finale**.
 
