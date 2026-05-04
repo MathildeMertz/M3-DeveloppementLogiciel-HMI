@@ -8,4 +8,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="AccesDonnees\" />
+    <Folder Include="Gestion\" />
+    <Folder Include="Automate_connection\" />
+  </ItemGroup>
+
 </Project>
