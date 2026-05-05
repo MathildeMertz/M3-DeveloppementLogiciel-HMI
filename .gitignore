@@ -1,3 +1,19 @@
+# Visual Studio
 .vs/
 bin/
 obj/
+
+# User-specific
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Build results
+*.cache
+*.pdb
+
+# OS files
+.DS_Store
+Thumbs.db
