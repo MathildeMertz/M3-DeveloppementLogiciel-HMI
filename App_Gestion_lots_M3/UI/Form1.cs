@@ -1,3 +1,5 @@
+using App_Gestion_lots_M3.UI;
+
 namespace App_Gestion_lots_M3
 {
     public partial class Form1 : Form
@@ -5,61 +7,39 @@ namespace App_Gestion_lots_M3
         public Form1()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnNouveauLot_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            FormGestionLot formGestionLot = new FormGestionLot();
+            formGestionLot.ShowDialog();
+            this.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnNouvelleRecette_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            FormGestionRecette formGestionRecette = new FormGestionRecette();
+            formGestionRecette.ShowDialog();
+            this.Show();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnModifierLot_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            FormGestionLot formGestionLot = new FormGestionLot();
+            formGestionLot.ShowDialog();
+            this.Show();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void btnVoirTracabilite_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button3_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvLots_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
+            this.Hide();
+            FormTracabilite formTracabilite = new FormTracabilite();
+            formTracabilite.ShowDialog();
+            this.Show();
         }
     }
 }

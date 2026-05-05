@@ -2,15 +2,8 @@
 {
     partial class Form1
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,24 +15,21 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             tabControl1 = new TabControl();
             Lots = new TabPage();
-            Recette = new TabPage();
-            Historique = new TabPage();
-            dgvLots = new DataGridView();
-            btnNouveauLot = new Button();
-            btnNouvelleRecette = new Button();
+            btnVoirTracabilite = new Button();
             btnModifierLot = new Button();
+            btnNouvelleRecette = new Button();
+            btnNouveauLot = new Button();
+            dgvLots = new DataGridView();
             colNomLot = new DataGridViewTextBoxColumn();
             colQuantite = new DataGridViewTextBoxColumn();
             colRecette = new DataGridViewTextBoxColumn();
             colEtat = new DataGridViewTextBoxColumn();
+            Recette = new TabPage();
+            Historique = new TabPage();
             tabControl1.SuspendLayout();
             Lots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLots).BeginInit();
@@ -59,6 +49,7 @@
             // 
             // Lots
             // 
+            Lots.Controls.Add(btnVoirTracabilite);
             Lots.Controls.Add(btnModifierLot);
             Lots.Controls.Add(btnNouvelleRecette);
             Lots.Controls.Add(btnNouveauLot);
@@ -70,47 +61,26 @@
             Lots.TabIndex = 0;
             Lots.Text = "Lots";
             Lots.UseVisualStyleBackColor = true;
-            Lots.Click += tabPage1_Click;
             // 
-            // Recette
+            // btnVoirTracabilite
             // 
-            Recette.Location = new Point(4, 24);
-            Recette.Name = "Recette";
-            Recette.Padding = new Padding(3);
-            Recette.Size = new Size(788, 352);
-            Recette.TabIndex = 1;
-            Recette.Text = "Recettes";
-            Recette.UseVisualStyleBackColor = true;
+            btnVoirTracabilite.Location = new Point(384, 294);
+            btnVoirTracabilite.Name = "btnVoirTracabilite";
+            btnVoirTracabilite.Size = new Size(120, 36);
+            btnVoirTracabilite.TabIndex = 4;
+            btnVoirTracabilite.Text = "Voir Historique";
+            btnVoirTracabilite.UseVisualStyleBackColor = true;
+            btnVoirTracabilite.Click += btnVoirTracabilite_Click;
             // 
-            // Historique
+            // btnModifierLot
             // 
-            Historique.Location = new Point(4, 24);
-            Historique.Name = "Historique";
-            Historique.Padding = new Padding(3);
-            Historique.Size = new Size(788, 352);
-            Historique.TabIndex = 2;
-            Historique.Text = "Historique";
-            Historique.UseVisualStyleBackColor = true;
-            // 
-            // dgvLots
-            // 
-            dgvLots.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLots.Columns.AddRange(new DataGridViewColumn[] { colNomLot, colQuantite, colRecette, colEtat });
-            dgvLots.Location = new Point(8, 6);
-            dgvLots.Name = "dgvLots";
-            dgvLots.Size = new Size(764, 282);
-            dgvLots.TabIndex = 0;
-            dgvLots.CellContentClick += dgvLots_CellContentClick;
-            // 
-            // btnNouveauLot
-            // 
-            btnNouveauLot.Location = new Point(13, 294);
-            btnNouveauLot.Name = "btnNouveauLot";
-            btnNouveauLot.Size = new Size(109, 36);
-            btnNouveauLot.TabIndex = 1;
-            btnNouveauLot.Text = "Nouveau Lot";
-            btnNouveauLot.UseVisualStyleBackColor = true;
-            btnNouveauLot.Click += button1_Click_1;
+            btnModifierLot.Location = new Point(258, 294);
+            btnModifierLot.Name = "btnModifierLot";
+            btnModifierLot.Size = new Size(120, 36);
+            btnModifierLot.TabIndex = 3;
+            btnModifierLot.Text = "Modifier Lots";
+            btnModifierLot.UseVisualStyleBackColor = true;
+            btnModifierLot.Click += btnModifierLot_Click;
             // 
             // btnNouvelleRecette
             // 
@@ -120,17 +90,26 @@
             btnNouvelleRecette.TabIndex = 2;
             btnNouvelleRecette.Text = "Nouvelle Recette";
             btnNouvelleRecette.UseVisualStyleBackColor = true;
-            btnNouvelleRecette.Click += button2_Click_1;
+            btnNouvelleRecette.Click += btnNouvelleRecette_Click;
             // 
-            // btnModifierLot
+            // btnNouveauLot
             // 
-            btnModifierLot.Location = new Point(269, 294);
-            btnModifierLot.Name = "btnModifierLot";
-            btnModifierLot.Size = new Size(120, 36);
-            btnModifierLot.TabIndex = 3;
-            btnModifierLot.Text = "Modifier Lots";
-            btnModifierLot.UseVisualStyleBackColor = true;
-            btnModifierLot.Click += button3_Click_1;
+            btnNouveauLot.Location = new Point(13, 294);
+            btnNouveauLot.Name = "btnNouveauLot";
+            btnNouveauLot.Size = new Size(109, 36);
+            btnNouveauLot.TabIndex = 1;
+            btnNouveauLot.Text = "Nouveau Lot";
+            btnNouveauLot.UseVisualStyleBackColor = true;
+            btnNouveauLot.Click += btnNouveauLot_Click;
+            // 
+            // dgvLots
+            // 
+            dgvLots.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvLots.Columns.AddRange(new DataGridViewColumn[] { colNomLot, colQuantite, colRecette, colEtat });
+            dgvLots.Location = new Point(8, 6);
+            dgvLots.Name = "dgvLots";
+            dgvLots.Size = new Size(764, 282);
+            dgvLots.TabIndex = 0;
             // 
             // colNomLot
             // 
@@ -152,6 +131,26 @@
             colEtat.HeaderText = "État";
             colEtat.Name = "colEtat";
             // 
+            // Recette
+            // 
+            Recette.Location = new Point(4, 24);
+            Recette.Name = "Recette";
+            Recette.Padding = new Padding(3);
+            Recette.Size = new Size(788, 352);
+            Recette.TabIndex = 1;
+            Recette.Text = "Recettes";
+            Recette.UseVisualStyleBackColor = true;
+            // 
+            // Historique
+            // 
+            Historique.Location = new Point(4, 24);
+            Historique.Name = "Historique";
+            Historique.Padding = new Padding(3);
+            Historique.Size = new Size(788, 352);
+            Historique.TabIndex = 2;
+            Historique.Text = "Traçabilité";
+            Historique.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -161,7 +160,6 @@
             Margin = new Padding(2);
             Name = "Form1";
             Text = "Gestion Lots";
-            Load += Form1_Load;
             tabControl1.ResumeLayout(false);
             Lots.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvLots).EndInit();
@@ -182,5 +180,6 @@
         private DataGridViewTextBoxColumn colQuantite;
         private DataGridViewTextBoxColumn colRecette;
         private DataGridViewTextBoxColumn colEtat;
+        private Button btnVoirTracabilite;
     }
 }

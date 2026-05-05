@@ -13,9 +13,25 @@ namespace App_Gestion_lots_M3.UI
         public FormGestionLot()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void FormGestionLot_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnFermer_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnSupprimer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnModifier_Click(object sender, EventArgs e)
         {
 
         }
