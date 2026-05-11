@@ -31,7 +31,6 @@
             label1 = new Label();
             label2 = new Label();
             textBox1 = new TextBox();
-            textBox2 = new TextBox();
             dgvOperations = new DataGridView();
             colPosition = new DataGridViewTextBoxColumn();
             colTemps = new DataGridViewTextBoxColumn();
@@ -40,6 +39,7 @@
             btnSupprimerOperation = new Button();
             btnEnregistrerRecette = new Button();
             btnFermer = new Button();
+            dtpDu = new DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)dgvOperations).BeginInit();
             SuspendLayout();
             // 
@@ -67,16 +67,8 @@
             // 
             textBox1.Location = new Point(218, 36);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
+            textBox1.Size = new Size(121, 23);
             textBox1.TabIndex = 2;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(218, 72);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 3;
-            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // dgvOperations
             // 
@@ -143,17 +135,24 @@
             btnFermer.UseVisualStyleBackColor = true;
             btnFermer.Click += btnFermer_Click;
             // 
+            // dtpDu
+            // 
+            dtpDu.Location = new Point(218, 69);
+            dtpDu.Name = "dtpDu";
+            dtpDu.Size = new Size(121, 23);
+            dtpDu.TabIndex = 16;
+            // 
             // FormGestionRecette
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(434, 381);
+            Controls.Add(dtpDu);
             Controls.Add(btnFermer);
             Controls.Add(btnEnregistrerRecette);
             Controls.Add(btnSupprimerOperation);
             Controls.Add(btnAjouterOperation);
             Controls.Add(dgvOperations);
-            Controls.Add(textBox2);
             Controls.Add(textBox1);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -170,7 +169,6 @@
         private Label label1;
         private Label label2;
         private TextBox textBox1;
-        private TextBox textBox2;
         private DataGridView dgvOperations;
         private DataGridViewTextBoxColumn colPosition;
         private DataGridViewTextBoxColumn colTemps;
@@ -179,5 +177,6 @@
         private Button btnSupprimerOperation;
         private Button btnEnregistrerRecette;
         private Button btnFermer;
+        private DateTimePicker dtpDu;
     }
 }
