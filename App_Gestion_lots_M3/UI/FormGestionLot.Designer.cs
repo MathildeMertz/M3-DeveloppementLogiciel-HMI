@@ -95,6 +95,7 @@
             txtNomLot.Name = "txtNomLot";
             txtNomLot.Size = new Size(121, 23);
             txtNomLot.TabIndex = 5;
+            txtNomLot.TextChanged += txtNomLot_TextChanged;
             // 
             // txtQuantite
             // 
@@ -102,6 +103,7 @@
             txtQuantite.Name = "txtQuantite";
             txtQuantite.Size = new Size(121, 23);
             txtQuantite.TabIndex = 7;
+            txtQuantite.TextChanged += txtQuantite_TextChanged;
             // 
             // cboRecette
             // 
@@ -110,6 +112,7 @@
             cboRecette.Name = "cboRecette";
             cboRecette.Size = new Size(121, 23);
             cboRecette.TabIndex = 8;
+            cboRecette.SelectedIndexChanged += cboRecette_SelectedIndexChanged;
             // 
             // cboEtat
             // 
@@ -118,6 +121,7 @@
             cboEtat.Name = "cboEtat";
             cboEtat.Size = new Size(121, 23);
             cboEtat.TabIndex = 9;
+            cboEtat.SelectedIndexChanged += cboEtat_SelectedIndexChanged;
             // 
             // btnEnregistrer
             // 
@@ -127,6 +131,7 @@
             btnEnregistrer.TabIndex = 10;
             btnEnregistrer.Text = "Enregistrer";
             btnEnregistrer.UseVisualStyleBackColor = true;
+            btnEnregistrer.Click += btnEnregistrer_Click;
             // 
             // btnModifier
             // 
@@ -154,6 +159,7 @@
             dtpDu.Name = "dtpDu";
             dtpDu.Size = new Size(121, 23);
             dtpDu.TabIndex = 13;
+            dtpDu.ValueChanged += dtpDu_ValueChanged;
             // 
             // btnFermer
             // 

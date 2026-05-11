@@ -140,7 +140,6 @@
             Recette.TabIndex = 1;
             Recette.Text = "Recettes";
             Recette.UseVisualStyleBackColor = true;
-            Recette.Click += Recette_Click;
             // 
             // btnNouvelleRecette
             // 
@@ -152,6 +151,7 @@
             btnNouvelleRecette.Text = "Nouvelle Recette";
             btnNouvelleRecette.UseVisualStyleBackColor = true;
             btnNouvelleRecette.Click += btnNouvelleRecette_Click;
+<<<<<<< Updated upstream
             // 
             // dgvRecettes
             // 
@@ -177,6 +177,8 @@
             // 
             colNbOperations.HeaderText = "Nb Opérations";
             colNbOperations.Name = "colNbOperations";
+=======
+>>>>>>> Stashed changes
             // 
             // Historique
             // 
@@ -191,7 +193,6 @@
             Historique.TabIndex = 2;
             Historique.Text = "Traçabilité";
             Historique.UseVisualStyleBackColor = true;
-            Historique.Click += Historique_Click;
             // 
             // dgvTracabilite
             // 

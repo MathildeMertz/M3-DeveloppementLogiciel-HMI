@@ -42,16 +42,6 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
-        private void Historique_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Recette_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void dgvLots_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 

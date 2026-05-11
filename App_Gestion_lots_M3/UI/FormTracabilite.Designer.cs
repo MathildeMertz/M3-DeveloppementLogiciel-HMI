@@ -67,6 +67,7 @@
             cboSelectLot.Name = "cboSelectLot";
             cboSelectLot.Size = new Size(121, 23);
             cboSelectLot.TabIndex = 1;
+            cboSelectLot.SelectedIndexChanged += cboSelectLot_SelectedIndexChanged;
             // 
             // groupBox1
             // 
@@ -88,6 +89,7 @@
             dtpAu.Name = "dtpAu";
             dtpAu.Size = new Size(107, 23);
             dtpAu.TabIndex = 3;
+            dtpAu.ValueChanged += dtpAu_ValueChanged;
             // 
             // label3
             // 
@@ -139,6 +141,7 @@
             rbDebut.TabStop = true;
             rbDebut.Text = "Début";
             rbDebut.UseVisualStyleBackColor = true;
+            rbDebut.CheckedChanged += rbDebut_CheckedChanged;
             // 
             // rbAlarmes
             // 
@@ -150,6 +153,7 @@
             rbAlarmes.TabStop = true;
             rbAlarmes.Text = "Alarmes";
             rbAlarmes.UseVisualStyleBackColor = true;
+            rbAlarmes.CheckedChanged += rbAlarmes_CheckedChanged;
             // 
             // rbFin
             // 
@@ -161,6 +165,7 @@
             rbFin.TabStop = true;
             rbFin.Text = "Fin";
             rbFin.UseVisualStyleBackColor = true;
+            rbFin.CheckedChanged += rbFin_CheckedChanged;
             // 
             // rbTous
             // 
@@ -172,6 +177,7 @@
             rbTous.TabStop = true;
             rbTous.Text = "Tous";
             rbTous.UseVisualStyleBackColor = true;
+            rbTous.CheckedChanged += rbTous_CheckedChanged;
             // 
             // dgvEvenements
             // 
@@ -206,6 +212,7 @@
             btnExporterPDF.TabIndex = 6;
             btnExporterPDF.Text = "Exporter PDF";
             btnExporterPDF.UseVisualStyleBackColor = true;
+            btnExporterPDF.Click += btnExporterPDF_Click;
             // 
             // btnFermer
             // 
@@ -221,7 +228,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(584, 481);
+            ClientSize = new Size(587, 481);
             Controls.Add(btnFermer);
             Controls.Add(btnExporterPDF);
             Controls.Add(dgvEvenements);
@@ -231,6 +238,7 @@
             Controls.Add(label1);
             Name = "FormTracabilite";
             Text = "Historique de Traçabilité";
+            WindowState = FormWindowState.Maximized;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
