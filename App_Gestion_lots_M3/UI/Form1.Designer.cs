@@ -78,12 +78,13 @@
             // 
             // btnModifierLot
             // 
-            btnModifierLot.Anchor = AnchorStyles.Bottom;
+            btnModifierLot.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnModifierLot.BackgroundImageLayout = ImageLayout.Center;
             btnModifierLot.Location = new Point(160, 296);
             btnModifierLot.Name = "btnModifierLot";
             btnModifierLot.Size = new Size(149, 36);
             btnModifierLot.TabIndex = 3;
-            btnModifierLot.Text = "Modifier Lots";
+            btnModifierLot.Text = "Détail Lot";
             btnModifierLot.UseVisualStyleBackColor = true;
             btnModifierLot.Click += btnModifierLot_Click;
             // 
@@ -151,7 +152,6 @@
             btnNouvelleRecette.Text = "Nouvelle Recette";
             btnNouvelleRecette.UseVisualStyleBackColor = true;
             btnNouvelleRecette.Click += btnNouvelleRecette_Click;
-<<<<<<< Updated upstream
             // 
             // dgvRecettes
             // 
@@ -177,8 +177,6 @@
             // 
             colNbOperations.HeaderText = "Nb Opérations";
             colNbOperations.Name = "colNbOperations";
-=======
->>>>>>> Stashed changes
             // 
             // Historique
             // 

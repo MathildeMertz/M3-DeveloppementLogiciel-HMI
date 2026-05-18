@@ -19,12 +19,8 @@
         {
             label1 = new Label();
             label2 = new Label();
-<<<<<<< Updated upstream
-            textBox1 = new TextBox();
-=======
             txtNomRecette = new TextBox();
             txtDateCreation = new TextBox();
->>>>>>> Stashed changes
             dgvOperations = new DataGridView();
             colPosition = new DataGridViewTextBoxColumn();
             colTemps = new DataGridViewTextBoxColumn();
@@ -33,7 +29,6 @@
             btnSupprimerOperation = new Button();
             btnEnregistrerRecette = new Button();
             btnFermer = new Button();
-            dtpDu = new DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)dgvOperations).BeginInit();
             SuspendLayout();
             // label1
@@ -50,17 +45,6 @@
             label2.Size = new Size(101, 15);
             label2.TabIndex = 1;
             label2.Text = "Date de Création :";
-<<<<<<< Updated upstream
-            label2.Click += label2_Click;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(218, 36);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(121, 23);
-            textBox1.TabIndex = 2;
-            // 
-=======
             // txtNomRecette
             txtNomRecette.Location = new Point(464, 41);
             txtNomRecette.Name = "txtNomRecette";
@@ -71,7 +55,6 @@
             txtDateCreation.Name = "txtDateCreation";
             txtDateCreation.Size = new Size(100, 23);
             txtDateCreation.TabIndex = 3;
->>>>>>> Stashed changes
             // dgvOperations
             dgvOperations.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvOperations.Columns.AddRange(new DataGridViewColumn[] { colPosition, colTemps, colQuittance });
@@ -119,39 +102,18 @@
             btnFermer.TabIndex = 15;
             btnFermer.Text = "Fermer";
             btnFermer.UseVisualStyleBackColor = true;
-<<<<<<< Updated upstream
-            btnFermer.Click += btnFermer_Click;
-            // 
-            // dtpDu
-            // 
-            dtpDu.Location = new Point(218, 69);
-            dtpDu.Name = "dtpDu";
-            dtpDu.Size = new Size(121, 23);
-            dtpDu.TabIndex = 16;
-            // 
-=======
             btnFermer.Click += new System.EventHandler(this.btnFermer_Click);
->>>>>>> Stashed changes
             // FormGestionRecette
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-<<<<<<< Updated upstream
-            ClientSize = new Size(434, 381);
-            Controls.Add(dtpDu);
-=======
             ClientSize = new Size(802, 386);
->>>>>>> Stashed changes
             Controls.Add(btnFermer);
             Controls.Add(btnEnregistrerRecette);
             Controls.Add(btnSupprimerOperation);
             Controls.Add(btnAjouterOperation);
             Controls.Add(dgvOperations);
-<<<<<<< Updated upstream
-            Controls.Add(textBox1);
-=======
             Controls.Add(txtDateCreation);
             Controls.Add(txtNomRecette);
->>>>>>> Stashed changes
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "FormGestionRecette";
@@ -166,12 +128,8 @@
 
         private Label label1;
         private Label label2;
-<<<<<<< Updated upstream
-        private TextBox textBox1;
-=======
         private TextBox txtNomRecette;
         private TextBox txtDateCreation;
->>>>>>> Stashed changes
         private DataGridView dgvOperations;
         private DataGridViewTextBoxColumn colPosition;
         private DataGridViewTextBoxColumn colTemps;
@@ -180,6 +138,5 @@
         private Button btnSupprimerOperation;
         private Button btnEnregistrerRecette;
         private Button btnFermer;
-        private DateTimePicker dtpDu;
     }
 }

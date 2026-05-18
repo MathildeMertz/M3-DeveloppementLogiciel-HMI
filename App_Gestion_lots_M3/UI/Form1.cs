@@ -29,8 +29,8 @@ namespace App_Gestion_lots_M3
         private void btnModifierLot_Click(object sender, EventArgs e)
         {
             this.Hide();
-            FormGestionLot formGestionLot = new FormGestionLot();
-            formGestionLot.ShowDialog();
+            FormDetailsLot formDetailLot = new FormDetailsLot();
+            formDetailLot.ShowDialog();
             this.Show();
         }
 
