@@ -57,6 +57,7 @@
             label1.Size = new Size(53, 15);
             label1.TabIndex = 0;
             label1.Text = "Période :";
+            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -76,6 +77,7 @@
             label3.Size = new Size(28, 15);
             label3.TabIndex = 2;
             label3.Text = "Au :";
+            label3.Click += label3_Click;
             // 
             // cboPeriode
             // 
@@ -84,6 +86,7 @@
             cboPeriode.Name = "cboPeriode";
             cboPeriode.Size = new Size(132, 23);
             cboPeriode.TabIndex = 3;
+            cboPeriode.SelectedIndexChanged += cboPeriode_SelectedIndexChanged;
             // 
             // dtpDu
             // 
@@ -91,6 +94,7 @@
             dtpDu.Name = "dtpDu";
             dtpDu.Size = new Size(200, 23);
             dtpDu.TabIndex = 4;
+            dtpDu.ValueChanged += dtpDu_ValueChanged;
             // 
             // dtpAu
             // 
@@ -98,6 +102,7 @@
             dtpAu.Name = "dtpAu";
             dtpAu.Size = new Size(200, 23);
             dtpAu.TabIndex = 5;
+            dtpAu.ValueChanged += dtpAu_ValueChanged;
             // 
             // btnActualiser
             // 
@@ -107,6 +112,7 @@
             btnActualiser.TabIndex = 6;
             btnActualiser.Text = "Actualiser";
             btnActualiser.UseVisualStyleBackColor = true;
+            btnActualiser.Click += btnActualiser_Click;
             // 
             // label4
             // 
@@ -116,6 +122,7 @@
             label4.Size = new Size(72, 15);
             label4.TabIndex = 7;
             label4.Text = "Lots par état";
+            label4.Click += label4_Click;
             // 
             // label5
             // 
@@ -125,6 +132,7 @@
             label5.Size = new Size(66, 15);
             label5.TabIndex = 8;
             label5.Text = "En attente :";
+            label5.Click += label5_Click;
             // 
             // label6
             // 
@@ -134,6 +142,7 @@
             label6.Size = new Size(88, 15);
             label6.TabIndex = 9;
             label6.Text = "En production :";
+            label6.Click += label6_Click;
             // 
             // label7
             // 
@@ -143,6 +152,7 @@
             label7.Size = new Size(60, 15);
             label7.TabIndex = 10;
             label7.Text = "Terminés :";
+            label7.Click += label7_Click;
             // 
             // lblEnAttente
             // 
@@ -152,6 +162,7 @@
             lblEnAttente.Size = new Size(13, 15);
             lblEnAttente.TabIndex = 11;
             lblEnAttente.Text = "0";
+            lblEnAttente.Click += lblEnAttente_Click;
             // 
             // label9
             // 
@@ -161,6 +172,7 @@
             label9.Size = new Size(60, 15);
             label9.TabIndex = 12;
             label9.Text = "En erreur :";
+            label9.Click += label9_Click;
             // 
             // lblEnProduction
             // 
@@ -170,6 +182,7 @@
             lblEnProduction.Size = new Size(13, 15);
             lblEnProduction.TabIndex = 13;
             lblEnProduction.Text = "0";
+            lblEnProduction.Click += lblEnProduction_Click;
             // 
             // lblEnErreur
             // 
@@ -179,6 +192,7 @@
             lblEnErreur.Size = new Size(13, 15);
             lblEnErreur.TabIndex = 14;
             lblEnErreur.Text = "0";
+            lblEnErreur.Click += lblEnErreur_Click;
             // 
             // lblTermines
             // 
@@ -188,6 +202,7 @@
             lblTermines.Size = new Size(13, 15);
             lblTermines.TabIndex = 15;
             lblTermines.Text = "0";
+            lblTermines.Click += lblTermines_Click;
             // 
             // btnFermer
             // 
@@ -244,6 +259,7 @@
             Controls.Add(label1);
             Name = "FormStatistiques";
             Text = "Statistiques";
+            Load += FormStatistiques_Load;
             ResumeLayout(false);
             PerformLayout();
         }

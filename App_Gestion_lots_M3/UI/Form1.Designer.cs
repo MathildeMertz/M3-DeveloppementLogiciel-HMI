@@ -40,6 +40,7 @@
             cboSelectLotTrace = new ComboBox();
             label1 = new Label();
             btnVoirTracabilite = new Button();
+            btnVoirStatistiques = new Button();
             tabControl1.SuspendLayout();
             Lots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLots).BeginInit();
@@ -64,6 +65,7 @@
             // 
             // Lots
             // 
+            Lots.Controls.Add(btnVoirStatistiques);
             Lots.Controls.Add(btnModifierLot);
             Lots.Controls.Add(btnNouveauLot);
             Lots.Controls.Add(dgvLots);
@@ -245,6 +247,18 @@
             btnVoirTracabilite.UseVisualStyleBackColor = true;
             btnVoirTracabilite.Click += btnVoirTracabilite_Click;
             // 
+            // btnVoirStatistiques
+            // 
+            btnVoirStatistiques.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVoirStatistiques.BackgroundImageLayout = ImageLayout.Center;
+            btnVoirStatistiques.Location = new Point(315, 296);
+            btnVoirStatistiques.Name = "btnVoirStatistiques";
+            btnVoirStatistiques.Size = new Size(149, 36);
+            btnVoirStatistiques.TabIndex = 4;
+            btnVoirStatistiques.Text = "Voir Statistiques";
+            btnVoirStatistiques.UseVisualStyleBackColor = true;
+            btnVoirStatistiques.Click += button1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -290,5 +304,6 @@
         private DataGridViewTextBoxColumn colTracEvenement;
         private ComboBox cboSelectLotTrace;
         private Label label1;
+        private Button btnVoirStatistiques;
     }
 }
