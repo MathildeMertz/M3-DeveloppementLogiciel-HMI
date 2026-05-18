@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace App_Gestion_lots_M3.Model
+﻿namespace App_Gestion_lots_M3.Model
 {
-    internal class Etat
+    public class Etat
     {
+        public int Id_Etat { get; set; }
+        public string ETA_Libelle { get; set; }
     }
 }

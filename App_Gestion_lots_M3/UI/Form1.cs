@@ -51,7 +51,7 @@ namespace App_Gestion_lots_M3
         }
 
         // ================================================
-        // NAVIGATION
+        // NAVIGATION LOTS
         // ================================================
         private void btnNouveauLot_Click(object sender, EventArgs e)
         {
@@ -62,15 +62,6 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
-        private void btnNouvelleRecette_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            FormGestionRecette formGestionRecette = new FormGestionRecette();
-            formGestionRecette.ShowDialog();
-            ChargerRecettes();
-            this.Show();
-        }
-
         private void btnModifierLot_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -78,13 +69,11 @@ namespace App_Gestion_lots_M3
 
             if (dgvLots.SelectedRows.Count > 0)
             {
-                // Un lot est sélectionné → on l'ouvre directement
                 string nomLot = dgvLots.SelectedRows[0].Cells["colNomLot"].Value.ToString();
                 formDetailLot = new FormDetailsLot(nomLot);
             }
             else
             {
-                // Aucun lot sélectionné → on ouvre LOT001 par défaut
                 formDetailLot = new FormDetailsLot(null);
             }
 
@@ -93,25 +82,6 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
-        private void btnVoirTracabilite_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            FormTracabilite formTracabilite = new FormTracabilite();
-            formTracabilite.ShowDialog();
-            this.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            FormStatistiques formStatistique = new FormStatistiques();
-            formStatistique.ShowDialog();
-            this.Show();
-        }
-
-        // ================================================
-        // DOUBLE CLIC SUR UN LOT → FormDetailsLot
-        // ================================================
         private void dgvLots_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -126,14 +96,44 @@ namespace App_Gestion_lots_M3
         }
 
         // ================================================
+        // NAVIGATION RECETTES
+        // ================================================
+        private void btnNouvelleRecette_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormGestionRecette formGestionRecette = new FormGestionRecette();
+            formGestionRecette.ShowDialog();
+            ChargerRecettes();
+            this.Show();
+        }
+
+        // ================================================
+        // NAVIGATION TRAÇABILITÉ
+        // ================================================
+        private void btnVoirTracabilite_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormTracabilite formTracabilite = new FormTracabilite();
+            formTracabilite.ShowDialog();
+            this.Show();
+        }
+
+        // ================================================
+        // NAVIGATION STATISTIQUES
+        // ================================================
+        private void btnVoirStatistiques_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormStatistiques formStatistiques = new FormStatistiques();
+            formStatistiques.ShowDialog();
+            this.Show();
+        }
+
+        // ================================================
         // ÉVÉNEMENTS NON UTILISÉS
         // ================================================
         private void dgvLots_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+        private void dgvRecettes_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void Lots_Click(object sender, EventArgs e) { }
-
-        private void dgvRecettes_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

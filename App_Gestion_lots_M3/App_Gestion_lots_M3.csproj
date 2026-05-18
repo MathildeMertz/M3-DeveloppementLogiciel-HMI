@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AccesDonnees\" />
     <Folder Include="Gestion\" />
     <Folder Include="Automate_connection\" />
   </ItemGroup>
