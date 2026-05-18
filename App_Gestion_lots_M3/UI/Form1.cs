@@ -56,7 +56,7 @@ namespace App_Gestion_lots_M3
         private void btnNouveauLot_Click(object sender, EventArgs e)
         {
             this.Hide();
-            FormGestionLot formGestionLot = new FormGestionLot();
+            FormGestionLot formGestionLot = new FormGestionLot(null);
             formGestionLot.ShowDialog();
             ChargerLots();
             this.Show();
@@ -65,19 +65,22 @@ namespace App_Gestion_lots_M3
         private void btnModifierLot_Click(object sender, EventArgs e)
         {
             this.Hide();
-            FormDetailsLot formDetailLot;
 
             if (dgvLots.SelectedRows.Count > 0)
             {
+                // Lot sélectionné → ouvre FormGestionLot en mode modification
                 string nomLot = dgvLots.SelectedRows[0].Cells["colNomLot"].Value.ToString();
-                formDetailLot = new FormDetailsLot(nomLot);
+                Lot lotSelectionne = DAL.GetLots().Find(l => l.LOT_Nom == nomLot);
+                FormGestionLot formGestionLot = new FormGestionLot(lotSelectionne);
+                formGestionLot.ShowDialog();
             }
             else
             {
-                formDetailLot = new FormDetailsLot(null);
+                // Aucun lot sélectionné → ouvre FormDetailsLot sur le premier lot
+                FormDetailsLot formDetailLot = new FormDetailsLot(null);
+                formDetailLot.ShowDialog();
             }
 
-            formDetailLot.ShowDialog();
             ChargerLots();
             this.Show();
         }

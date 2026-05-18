@@ -36,16 +36,23 @@ namespace App_Gestion_lots_M3.AccesDonnees
         // ================================================
         // LOTS
         // ================================================
+        // Ajoute cette variable statique en haut de la classe DAL
+        private static List<Lot> listeLots = null;
+
         public static List<Lot> GetLots()
         {
-            return new List<Lot>
+            if (listeLots == null)
             {
-                new Lot { Id_Lot = 1, LOT_Nom = "LOT001", LOT_Quantite = 1500, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 2, ETA_Libelle = "En production", Id_Recette = 1, REC_Nom = "AM203" },
-                new Lot { Id_Lot = 2, LOT_Nom = "LOT002", LOT_Quantite = 1000, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 4, ETA_Libelle = "Terminé",       Id_Recette = 2, REC_Nom = "BM450" },
-                new Lot { Id_Lot = 3, LOT_Nom = "LOT003", LOT_Quantite = 750,  LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 1, ETA_Libelle = "En attente",    Id_Recette = 3, REC_Nom = "CX120" },
-                new Lot { Id_Lot = 4, LOT_Nom = "LOT004", LOT_Quantite = 500,  LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 3, ETA_Libelle = "En erreur",     Id_Recette = 4, REC_Nom = "DX900" },
-                new Lot { Id_Lot = 5, LOT_Nom = "LOT005", LOT_Quantite = 2000, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 4, ETA_Libelle = "Terminé",       Id_Recette = 5, REC_Nom = "EX310" },
-            };
+                listeLots = new List<Lot>
+        {
+            new Lot { Id_Lot = 1, LOT_Nom = "LOT001", LOT_Quantite = 1500, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 2, ETA_Libelle = "En production", Id_Recette = 1, REC_Nom = "AM203" },
+            new Lot { Id_Lot = 2, LOT_Nom = "LOT002", LOT_Quantite = 1000, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 4, ETA_Libelle = "Terminé",       Id_Recette = 2, REC_Nom = "BM450" },
+            new Lot { Id_Lot = 3, LOT_Nom = "LOT003", LOT_Quantite = 750,  LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 1, ETA_Libelle = "En attente",    Id_Recette = 3, REC_Nom = "CX120" },
+            new Lot { Id_Lot = 4, LOT_Nom = "LOT004", LOT_Quantite = 500,  LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 3, ETA_Libelle = "En erreur",     Id_Recette = 4, REC_Nom = "DX900" },
+            new Lot { Id_Lot = 5, LOT_Nom = "LOT005", LOT_Quantite = 2000, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 4, ETA_Libelle = "Terminé",       Id_Recette = 5, REC_Nom = "EX310" },
+        };
+            }
+            return listeLots;
         }
 
         // ================================================
@@ -92,6 +99,47 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 new Operation { Id_Operation = 2, OPE_Nom = "Position 2", OPE_PositionMoteur = 2, OPE_TempsAttente = 2, OPE_CycleVerin = 0, OPE_Quittance = false, OPE_SensMoteur = 1, CON_NoOperation = 2 },
                 new Operation { Id_Operation = 3, OPE_Nom = "Position 3", OPE_PositionMoteur = 3, OPE_TempsAttente = 3, OPE_CycleVerin = 1, OPE_Quittance = false, OPE_SensMoteur = 0, CON_NoOperation = 3 },
             };
+        }
+        // ================================================
+        // AJOUTER UN LOT
+        // ================================================
+        public static void AjouterLot(Lot nouveauLot)
+        {
+            // TODO : remplacer par INSERT MySQL
+            nouveauLot.Id_Lot = listeLots.Count + 1;
+            listeLots.Add(nouveauLot);
+        }
+
+        // ================================================
+        // MODIFIER UN LOT
+        // ================================================
+        public static void ModifierLot(string nomLot, Lot lotModifie)
+        {
+            // TODO : remplacer par UPDATE MySQL
+            for (int i = 0; i < listeLots.Count; i++)
+            {
+                if (listeLots[i].LOT_Nom == nomLot)
+                {
+                    listeLots[i] = lotModifie;
+                    break;
+                }
+            }
+        }
+
+        // ================================================
+        // SUPPRIMER UN LOT
+        // ================================================
+        public static void SupprimerLot(string nomLot)
+        {
+            // TODO : remplacer par DELETE MySQL
+            for (int i = 0; i < listeLots.Count; i++)
+            {
+                if (listeLots[i].LOT_Nom == nomLot)
+                {
+                    listeLots.Remove(listeLots[i]);
+                    break;
+                }
+            }
         }
     }
 }

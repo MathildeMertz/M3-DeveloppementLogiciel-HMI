@@ -1,12 +1,8 @@
 ﻿using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.Model;
-using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace App_Gestion_lots_M3.UI
@@ -28,27 +24,31 @@ namespace App_Gestion_lots_M3.UI
             this.WindowState = FormWindowState.Maximized;
             lotInitial = nomLot;
             listeLots = DAL.GetLots();
+
+            // Désactiver l'événement pendant le chargement
+            cboSelectLot.SelectedIndexChanged -= cboSelectLot_SelectedIndexChanged;
             RemplirComboBox();
 
+            int indexInitial = 0;
             if (lotInitial != null)
             {
-                // Chercher l'index du lot demandé
-                int index = 0;
                 for (int i = 0; i < listeLots.Count; i++)
                 {
                     if (listeLots[i].LOT_Nom == lotInitial)
                     {
-                        index = i;
+                        indexInitial = i;
                         break;
                     }
                 }
-                cboSelectLot.SelectedIndex = index;
             }
-            else
-            {
-                // Aucun lot sélectionné → premier lot par défaut
-                cboSelectLot.SelectedIndex = 0;
-            }
+
+            cboSelectLot.SelectedIndex = indexInitial;
+
+            // Réactiver l'événement
+            cboSelectLot.SelectedIndexChanged += cboSelectLot_SelectedIndexChanged;
+
+            // Afficher le lot initial
+            AfficherLot(indexInitial);
         }
 
         // ================================================
@@ -68,6 +68,8 @@ namespace App_Gestion_lots_M3.UI
         // ================================================
         private void AfficherLot(int index)
         {
+            if (index < 0 || index >= listeLots.Count) return;
+
             Lot lot = listeLots[index];
 
             lblRecette.Text = lot.REC_Nom;
@@ -77,17 +79,17 @@ namespace App_Gestion_lots_M3.UI
             lblDateDebut.Text = "-";
             lblDateFin.Text = "-";
 
-            // Mettre à jour le ComboBox sans déclencher l'événement
-            cboSelectLot.SelectedIndexChanged -= cboSelectLot_SelectedIndexChanged;
-            cboSelectLot.SelectedIndex = index;
-            cboSelectLot.SelectedIndexChanged += cboSelectLot_SelectedIndexChanged;
-
             // Mettre à jour le titre
             this.Text = "Détails du Lot - " + lot.LOT_Nom;
 
             // Gérer les boutons Précédent/Suivant
             btnPrecedent.Enabled = index > 0;
             btnSuivant.Enabled = index < listeLots.Count - 1;
+
+            // Mettre à jour le ComboBox sans déclencher l'événement
+            cboSelectLot.SelectedIndexChanged -= cboSelectLot_SelectedIndexChanged;
+            cboSelectLot.SelectedIndex = index;
+            cboSelectLot.SelectedIndexChanged += cboSelectLot_SelectedIndexChanged;
 
             ChargerEvenements(lot.Id_Lot);
         }
@@ -146,7 +148,7 @@ namespace App_Gestion_lots_M3.UI
         private void btnModifierLot_Click(object sender, EventArgs e)
         {
             this.Hide();
-            FormGestionLot formGestionLot = new FormGestionLot();
+            FormGestionLot formGestionLot = new FormGestionLot(null);
             formGestionLot.WindowState = FormWindowState.Maximized;
             formGestionLot.ShowDialog();
             listeLots = DAL.GetLots();
