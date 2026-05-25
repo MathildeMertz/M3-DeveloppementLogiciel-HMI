@@ -19,7 +19,12 @@
         {
             tabControl1 = new TabControl();
             Lots = new TabPage();
+<<<<<<< Updated upstream
             btnModifierLot = new Button();
+=======
+            btnStatistique = new Button();
+            btnDetailLot = new Button();
+>>>>>>> Stashed changes
             btnNouveauLot = new Button();
             dgvLots = new DataGridView();
             colNomLot = new DataGridViewTextBoxColumn();
@@ -64,7 +69,12 @@
             // 
             // Lots
             // 
+<<<<<<< Updated upstream
             Lots.Controls.Add(btnModifierLot);
+=======
+            Lots.Controls.Add(btnStatistique);
+            Lots.Controls.Add(btnDetailLot);
+>>>>>>> Stashed changes
             Lots.Controls.Add(btnNouveauLot);
             Lots.Controls.Add(dgvLots);
             Lots.Location = new Point(4, 24);
@@ -86,6 +96,17 @@
             btnModifierLot.Text = "Modifier Lots";
             btnModifierLot.UseVisualStyleBackColor = true;
             btnModifierLot.Click += btnModifierLot_Click;
+            // 
+            // btnDetailLot
+            // 
+            btnDetailLot.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnDetailLot.Location = new Point(160, 296);
+            btnDetailLot.Name = "btnDetailLot";
+            btnDetailLot.Size = new Size(149, 36);
+            btnDetailLot.TabIndex = 3;
+            btnDetailLot.Text = "Détails Lots";
+            btnDetailLot.UseVisualStyleBackColor = true;
+            btnDetailLot.Click += btnModifierLot_Click;
             // 
             // btnNouveauLot
             // 
@@ -291,5 +312,10 @@
         private DataGridViewTextBoxColumn colTracEvenement;
         private ComboBox cboSelectLotTrace;
         private Label label1;
+<<<<<<< Updated upstream
+=======
+        private Button btnStatistique;
+        private Button btnDetailLot;
+>>>>>>> Stashed changes
     }
 }
