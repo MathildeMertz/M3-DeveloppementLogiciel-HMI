@@ -9,7 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< Updated upstream
     <Folder Include="Gestion\" />
+=======
+>>>>>>> Stashed changes
     <Folder Include="Automate_connection\" />
   </ItemGroup>
 
