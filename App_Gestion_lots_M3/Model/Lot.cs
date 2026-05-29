@@ -1,6 +1,10 @@
 ﻿namespace App_Gestion_lots_M3.Model
 {
+<<<<<<< Updated upstream
     public class Lot
+=======
+    internal class Lot
+>>>>>>> Stashed changes
     {
         public int Id_Lot { get; set; }
         public string LOT_Nom { get; set; }
