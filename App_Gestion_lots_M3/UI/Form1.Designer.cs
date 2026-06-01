@@ -40,6 +40,7 @@
             cboSelectLotTrace = new ComboBox();
             label1 = new Label();
             btnVoirTracabilite = new Button();
+            btnDetailRecette = new Button();
             tabControl1.SuspendLayout();
             Lots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLots).BeginInit();
@@ -108,6 +109,7 @@
             dgvLots.Size = new Size(764, 282);
             dgvLots.TabIndex = 0;
             dgvLots.CellContentClick += dgvLots_CellContentClick;
+            dgvLots.CellDoubleClick += dgvLots_CellDoubleClick;
             // 
             // colNomLot
             // 
@@ -131,6 +133,7 @@
             // 
             // Recette
             // 
+            Recette.Controls.Add(btnDetailRecette);
             Recette.Controls.Add(btnNouvelleRecette);
             Recette.Controls.Add(dgvRecettes);
             Recette.Location = new Point(4, 24);
@@ -249,6 +252,16 @@
             btnVoirTracabilite.UseVisualStyleBackColor = true;
             btnVoirTracabilite.Click += btnVoirTracabilite_Click;
             // 
+            // btnDetailRecette
+            // 
+            btnDetailRecette.Location = new Point(138, 296);
+            btnDetailRecette.Name = "btnDetailRecette";
+            btnDetailRecette.Size = new Size(133, 36);
+            btnDetailRecette.TabIndex = 7;
+            btnDetailRecette.Text = "Détail Recette";
+            btnDetailRecette.UseVisualStyleBackColor = true;
+            btnDetailRecette.Click += btnDetailRecette_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -294,5 +307,6 @@
         private ComboBox cboSelectLotTrace;
         private Label label1;
         private Button btnDetailLot;
+        private Button btnDetailRecette;
     }
 }

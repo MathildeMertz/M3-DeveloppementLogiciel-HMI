@@ -137,5 +137,10 @@ namespace App_Gestion_lots_M3
         private void Lots_Click(object sender, EventArgs e) { }
         private void Historique_Click(object sender, EventArgs e) { }
         private void Recette_Click(object sender, EventArgs e) { }
+
+        private void btnDetailRecette_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
