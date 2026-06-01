@@ -170,13 +170,12 @@ namespace App_Gestion_lots_M3
             formTracabilite.ShowDialog();
             this.Show();
         }
-
-       /// <summary>
-       /// Bouton pour voir les statistique
-       /// </summary>
-       /// <param name="sender"></param>
-       /// <param name="e"></param>
-        private void btnVoirStatistiques_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Bouton voir statistique
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnVoirStatistiques_Click_1(object sender, EventArgs e)
         {
             this.Hide();
             FormStatistiques formStatistiques = new FormStatistiques();
@@ -188,12 +187,12 @@ namespace App_Gestion_lots_M3
         // Autres
         // ================================================
         private void dgvLots_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
-        private void dgvRecettes_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void dgvRecettes_CellContentClick_1(object sender, DataGridViewCellEventArgs e) { }
         private void dgvTracabilite_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void cboSelectLotTrace_SelectedIndexChanged(object sender, EventArgs e) { }
         private void Lots_Click(object sender, EventArgs e) { }
         private void Historique_Click(object sender, EventArgs e) { }
         private void Recette_Click(object sender, EventArgs e) { }
+
     }
 }

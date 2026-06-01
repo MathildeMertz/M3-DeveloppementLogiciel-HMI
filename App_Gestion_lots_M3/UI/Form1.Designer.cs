@@ -34,6 +34,7 @@
             colDateCreation = new DataGridViewTextBoxColumn();
             colNbOperations = new DataGridViewTextBoxColumn();
             Historique = new TabPage();
+            btnVoirStatistiques = new Button();
             dgvTracabilite = new DataGridView();
             colTracDate = new DataGridViewTextBoxColumn();
             colTracHeure = new DataGridViewTextBoxColumn();
@@ -177,7 +178,7 @@
             dgvRecettes.Size = new Size(933, 273);
             dgvRecettes.TabIndex = 4;
             dgvRecettes.CellContentClick += dgvRecettes_CellContentClick_1;
-            dgvRecettes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRecettes_CellDoubleClick);
+            dgvRecettes.CellDoubleClick += dgvRecettes_CellDoubleClick;
             // 
             // colNomRecette
             // 
@@ -196,6 +197,7 @@
             // 
             // Historique
             // 
+            Historique.Controls.Add(btnVoirStatistiques);
             Historique.Controls.Add(dgvTracabilite);
             Historique.Controls.Add(cboSelectLotTrace);
             Historique.Controls.Add(label1);
@@ -208,6 +210,17 @@
             Historique.Text = "Traçabilité";
             Historique.UseVisualStyleBackColor = true;
             Historique.Click += Historique_Click;
+            // 
+            // btnVoirStatistiques
+            // 
+            btnVoirStatistiques.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVoirStatistiques.Location = new Point(134, 296);
+            btnVoirStatistiques.Name = "btnVoirStatistiques";
+            btnVoirStatistiques.Size = new Size(142, 34);
+            btnVoirStatistiques.TabIndex = 10;
+            btnVoirStatistiques.Text = "Voir Statistique";
+            btnVoirStatistiques.UseVisualStyleBackColor = true;
+            btnVoirStatistiques.Click += btnVoirStatistiques_Click_1;
             // 
             // dgvTracabilite
             // 
@@ -310,5 +323,6 @@
         private Label label1;
         private Button btnDetailLot;
         private Button btnDetailRecette;
+        private Button btnVoirStatistiques;
     }
 }
