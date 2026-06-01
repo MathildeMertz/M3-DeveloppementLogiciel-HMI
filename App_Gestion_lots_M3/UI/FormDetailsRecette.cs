@@ -94,16 +94,19 @@ namespace App_Gestion_lots_M3.UI
         private void ChargerOperations(int idRecette)
         {
             dgvOperations.Rows.Clear();
-
             List<Operation> operations = DAL.GetOperations(idRecette);
             lblNbOperation.Text = operations.Count.ToString();
 
             foreach (Operation op in operations)
             {
                 dgvOperations.Rows.Add(
-                    op.OPE_PositionMoteur,
-                    op.OPE_TempsAttente,
-                    op.OPE_Quittance ? "Oui" : "Non"
+                    op.OPE_Position,        // était OPE_PositionMoteur
+                    op.OPE_SensRotation,
+                    op.OPE_NbTours,
+                    op.OPE_TempsArret,      // était OPE_TempsAttente
+                    op.OPE_CycleVerin ? "Oui" : "Non",
+                    op.OPE_Quittance ? "Oui" : "Non",
+                    op.OPE_Nom
                 );
             }
         }

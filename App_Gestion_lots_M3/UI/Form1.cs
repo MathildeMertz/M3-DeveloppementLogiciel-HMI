@@ -13,6 +13,12 @@ namespace App_Gestion_lots_M3
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+
+            // Configuration des grilles APRÈS InitializeComponent
+            dgvLots.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvRecettes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvTracabilite.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
             ChargerLots();
             ChargerRecettes();
         }

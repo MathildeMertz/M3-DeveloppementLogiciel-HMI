@@ -208,19 +208,82 @@ namespace App_Gestion_lots_M3.AccesDonnees
         // ================================================
 
         /// <summary>
+        /// Dictionnaire statique des opérations par recette pour persister les données en session
+        /// </summary>
+        private static Dictionary<int, List<Operation>> listeOperations = null;
+
+        /// <summary>
         /// Retourne la liste des opérations pour une recette donnée
         /// </summary>
         /// <param name="idRecette">Identifiant de la recette</param>
-        /// <returns>Liste des opérations</returns>
+        /// <returns>Liste des opérations de la recette</returns>
         public static List<Operation> GetOperations(int idRecette)
         {
-            // TODO : remplacer par SELECT MySQL avec filtre sur idRecette
-            return new List<Operation>
+            if (listeOperations == null)
             {
-                new Operation { Id_Operation = 1, OPE_Nom = "Position 1", OPE_PositionMoteur = 1, OPE_TempsAttente = 1, OPE_CycleVerin = 1, OPE_Quittance = true,  OPE_SensMoteur = 1, CON_NoOperation = 1 },
-                new Operation { Id_Operation = 2, OPE_Nom = "Position 2", OPE_PositionMoteur = 2, OPE_TempsAttente = 2, OPE_CycleVerin = 0, OPE_Quittance = false, OPE_SensMoteur = 1, CON_NoOperation = 2 },
-                new Operation { Id_Operation = 3, OPE_Nom = "Position 3", OPE_PositionMoteur = 3, OPE_TempsAttente = 3, OPE_CycleVerin = 1, OPE_Quittance = false, OPE_SensMoteur = 0, CON_NoOperation = 3 },
-            };
+                // Données de démonstration — sera remplacé par SELECT MySQL
+                listeOperations = new Dictionary<int, List<Operation>>
+                {
+                    {
+                        1, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 1, OPE_Nom = "Pas 1", OPE_Position = "3H",  OPE_SensRotation = "Horaire",       OPE_NbTours = 2, OPE_TempsArret = 5,  OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 2, OPE_Nom = "Pas 2", OPE_Position = "6H",  OPE_SensRotation = "Anti-Horaire",  OPE_NbTours = 1, OPE_TempsArret = 8,  OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 2 },
+                            new Operation { Id_Operation = 3, OPE_Nom = "Pas 3", OPE_Position = "12H", OPE_SensRotation = "Horaire",       OPE_NbTours = 3, OPE_TempsArret = 10, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 3 },
+                        }
+                    },
+                    {
+                        2, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 4, OPE_Nom = "Pas 1", OPE_Position = "3H", OPE_SensRotation = "Horaire",      OPE_NbTours = 1, OPE_TempsArret = 3, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 5, OPE_Nom = "Pas 2", OPE_Position = "9H", OPE_SensRotation = "Anti-Horaire", OPE_NbTours = 2, OPE_TempsArret = 6, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 2 },
+                        }
+                    },
+                    {
+                        3, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 6, OPE_Nom = "Pas 1", OPE_Position = "6H",  OPE_SensRotation = "Horaire",      OPE_NbTours = 1, OPE_TempsArret = 4, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 7, OPE_Nom = "Pas 2", OPE_Position = "12H", OPE_SensRotation = "Anti-Horaire", OPE_NbTours = 2, OPE_TempsArret = 7, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 2 },
+                            new Operation { Id_Operation = 8, OPE_Nom = "Pas 3", OPE_Position = "3H",  OPE_SensRotation = "Horaire",      OPE_NbTours = 1, OPE_TempsArret = 2, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 3 },
+                        }
+                    },
+                    {
+                        4, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 9,  OPE_Nom = "Pas 1", OPE_Position = "9H",  OPE_SensRotation = "Horaire",      OPE_NbTours = 3, OPE_TempsArret = 5, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 10, OPE_Nom = "Pas 2", OPE_Position = "12H", OPE_SensRotation = "Anti-Horaire", OPE_NbTours = 1, OPE_TempsArret = 3, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 2 },
+                        }
+                    },
+                    {
+                        5, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 11, OPE_Nom = "Pas 1", OPE_Position = "3H", OPE_SensRotation = "Horaire",      OPE_NbTours = 2, OPE_TempsArret = 8, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 12, OPE_Nom = "Pas 2", OPE_Position = "6H", OPE_SensRotation = "Anti-Horaire", OPE_NbTours = 1, OPE_TempsArret = 5, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 2 },
+                            new Operation { Id_Operation = 13, OPE_Nom = "Pas 3", OPE_Position = "9H", OPE_SensRotation = "Horaire",      OPE_NbTours = 3, OPE_TempsArret = 3, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 3 },
+                        }
+                    },
+                };
+            }
+
+            // Retourne les opérations de la recette ou liste vide si inexistante
+            if (listeOperations.ContainsKey(idRecette))
+                return listeOperations[idRecette];
+
+            return new List<Operation>();
+        }
+
+        /// <summary>
+        /// Ajoute ou met à jour les opérations d'une recette
+        /// </summary>
+        /// <param name="idRecette">Identifiant de la recette</param>
+        /// <param name="operations">Liste des opérations à enregistrer</param>
+        public static void AjouterOperations(int idRecette, List<Operation> operations)
+        {
+            // TODO : remplacer par INSERT MySQL
+            if (listeOperations == null)
+                GetOperations(0); // Initialise le dictionnaire
+
+            listeOperations[idRecette] = operations;
         }
     }
 }

@@ -118,9 +118,13 @@ namespace App_Gestion_lots_M3.UI
             foreach (Operation op in operations)
             {
                 dgvOperations.Rows.Add(
-                    op.OPE_Nom,
-                    op.OPE_TempsAttente,
-                    op.OPE_Quittance ? "Oui" : "Non"
+                    op.OPE_Position,        // était OPE_PositionMoteur
+                    op.OPE_SensRotation,
+                    op.OPE_NbTours,
+                    op.OPE_TempsArret,      // était OPE_TempsAttente
+                    op.OPE_CycleVerin ? "Oui" : "Non",
+                    op.OPE_Quittance ? "Oui" : "Non",
+                    op.OPE_Nom
                 );
             }
         }
@@ -320,41 +324,73 @@ namespace App_Gestion_lots_M3.UI
                 dgvOperations.Rows.Remove(dgvOperations.SelectedRows[0]);
         }
 
-        /// <summary>
-        /// Bouton pour enregistrer ou modifier la recette
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnEnregistrerRecette_Click(object sender, EventArgs e)
         {
             if (!ValiderFormulaire()) return;
 
             if (estNouvelleRecette)
             {
-                // Création d'une nouvelle recette
+                // Création de la nouvelle recette
                 Recette nouvelleRecette = new Recette
                 {
                     REC_Nom = txtNomRecette.Text,
                     REC_DateHeureCreation = DateTime.Now
                 };
                 DAL.AjouterRecette(nouvelleRecette);
+
+                // Sauvegarde des opérations
+                List<Operation> operations = RecupererOperationsGrille();
+                DAL.AjouterOperations(nouvelleRecette.Id_Recette, operations);
+
                 MessageBox.Show("Recette enregistrée avec succès !",
                     "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                // Modification d'une recette existante
+                // Modification de la recette existante
                 Recette recetteModifiee = new Recette
                 {
                     REC_Nom = recetteEnCours.REC_Nom,
                     REC_DateHeureCreation = recetteEnCours.REC_DateHeureCreation
                 };
                 DAL.ModifierRecette(recetteEnCours.REC_Nom, recetteModifiee);
+
+                // Mise à jour des opérations
+                List<Operation> operations = RecupererOperationsGrille();
+                DAL.AjouterOperations(recetteEnCours.Id_Recette, operations);
+
                 MessageBox.Show("Recette modifiée avec succès !",
                     "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             this.Close();
+        }
+
+        /// <summary>
+        /// Récupère les opérations depuis le DataGridView
+        /// </summary>
+        /// <returns>Liste des opérations saisies</returns>
+        private List<Operation> RecupererOperationsGrille()
+        {
+            List<Operation> operations = new List<Operation>();
+
+            for (int i = 0; i < dgvOperations.Rows.Count; i++)
+            {
+                Operation op = new Operation
+                {
+                    OPE_Nom = dgvOperations.Rows[i].Cells["colNomPas"].Value?.ToString() ?? "",
+                    OPE_Position = dgvOperations.Rows[i].Cells["colPosition"].Value?.ToString() ?? "",
+                    OPE_SensRotation = dgvOperations.Rows[i].Cells["colSensRotation"].Value?.ToString() ?? "",
+                    OPE_NbTours = Convert.ToInt32(dgvOperations.Rows[i].Cells["colNbTours"].Value ?? 0),
+                    OPE_TempsArret = Convert.ToInt32(dgvOperations.Rows[i].Cells["colTempsArret"].Value ?? 0),
+                    OPE_CycleVerin = dgvOperations.Rows[i].Cells["colCycleVerin"].Value?.ToString() == "Oui",
+                    OPE_Quittance = dgvOperations.Rows[i].Cells["colQuittance"].Value?.ToString() == "Oui",
+                    CON_NoOperation = i + 1
+                };
+                operations.Add(op);
+            }
+
+            return operations;
         }
 
         /// <summary>
