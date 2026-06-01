@@ -19,12 +19,12 @@
         {
             tabControl1 = new TabControl();
             Lots = new TabPage();
-<<<<<<< Updated upstream
+
             btnModifierLot = new Button();
-=======
+
             btnStatistique = new Button();
             btnDetailLot = new Button();
->>>>>>> Stashed changes
+
             btnNouveauLot = new Button();
             dgvLots = new DataGridView();
             colNomLot = new DataGridViewTextBoxColumn();
@@ -69,12 +69,12 @@
             // 
             // Lots
             // 
-<<<<<<< Updated upstream
+
             Lots.Controls.Add(btnModifierLot);
-=======
+
             Lots.Controls.Add(btnStatistique);
             Lots.Controls.Add(btnDetailLot);
->>>>>>> Stashed changes
+
             Lots.Controls.Add(btnNouveauLot);
             Lots.Controls.Add(dgvLots);
             Lots.Location = new Point(4, 24);
@@ -312,10 +312,10 @@
         private DataGridViewTextBoxColumn colTracEvenement;
         private ComboBox cboSelectLotTrace;
         private Label label1;
-<<<<<<< Updated upstream
-=======
+
+
         private Button btnStatistique;
         private Button btnDetailLot;
->>>>>>> Stashed changes
+
     }
 }
