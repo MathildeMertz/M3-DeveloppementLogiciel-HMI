@@ -27,6 +27,7 @@
             colRecette = new DataGridViewTextBoxColumn();
             colEtat = new DataGridViewTextBoxColumn();
             Recette = new TabPage();
+            btnDetailRecette = new Button();
             btnNouvelleRecette = new Button();
             dgvRecettes = new DataGridView();
             colNomRecette = new DataGridViewTextBoxColumn();
@@ -40,7 +41,6 @@
             cboSelectLotTrace = new ComboBox();
             label1 = new Label();
             btnVoirTracabilite = new Button();
-            btnDetailRecette = new Button();
             tabControl1.SuspendLayout();
             Lots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLots).BeginInit();
@@ -145,6 +145,17 @@
             Recette.UseVisualStyleBackColor = true;
             Recette.Click += Recette_Click;
             // 
+            // btnDetailRecette
+            // 
+            btnDetailRecette.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnDetailRecette.Location = new Point(138, 296);
+            btnDetailRecette.Name = "btnDetailRecette";
+            btnDetailRecette.Size = new Size(133, 36);
+            btnDetailRecette.TabIndex = 7;
+            btnDetailRecette.Text = "Détail Recette";
+            btnDetailRecette.UseVisualStyleBackColor = true;
+            btnDetailRecette.Click += btnDetailRecette_Click;
+            // 
             // btnNouvelleRecette
             // 
             btnNouvelleRecette.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
@@ -166,6 +177,7 @@
             dgvRecettes.Size = new Size(933, 273);
             dgvRecettes.TabIndex = 4;
             dgvRecettes.CellContentClick += dgvRecettes_CellContentClick_1;
+            dgvLots.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLots_CellDoubleClick);
             // 
             // colNomRecette
             // 
@@ -251,16 +263,6 @@
             btnVoirTracabilite.Text = "Voir Historique";
             btnVoirTracabilite.UseVisualStyleBackColor = true;
             btnVoirTracabilite.Click += btnVoirTracabilite_Click;
-            // 
-            // btnDetailRecette
-            // 
-            btnDetailRecette.Location = new Point(138, 296);
-            btnDetailRecette.Name = "btnDetailRecette";
-            btnDetailRecette.Size = new Size(133, 36);
-            btnDetailRecette.TabIndex = 7;
-            btnDetailRecette.Text = "Détail Recette";
-            btnDetailRecette.UseVisualStyleBackColor = true;
-            btnDetailRecette.Click += btnDetailRecette_Click;
             // 
             // Form1
             // 

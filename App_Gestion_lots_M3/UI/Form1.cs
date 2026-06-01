@@ -104,6 +104,38 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
+        private void btnDetailRecette_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            if (dgvRecettes.SelectedRows.Count > 0)
+            {
+                string nomRecette = dgvRecettes.SelectedRows[0].Cells["colNomRecette"].Value.ToString();
+                FormDetailsRecette formDetailsRecette = new FormDetailsRecette(nomRecette);
+                formDetailsRecette.ShowDialog();
+            }
+            else
+            {
+                FormDetailsRecette formDetailsRecette = new FormDetailsRecette(null);
+                formDetailsRecette.ShowDialog();
+            }
+
+            ChargerRecettes();
+            this.Show();
+        }
+
+        private void dgvRecettes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            string nomRecette = dgvRecettes.Rows[e.RowIndex].Cells["colNomRecette"].Value.ToString();
+            this.Hide();
+            FormDetailsRecette formDetailsRecette = new FormDetailsRecette(nomRecette);
+            formDetailsRecette.ShowDialog();
+            ChargerRecettes();
+            this.Show();
+        }
+
         // ================================================
         // NAVIGATION TRAÇABILITÉ
         // ================================================
@@ -137,10 +169,5 @@ namespace App_Gestion_lots_M3
         private void Lots_Click(object sender, EventArgs e) { }
         private void Historique_Click(object sender, EventArgs e) { }
         private void Recette_Click(object sender, EventArgs e) { }
-
-        private void btnDetailRecette_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
