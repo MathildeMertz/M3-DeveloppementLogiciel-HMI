@@ -12,6 +12,7 @@ namespace App_Gestion_lots_M3
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App_Gestion_lots_M3.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,13 +10,28 @@ using System.Windows.Forms;
 namespace App_Gestion_lots_M3.UI
 {
     public partial class FormDetailsLot : Form
+  
+
     {
-        public FormDetailsLot()
+        private List<Lot> listeLots;
+        private int indexCourant;
+
+        public FormDetailsLot(string nomLot = null)
         {
             InitializeComponent();
+            listeLots = AccesDonnees.DAL.GetLots();
+            RemplirComboBox();
+
+            if (listeLots.Count == 0) return;
+
+            if (nomLot != null)
+                indexCourant = listeLots.FindIndex(l => l.LOT_Nom == nomLot);
+
+            if (indexCourant < 0) indexCourant = 0;
+
+            AfficherLot(indexCourant);
         }
-<<<<<<< Updated upstream
-=======
+
 
         // ================================================
         // INITIALISATION DU COMBOBOX
@@ -67,7 +83,7 @@ namespace App_Gestion_lots_M3.UI
         {
             dataGridView1.Rows.Clear();
 
-            List<Evenement> evenements = DAL.GetEvenements(idLot);
+            List<Evenement> evenements = AccesDonnees.DAL.GetEvenements(idLot);
             foreach (Evenement evt in evenements)
             {
                 dataGridView1.Rows.Add(
@@ -122,7 +138,7 @@ namespace App_Gestion_lots_M3.UI
             formGestionLot.ShowDialog();
 
             // Recharger les lots après modification
-            listeLots = DAL.GetLots();
+            listeLots = AccesDonnees.DAL.GetLots();
             AfficherLot(cboSelectLot.SelectedIndex);
             this.Show();
         }
@@ -144,6 +160,6 @@ namespace App_Gestion_lots_M3.UI
         private void label11_Click(object sender, EventArgs e) { }
         private void lblDateFin_Click(object sender, EventArgs e) { }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
->>>>>>> Stashed changes
+
     }
 }

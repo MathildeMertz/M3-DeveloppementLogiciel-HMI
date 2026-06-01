@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 
 namespace App_Gestion_lots_M3.Model
 {
-    internal class FileName
+    public class FileName
     {
         static private MySqlConnection _connection;
 
