@@ -91,6 +91,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
         // ================================================
         // OPÉRATIONS PAR RECETTE
         // ================================================
+        /*
         public static List<Operation> GetOperations(int idRecette)
         {
             return new List<Operation>
@@ -100,6 +101,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 new Operation { Id_Operation = 3, OPE_Nom = "Position 3", OPE_PositionMoteur = 3, OPE_TempsAttente = 3, OPE_CycleVerin = 1, OPE_Quittance = false, OPE_SensMoteur = 0, CON_NoOperation = 3 },
             };
         }
+        */
         // ================================================
         // AJOUTER UN LOT
         // ================================================

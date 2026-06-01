@@ -2,13 +2,12 @@
 {
     public class Operation
     {
-        public int Id_Operation { get; set; }
-        public string OPE_Nom { get; set; }
-        public int OPE_PositionMoteur { get; set; }
-        public int OPE_TempsAttente { get; set; }
-        public int OPE_CycleVerin { get; set; }
-        public bool OPE_Quittance { get; set; }
-        public int OPE_SensMoteur { get; set; }
-        public int CON_NoOperation { get; set; }
+        public string nomOpe { get; set; }
+        public int posMoteurOpe { get; set; }
+        public int tempsAttenteOpe { get; set; }
+        public int cycleVerrinOpe { get; set; }
+        public bool quittanceOpe { get; set; }
+        public int sensMoteurOpe { get; set; }
+        public int noOpe { get; set; }
     }
 }
