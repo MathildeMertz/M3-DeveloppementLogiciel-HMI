@@ -18,3 +18,6 @@ obj/
 .DS_Store
 Thumbs.db
 /App_Gestion_lots_M3/UI/Form1.resx
+
+/App_Gestion_lots_M3/appSettings.json
+
