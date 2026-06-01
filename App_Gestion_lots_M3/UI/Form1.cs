@@ -64,5 +64,10 @@ namespace App_Gestion_lots_M3
         private void Lots_Click(object sender, EventArgs e) { }
         private void dgvLots_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void dgvRecettes_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+
+        private void btnStatistique_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

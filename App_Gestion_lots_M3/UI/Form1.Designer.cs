@@ -19,12 +19,8 @@
         {
             tabControl1 = new TabControl();
             Lots = new TabPage();
-
             btnModifierLot = new Button();
-
-            btnStatistique = new Button();
             btnDetailLot = new Button();
-
             btnNouveauLot = new Button();
             dgvLots = new DataGridView();
             colNomLot = new DataGridViewTextBoxColumn();
@@ -69,12 +65,8 @@
             // 
             // Lots
             // 
-
             Lots.Controls.Add(btnModifierLot);
-
-            Lots.Controls.Add(btnStatistique);
             Lots.Controls.Add(btnDetailLot);
-
             Lots.Controls.Add(btnNouveauLot);
             Lots.Controls.Add(dgvLots);
             Lots.Location = new Point(4, 24);
@@ -312,9 +304,6 @@
         private DataGridViewTextBoxColumn colTracEvenement;
         private ComboBox cboSelectLotTrace;
         private Label label1;
-
-
-        private Button btnStatistique;
         private Button btnDetailLot;
 
     }
