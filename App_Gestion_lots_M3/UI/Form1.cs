@@ -6,9 +6,9 @@ namespace App_Gestion_lots_M3
 {
     public partial class Form1 : Form
     {
-        // ================================================
-        // CONSTRUCTEUR
-        // ================================================
+        /// <summary>
+        /// Constructeur
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -17,9 +17,9 @@ namespace App_Gestion_lots_M3
             ChargerRecettes();
         }
 
-        // ================================================
-        // CHARGEMENT DES DONNÉES
-        // ================================================
+        /// <summary>
+        /// Chargement des données du Lot
+        /// </summary>
         private void ChargerLots()
         {
             dgvLots.Rows.Clear();
@@ -34,7 +34,9 @@ namespace App_Gestion_lots_M3
                 );
             }
         }
-
+        /// <summary>
+        /// Chargement des données de la Recette
+        /// </summary>
         private void ChargerRecettes()
         {
             dgvRecettes.Rows.Clear();
@@ -48,9 +50,11 @@ namespace App_Gestion_lots_M3
             }
         }
 
-        // ================================================
-        // NAVIGATION LOTS
-        // ================================================
+        /// <summary>
+        /// Bouton pour un nouveau lot
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnNouveauLot_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -59,7 +63,11 @@ namespace App_Gestion_lots_M3
             ChargerLots();
             this.Show();
         }
-
+        /// <summary>
+        /// Bouton Détail lot
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDetailLot_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -79,7 +87,11 @@ namespace App_Gestion_lots_M3
             ChargerLots();
             this.Show();
         }
-
+        /// <summary>
+        /// Double clique pour le lot
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgvLots_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -92,9 +104,11 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
-        // ================================================
-        // NAVIGATION RECETTES
-        // ================================================
+        /// <summary>
+        /// Bouton nouvelle recette
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnNouvelleRecette_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -103,7 +117,11 @@ namespace App_Gestion_lots_M3
             ChargerRecettes();
             this.Show();
         }
-
+        /// <summary>
+        /// Bouton détail de la recette
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDetailRecette_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -123,7 +141,11 @@ namespace App_Gestion_lots_M3
             ChargerRecettes();
             this.Show();
         }
-
+        /// <summary>
+        /// Double clique pour le tableau de la recette
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgvRecettes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -136,9 +158,11 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
-        // ================================================
-        // NAVIGATION TRAÇABILITÉ
-        // ================================================
+        /// <summary>
+        /// Boutuon pour voir l'historique
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnVoirTracabilite_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -147,9 +171,11 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
-        // ================================================
-        // NAVIGATION STATISTIQUES
-        // ================================================
+       /// <summary>
+       /// Bouton pour voir les statistique
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void btnVoirStatistiques_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -159,7 +185,7 @@ namespace App_Gestion_lots_M3
         }
 
         // ================================================
-        // ÉVÉNEMENTS NON UTILISÉS
+        // Autres
         // ================================================
         private void dgvLots_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void dgvRecettes_CellContentClick(object sender, DataGridViewCellEventArgs e) { }

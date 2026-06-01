@@ -177,7 +177,7 @@
             dgvRecettes.Size = new Size(933, 273);
             dgvRecettes.TabIndex = 4;
             dgvRecettes.CellContentClick += dgvRecettes_CellContentClick_1;
-            dgvLots.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLots_CellDoubleClick);
+            dgvRecettes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRecettes_CellDoubleClick);
             // 
             // colNomRecette
             // 
