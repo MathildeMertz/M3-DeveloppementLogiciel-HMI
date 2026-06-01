@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="App_Gestion_lots_M3.UI.Dialogs.NouvelleRecetteDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:conv="using:App_Gestion_lots_M3.Converters"
+    xmlns:model="using:App_Gestion_lots_M3.Model"
+    Title="Nouvelle Recette"
+    PrimaryButtonText="Enregistrer"
+    CloseButtonText="Annuler"
+    DefaultButton="Primary"
+    PrimaryButtonClick="OnPrimaryButtonClick"
+    mc:Ignorable="d" Style="{StaticResource DefaultContentDialogStyle}">
+
+    <ContentDialog.Resources>
+        <conv:BoolToYesNoConverter x:Key="BoolToYesNo" />
+    </ContentDialog.Resources>
+
+    <Grid RowSpacing="12" MinWidth="560">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="320" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <InfoBar
+            x:Name="ValidationInfoBar"
+            Grid.Row="0"
+            IsClosable="False"
+            IsOpen="False"
+            Severity="Warning" />
+
+        <Grid Grid.Row="1" RowSpacing="12" ColumnSpacing="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Nom de la Recette :" VerticalAlignment="Center" />
+            <TextBox
+                x:Name="txtNomRecette"
+                Grid.Row="0" Grid.Column="1"
+                PlaceholderText="FX560" />
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Date de création :" VerticalAlignment="Center" />
+            <TextBlock
+                x:Name="lblDateCreation"
+                Grid.Row="1" Grid.Column="1"
+                VerticalAlignment="Center"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+        </Grid>
+
+        <TextBlock
+            Grid.Row="2"
+            Text="Opérations"
+            Style="{StaticResource BodyStrongTextBlockStyle}" />
+
+        <!-- Lignes liées directement au type domaine Operation ;
+             bool→"Oui"/"Non" via le converter enregistré dans
+             ContentDialog.Resources. -->
+        <ListView
+            x:Name="grdOperations"
+            Grid.Row="3"
+            SelectionMode="Single">
+            <ListView.Header>
+                <controls:DataTable Margin="12,0,12,0" ColumnSpacing="16">
+                    <controls:DataColumn Content="Position"  DesiredWidth="160" />
+                    <controls:DataColumn Content="Temps (s)" DesiredWidth="160" />
+                    <controls:DataColumn Content="Quittance" DesiredWidth="*" />
+                </controls:DataTable>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:Operation">
+                    <controls:DataRow>
+                        <TextBlock Text="{x:Bind OPE_PositionMoteur}" VerticalAlignment="Center" />
+                        <TextBlock Text="{x:Bind OPE_TempsAttente}" VerticalAlignment="Center" />
+                        <TextBlock Text="{x:Bind OPE_Quittance, Converter={StaticResource BoolToYesNo}}" VerticalAlignment="Center" />
+                    </controls:DataRow>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="12">
+            <!-- Flyout-based add. ContentDialog enforces a single open dialog per
+                 XamlRoot, so opening a nested ContentDialog from inside this one
+                 crashes; Flyouts are lightweight popups and aren't subject to that
+                 constraint. -->
+            <Button
+                x:Name="btnAjouterOperation"
+                Content="+ Ajouter"
+                Style="{StaticResource AccentButtonStyle}">
+                <Button.Flyout>
+                    <Flyout Placement="Top">
+                        <Grid RowSpacing="12" ColumnSpacing="16" MinWidth="320">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="160" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0" Grid.Column="0"
+                                Text="Position (1-5)"
+                                VerticalAlignment="Center" />
+                            <NumberBox
+                                x:Name="fltPosition"
+                                Grid.Row="0" Grid.Column="1"
+                                Minimum="1"
+                                Maximum="5"
+                                Value="1"
+                                SpinButtonPlacementMode="Inline" />
+
+                            <TextBlock
+                                Grid.Row="1" Grid.Column="0"
+                                Text="Temps d'arrêt (s)"
+                                VerticalAlignment="Center" />
+                            <NumberBox
+                                x:Name="fltTemps"
+                                Grid.Row="1" Grid.Column="1"
+                                Minimum="0"
+                                Maximum="9999"
+                                Value="0"
+                                SpinButtonPlacementMode="Inline" />
+
+                            <TextBlock
+                                Grid.Row="2" Grid.Column="0"
+                                Text="Quittance manuelle"
+                                VerticalAlignment="Center" />
+                            <ComboBox
+                                x:Name="fltQuittance"
+                                Grid.Row="2" Grid.Column="1"
+                                SelectedIndex="1"
+                                HorizontalAlignment="Stretch">
+                                <x:String>Oui</x:String>
+                                <x:String>Non</x:String>
+                            </ComboBox>
+
+                            <StackPanel
+                                Grid.Row="3"
+                                Grid.ColumnSpan="2"
+                                Orientation="Horizontal"
+                                Spacing="12"
+                                HorizontalAlignment="Right">
+                                <Button Content="Annuler" Style="{StaticResource DefaultButtonStyle}" Click="fltCancel_Click" />
+                                <Button
+                                    Content="Ajouter"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Click="fltAdd_Click" />
+                            </StackPanel>
+                        </Grid>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+            <Button
+                x:Name="btnSupprimerOperation"
+                Content="− Supprimer"
+                Style="{StaticResource DefaultButtonStyle}"
+                Click="btnSupprimerOperation_Click" />
+        </StackPanel>
+    </Grid>
+</ContentDialog>

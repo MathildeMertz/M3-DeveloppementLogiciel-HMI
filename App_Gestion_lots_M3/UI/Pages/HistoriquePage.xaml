@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="App_Gestion_lots_M3.UI.Pages.HistoriquePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:local="using:App_Gestion_lots_M3.UI.Pages"
+    mc:Ignorable="d">
+
+    <Grid Padding="24" RowSpacing="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock Text="Traçabilité" Style="{StaticResource TitleTextBlockStyle}" />
+            <TextBlock
+                Text="Historique complet des événements pour le lot sélectionné"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+            <TextBlock Text="Sélectionner le Lot :" VerticalAlignment="Center" />
+            <ComboBox
+                x:Name="cboSelectLotTrace"
+                MinWidth="240"
+                PlaceholderText="Sélectionner un lot…"
+                SelectionChanged="cboSelectLotTrace_SelectionChanged" />
+        </StackPanel>
+
+        <Grid Grid.Row="2" ColumnSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Border
+                Grid.Column="0"
+                Padding="16"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Filtrer par date" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <TextBlock Text="Du :" VerticalAlignment="Center" Width="40" />
+                        <CalendarDatePicker
+                            x:Name="dtpDu"
+                            DateChanged="dtpDu_DateChanged" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <TextBlock Text="Au :" VerticalAlignment="Center" Width="40" />
+                        <CalendarDatePicker
+                            x:Name="dtpAu"
+                            DateChanged="dtpAu_DateChanged" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border
+                Grid.Column="1"
+                Padding="16"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Filtrer par événement" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <RadioButtons
+                        x:Name="rbFiltreEvenement"
+                        SelectedIndex="0"
+                        SelectionChanged="rbFiltreEvenement_SelectionChanged">
+                        <RadioButton x:Name="rbTous" Content="Tous" />
+                        <RadioButton x:Name="rbDebut" Content="Début" />
+                        <RadioButton x:Name="rbFin" Content="Fin" />
+                        <RadioButton x:Name="rbAlarmes" Content="Alarmes" />
+                    </RadioButtons>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <ListView
+            x:Name="grdEvenements"
+            Grid.Row="3"
+            SelectionMode="Single">
+            <ListView.Header>
+                <controls:DataTable Margin="12,0,12,0" ColumnSpacing="16">
+                    <controls:DataColumn Content="Date"      DesiredWidth="160" />
+                    <controls:DataColumn Content="Heure"     DesiredWidth="120" />
+                    <controls:DataColumn Content="Événement" DesiredWidth="*" />
+                </controls:DataTable>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:EvenementRow">
+                    <controls:DataRow>
+                        <TextBlock Text="{x:Bind Date}" VerticalAlignment="Center" />
+                        <TextBlock Text="{x:Bind Heure}" VerticalAlignment="Center" />
+                        <TextBlock Text="{x:Bind Evenement}" VerticalAlignment="Center" />
+                    </controls:DataRow>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="12">
+            <Button
+                x:Name="btnExporterPDF"
+                Content="Exporter PDF"
+                Style="{StaticResource DefaultButtonStyle}"
+                Click="btnExporterPDF_Click" />
+        </StackPanel>
+    </Grid>
+</Page>

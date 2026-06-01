@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="App_Gestion_lots_M3.UI.Dialogs.NouveauLotDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Nouveau Lot"
+    PrimaryButtonText="Enregistrer"
+    CloseButtonText="Annuler"
+    DefaultButton="Primary"
+    PrimaryButtonClick="OnPrimaryButtonClick"
+    mc:Ignorable="d" Style="{StaticResource DefaultContentDialogStyle}">
+
+    <Grid RowSpacing="12" MinWidth="445">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <InfoBar
+            x:Name="ValidationInfoBar"
+            Grid.Row="0"
+            IsClosable="False"
+            IsOpen="False"
+            Severity="Warning" />
+
+        <Grid Grid.Row="1" RowSpacing="12" ColumnSpacing="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Nom du Lot :" VerticalAlignment="Center" />
+            <TextBox
+                x:Name="txtNomLot"
+                Grid.Row="0" Grid.Column="1"
+                PlaceholderText="LOT006" />
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Quantité :" VerticalAlignment="Center" />
+            <NumberBox
+                x:Name="nudQuantite"
+                Grid.Row="1" Grid.Column="1"
+                Minimum="1"
+                Maximum="999999"
+                Value="1"
+                SmallChange="1"
+                SpinButtonPlacementMode="Inline" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Recette :" VerticalAlignment="Center" />
+            <ComboBox
+                x:Name="cboRecette"
+                Grid.Row="2" Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                PlaceholderText="Sélectionner une recette…" />
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="État :" VerticalAlignment="Center" />
+            <ComboBox
+                x:Name="cboEtat"
+                Grid.Row="3" Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                PlaceholderText="Sélectionner un état…" />
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Date de création :" VerticalAlignment="Center" />
+            <TextBlock
+                x:Name="lblDateCreation"
+                Grid.Row="4" Grid.Column="1"
+                VerticalAlignment="Center"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+        </Grid>
+    </Grid>
+</ContentDialog>

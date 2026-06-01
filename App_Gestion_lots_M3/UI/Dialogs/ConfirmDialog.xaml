@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="App_Gestion_lots_M3.UI.Dialogs.ConfirmDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    PrimaryButtonText="Oui"
+    CloseButtonText="Non"
+    DefaultButton="Close"
+    mc:Ignorable="d" Style="{StaticResource DefaultContentDialogStyle}">
+
+    <TextBlock
+        x:Name="MessageText"
+        MaxWidth="480"
+        TextWrapping="Wrap" />
+</ContentDialog>
