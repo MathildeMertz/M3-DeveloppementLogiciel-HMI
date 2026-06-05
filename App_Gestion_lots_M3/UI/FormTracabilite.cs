@@ -17,6 +17,11 @@ namespace App_Gestion_lots_M3.UI
         /// </summary>
         private List<Evenement> tousEvenements = new List<Evenement>();
 
+        /// <summary>
+        /// Nom du lot à présélectionner au chargement
+        /// </summary>
+        private string lotInitial = null;
+
         // ================================================
         // CONSTRUCTEUR
         // ================================================
@@ -24,7 +29,8 @@ namespace App_Gestion_lots_M3.UI
         /// <summary>
         /// Constructeur du formulaire de traçabilité
         /// </summary>
-        public FormTracabilite()
+        /// <param name="nomLot">Nom du lot à présélectionner, null pour le premier lot</param>
+        public FormTracabilite(string nomLot = null)
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
@@ -33,6 +39,9 @@ namespace App_Gestion_lots_M3.UI
             dgvEvenements.AllowUserToAddRows = false;
             dgvEvenements.RowHeadersVisible = false;
             dgvEvenements.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Stocker le lot initial pour le sélectionner au Load
+            lotInitial = nomLot;
         }
 
         // ================================================
@@ -53,11 +62,24 @@ namespace App_Gestion_lots_M3.UI
             // Sélectionne "Tous" par défaut
             rbTous.Checked = true;
 
-            // Case coché de base pour voir toute les dates
+            // Case cochée de base pour voir toutes les dates
             chkToutesLesDates.Checked = true;
 
             // Remplit le ComboBox avec les lots
             ChargerComboBoxLots();
+
+            // Présélectionner le lot si fourni
+            if (lotInitial != null)
+            {
+                for (int i = 0; i < cboSelectLot.Items.Count; i++)
+                {
+                    if (cboSelectLot.Items[i].ToString() == lotInitial)
+                    {
+                        cboSelectLot.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
         }
 
         // ================================================
@@ -121,8 +143,7 @@ namespace App_Gestion_lots_M3.UI
 
             foreach (Evenement evt in tousEvenements)
             {
-                // Filtre par date
-                // Filtre par date — ignoré si "Toutes les dates" est coché
+                // Filtre par date — ignoré si "Tout afficher" est coché
                 if (!chkToutesLesDates.Checked)
                 {
                     if (evt.EVE_DateHeure.Date < dtpDu.Value.Date) continue;
@@ -220,6 +241,19 @@ namespace App_Gestion_lots_M3.UI
             if (rbAlarmes.Checked) AppliquerFiltres();
         }
 
+        /// <summary>
+        /// Case à cocher pour ignorer le filtre de date
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chkToutesLesDates_CheckedChanged(object sender, EventArgs e)
+        {
+            // Désactive les DateTimePickers si toutes les dates sont affichées
+            dtpDu.Enabled = !chkToutesLesDates.Checked;
+            dtpAu.Enabled = !chkToutesLesDates.Checked;
+            AppliquerFiltres();
+        }
+
         // ================================================
         // ÉVÉNEMENTS BOUTONS
         // ================================================
@@ -254,23 +288,6 @@ namespace App_Gestion_lots_M3.UI
         private void dgvEvenements_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void label3_Click(object sender, EventArgs e) { }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Case à cocher pour ignorer le filtre de date
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chkToutesLesDates_CheckedChanged(object sender, EventArgs e)
-        {
-            // Désactive les DateTimePickers si toutes les dates sont sélectionnées
-            dtpDu.Enabled = !chkToutesLesDates.Checked;
-            dtpAu.Enabled = !chkToutesLesDates.Checked;
-            AppliquerFiltres();
-        }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) { }
     }
 }

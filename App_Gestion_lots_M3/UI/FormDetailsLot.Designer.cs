@@ -50,7 +50,7 @@
             label1.Text = "Recette :";
             // lblRecette
             lblRecette.AutoSize = true;
-            lblRecette.Location = new Point(158, 50);
+            lblRecette.Location = new Point(200, 50);
             lblRecette.Name = "lblRecette";
             lblRecette.TabIndex = 1;
             lblRecette.Text = "-";
@@ -62,7 +62,7 @@
             label3.Text = "Quantité demandée :";
             // lblQuantite
             lblQuantite.AutoSize = true;
-            lblQuantite.Location = new Point(158, 80);
+            lblQuantite.Location = new Point(200, 80);
             lblQuantite.Name = "lblQuantite";
             lblQuantite.TabIndex = 3;
             lblQuantite.Text = "-";
@@ -74,7 +74,7 @@
             label5.Text = "État actuel :";
             // lblEtat
             lblEtat.AutoSize = true;
-            lblEtat.Location = new Point(158, 110);
+            lblEtat.Location = new Point(200, 110);
             lblEtat.Name = "lblEtat";
             lblEtat.TabIndex = 5;
             lblEtat.Text = "-";
@@ -86,7 +86,7 @@
             label7.Text = "Date de création :";
             // lblDateCreation
             lblDateCreation.AutoSize = true;
-            lblDateCreation.Location = new Point(158, 140);
+            lblDateCreation.Location = new Point(200, 140);
             lblDateCreation.Name = "lblDateCreation";
             lblDateCreation.TabIndex = 7;
             lblDateCreation.Text = "-";
@@ -98,7 +98,7 @@
             label9.Text = "Date de début :";
             // lblDateDebut
             lblDateDebut.AutoSize = true;
-            lblDateDebut.Location = new Point(158, 170);
+            lblDateDebut.Location = new Point(200, 170);
             lblDateDebut.Name = "lblDateDebut";
             lblDateDebut.TabIndex = 9;
             lblDateDebut.Text = "-";
@@ -110,58 +110,40 @@
             label11.Text = "Date de fin prévue :";
             // lblDateFin
             lblDateFin.AutoSize = true;
-            lblDateFin.Location = new Point(158, 200);
+            lblDateFin.Location = new Point(200, 200);
             lblDateFin.Name = "lblDateFin";
             lblDateFin.TabIndex = 11;
             lblDateFin.Text = "-";
-            // btnPrecedent
-            btnPrecedent.Location = new Point(12, 13);
-            btnPrecedent.Name = "btnPrecedent";
-            btnPrecedent.Size = new Size(40, 25);
-            btnPrecedent.TabIndex = 16;
-            btnPrecedent.Text = "<";
-            btnPrecedent.UseVisualStyleBackColor = true;
-            btnPrecedent.Click += new System.EventHandler(this.btnPrecedent_Click);
-            // cboSelectLot
-            cboSelectLot.FormattingEnabled = true;
-            cboSelectLot.Location = new Point(58, 13);
-            cboSelectLot.Name = "cboSelectLot";
-            cboSelectLot.Size = new Size(180, 23);
-            cboSelectLot.TabIndex = 17;
-            cboSelectLot.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboSelectLot.SelectedIndexChanged += new System.EventHandler(this.cboSelectLot_SelectedIndexChanged);
-            // btnSuivant
-            btnSuivant.Location = new Point(244, 13);
-            btnSuivant.Name = "btnSuivant";
-            btnSuivant.Size = new Size(40, 25);
-            btnSuivant.TabIndex = 18;
-            btnSuivant.Text = ">";
-            btnSuivant.UseVisualStyleBackColor = true;
-            btnSuivant.Click += new System.EventHandler(this.btnSuivant_Click);
             // dataGridView1
+            dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { colDate, colHeure, colEvenement, colDetails });
             dataGridView1.Location = new Point(12, 230);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(776, 160);
             dataGridView1.TabIndex = 12;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.ReadOnly = true;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
             // colDate
             colDate.HeaderText = "Date";
             colDate.Name = "colDate";
+            colDate.ReadOnly = true;
             // colHeure
             colHeure.HeaderText = "Heure";
             colHeure.Name = "colHeure";
+            colHeure.ReadOnly = true;
             // colEvenement
             colEvenement.HeaderText = "Événement";
             colEvenement.Name = "colEvenement";
+            colEvenement.ReadOnly = true;
             // colDetails
             colDetails.HeaderText = "Détails";
             colDetails.Name = "colDetails";
+            colDetails.ReadOnly = true;
             // btnVoirTracabilite
             btnVoirTracabilite.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnVoirTracabilite.Location = new Point(12, 410);
@@ -189,6 +171,30 @@
             btnFermer.Text = "Fermer";
             btnFermer.UseVisualStyleBackColor = true;
             btnFermer.Click += new System.EventHandler(this.btnFermer_Click);
+            // btnPrecedent
+            btnPrecedent.Location = new Point(12, 13);
+            btnPrecedent.Name = "btnPrecedent";
+            btnPrecedent.Size = new Size(40, 25);
+            btnPrecedent.TabIndex = 16;
+            btnPrecedent.Text = "<";
+            btnPrecedent.UseVisualStyleBackColor = true;
+            btnPrecedent.Click += new System.EventHandler(this.btnPrecedent_Click);
+            // cboSelectLot
+            cboSelectLot.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboSelectLot.FormattingEnabled = true;
+            cboSelectLot.Location = new Point(58, 13);
+            cboSelectLot.Name = "cboSelectLot";
+            cboSelectLot.Size = new Size(180, 23);
+            cboSelectLot.TabIndex = 17;
+            cboSelectLot.SelectedIndexChanged += new System.EventHandler(this.cboSelectLot_SelectedIndexChanged);
+            // btnSuivant
+            btnSuivant.Location = new Point(244, 13);
+            btnSuivant.Name = "btnSuivant";
+            btnSuivant.Size = new Size(40, 25);
+            btnSuivant.TabIndex = 18;
+            btnSuivant.Text = ">";
+            btnSuivant.UseVisualStyleBackColor = true;
+            btnSuivant.Click += new System.EventHandler(this.btnSuivant_Click);
             // FormDetailsLot
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;

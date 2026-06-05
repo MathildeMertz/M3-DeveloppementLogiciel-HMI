@@ -57,6 +57,7 @@
             label1.Size = new Size(53, 15);
             label1.TabIndex = 0;
             label1.Text = "Période :";
+            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -76,6 +77,7 @@
             label3.Size = new Size(28, 15);
             label3.TabIndex = 2;
             label3.Text = "Au :";
+            label3.Click += label3_Click;
             // 
             // cboPeriode
             // 
@@ -84,6 +86,7 @@
             cboPeriode.Name = "cboPeriode";
             cboPeriode.Size = new Size(132, 23);
             cboPeriode.TabIndex = 3;
+            cboPeriode.SelectedIndexChanged += cboPeriode_SelectedIndexChanged;
             // 
             // dtpDu
             // 
@@ -91,6 +94,7 @@
             dtpDu.Name = "dtpDu";
             dtpDu.Size = new Size(200, 23);
             dtpDu.TabIndex = 4;
+            dtpDu.ValueChanged += dtpDu_ValueChanged;
             // 
             // dtpAu
             // 
@@ -98,6 +102,7 @@
             dtpAu.Name = "dtpAu";
             dtpAu.Size = new Size(200, 23);
             dtpAu.TabIndex = 5;
+            dtpAu.ValueChanged += dtpAu_ValueChanged;
             // 
             // btnActualiser
             // 
@@ -107,6 +112,7 @@
             btnActualiser.TabIndex = 6;
             btnActualiser.Text = "Actualiser";
             btnActualiser.UseVisualStyleBackColor = true;
+            btnActualiser.Click += btnActualiser_Click;
             // 
             // label4
             // 
@@ -120,77 +126,86 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(278, 109);
+            label5.Location = new Point(282, 156);
             label5.Name = "label5";
             label5.Size = new Size(66, 15);
             label5.TabIndex = 8;
             label5.Text = "En attente :";
+            label5.Click += label5_Click;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(278, 143);
+            label6.Location = new Point(282, 190);
             label6.Name = "label6";
             label6.Size = new Size(88, 15);
             label6.TabIndex = 9;
             label6.Text = "En production :";
+            label6.Click += label6_Click;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(278, 179);
+            label7.Location = new Point(282, 226);
             label7.Name = "label7";
             label7.Size = new Size(60, 15);
             label7.TabIndex = 10;
             label7.Text = "Terminés :";
+            label7.Click += label7_Click;
             // 
             // lblEnAttente
             // 
             lblEnAttente.AutoSize = true;
-            lblEnAttente.Location = new Point(392, 109);
+            lblEnAttente.Location = new Point(396, 156);
             lblEnAttente.Name = "lblEnAttente";
             lblEnAttente.Size = new Size(13, 15);
             lblEnAttente.TabIndex = 11;
             lblEnAttente.Text = "0";
+            lblEnAttente.Click += lblEnAttente_Click;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(278, 214);
+            label9.Location = new Point(282, 261);
             label9.Name = "label9";
             label9.Size = new Size(60, 15);
             label9.TabIndex = 12;
             label9.Text = "En erreur :";
+            label9.Click += label9_Click;
             // 
             // lblEnProduction
             // 
             lblEnProduction.AutoSize = true;
-            lblEnProduction.Location = new Point(392, 143);
+            lblEnProduction.Location = new Point(396, 190);
             lblEnProduction.Name = "lblEnProduction";
             lblEnProduction.Size = new Size(13, 15);
             lblEnProduction.TabIndex = 13;
             lblEnProduction.Text = "0";
+            lblEnProduction.Click += lblEnProduction_Click;
             // 
             // lblEnErreur
             // 
             lblEnErreur.AutoSize = true;
-            lblEnErreur.Location = new Point(392, 214);
+            lblEnErreur.Location = new Point(396, 261);
             lblEnErreur.Name = "lblEnErreur";
             lblEnErreur.Size = new Size(13, 15);
             lblEnErreur.TabIndex = 14;
             lblEnErreur.Text = "0";
+            lblEnErreur.Click += lblEnErreur_Click;
             // 
             // lblTermines
             // 
             lblTermines.AutoSize = true;
-            lblTermines.Location = new Point(392, 179);
+            lblTermines.Location = new Point(396, 226);
             lblTermines.Name = "lblTermines";
             lblTermines.Size = new Size(13, 15);
             lblTermines.TabIndex = 15;
             lblTermines.Text = "0";
+            lblTermines.Click += lblTermines_Click;
             // 
             // btnFermer
             // 
+            btnFermer.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnFermer.Location = new Point(12, 374);
             btnFermer.Name = "btnFermer";
             btnFermer.Size = new Size(97, 36);
@@ -202,7 +217,7 @@
             // lblTotal
             // 
             lblTotal.AutoSize = true;
-            lblTotal.Location = new Point(90, 143);
+            lblTotal.Location = new Point(94, 190);
             lblTotal.Name = "lblTotal";
             lblTotal.Size = new Size(13, 15);
             lblTotal.TabIndex = 19;
@@ -212,11 +227,12 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(77, 158);
+            label10.Location = new Point(81, 205);
             label10.Name = "label10";
             label10.Size = new Size(32, 15);
             label10.TabIndex = 20;
             label10.Text = "Total";
+            label10.Click += label10_Click;
             // 
             // FormStatistiques
             // 
@@ -244,6 +260,7 @@
             Controls.Add(label1);
             Name = "FormStatistiques";
             Text = "Statistiques";
+            Load += FormStatistiques_Load;
             ResumeLayout(false);
             PerformLayout();
         }
