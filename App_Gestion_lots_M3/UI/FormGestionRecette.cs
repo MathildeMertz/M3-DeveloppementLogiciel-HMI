@@ -202,69 +202,121 @@ namespace App_Gestion_lots_M3.UI
         {
             Form dlg = new Form();
             dlg.Text = "Ajouter une Opération";
-            dlg.Size = new Size(340, 230);
+            dlg.Size = new Size(400, 320);
             dlg.StartPosition = FormStartPosition.CenterParent;
             dlg.FormBorderStyle = FormBorderStyle.FixedDialog;
             dlg.MaximizeBox = false;
             dlg.BackColor = Color.White;
 
-            // Position du moteur (Aucun = pas de déplacement)
+            // Nom du pas
+            Label lblNom = new Label();
+            lblNom.Text = "Nom du pas :";
+            lblNom.Location = new Point(15, 20);
+            lblNom.AutoSize = true;
+
+            TextBox txtNom = new TextBox();
+            txtNom.Location = new Point(180, 17);
+            txtNom.Size = new Size(170, 23);
+
+            // Position
             Label lblPos = new Label();
             lblPos.Text = "Position :";
-            lblPos.Location = new Point(15, 20);
+            lblPos.Location = new Point(15, 55);
             lblPos.AutoSize = true;
 
             ComboBox cboPosition = new ComboBox();
-            cboPosition.Location = new Point(160, 17);
-            cboPosition.Size = new Size(120, 25);
+            cboPosition.Location = new Point(180, 52);
+            cboPosition.Size = new Size(170, 23);
             cboPosition.DropDownStyle = ComboBoxStyle.DropDownList;
             cboPosition.Items.AddRange(new string[] { "Aucun", "3H", "6H", "9H", "12H" });
             cboPosition.SelectedIndex = 0;
 
-            // Temps d'arrêt en secondes
+            // Sens de rotation
+            Label lblSens = new Label();
+            lblSens.Text = "Sens de rotation :";
+            lblSens.Location = new Point(15, 90);
+            lblSens.AutoSize = true;
+
+            ComboBox cboSens = new ComboBox();
+            cboSens.Location = new Point(180, 87);
+            cboSens.Size = new Size(170, 23);
+            cboSens.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboSens.Items.AddRange(new string[] { "Horaire", "Anti-Horaire" });
+            cboSens.SelectedIndex = 0;
+
+            // Nombre de tours
+            Label lblNbTours = new Label();
+            lblNbTours.Text = "Nombre de tours :";
+            lblNbTours.Location = new Point(15, 125);
+            lblNbTours.AutoSize = true;
+
+            NumericUpDown nudNbTours = new NumericUpDown();
+            nudNbTours.Location = new Point(180, 122);
+            nudNbTours.Size = new Size(170, 23);
+            nudNbTours.Minimum = 0;
+            nudNbTours.Maximum = 999;
+
+            // Temps d'arrêt
             Label lblTemps = new Label();
             lblTemps.Text = "Temps d'arrêt (s) :";
-            lblTemps.Location = new Point(15, 60);
+            lblTemps.Location = new Point(15, 160);
             lblTemps.AutoSize = true;
 
             NumericUpDown nudTemps = new NumericUpDown();
-            nudTemps.Location = new Point(160, 57);
-            nudTemps.Size = new Size(120, 25);
+            nudTemps.Location = new Point(180, 157);
+            nudTemps.Size = new Size(170, 23);
             nudTemps.Minimum = 0;
             nudTemps.Maximum = 9999;
 
-            // Quittance manuelle requise ou non
+            // Cycle vérin
+            Label lblCycleVerin = new Label();
+            lblCycleVerin.Text = "Cycle vérin :";
+            lblCycleVerin.Location = new Point(15, 195);
+            lblCycleVerin.AutoSize = true;
+
+            ComboBox cboCycleVerin = new ComboBox();
+            cboCycleVerin.Location = new Point(180, 192);
+            cboCycleVerin.Size = new Size(170, 23);
+            cboCycleVerin.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboCycleVerin.Items.AddRange(new string[] { "Oui", "Non" });
+            cboCycleVerin.SelectedIndex = 1;
+
+            // Quittance
             Label lblQuittance = new Label();
             lblQuittance.Text = "Quittance manuelle :";
-            lblQuittance.Location = new Point(15, 100);
+            lblQuittance.Location = new Point(15, 230);
             lblQuittance.AutoSize = true;
 
             ComboBox cboQuittance = new ComboBox();
-            cboQuittance.Location = new Point(160, 97);
-            cboQuittance.Size = new Size(120, 25);
+            cboQuittance.Location = new Point(180, 227);
+            cboQuittance.Size = new Size(170, 23);
             cboQuittance.DropDownStyle = ComboBoxStyle.DropDownList;
             cboQuittance.Items.AddRange(new string[] { "Oui", "Non" });
             cboQuittance.SelectedIndex = 1;
 
-            // Boutons de confirmation
+            // Boutons
             Button btnOk = new Button();
             btnOk.Text = "Ajouter";
-            btnOk.Location = new Point(60, 150);
+            btnOk.Location = new Point(80, 265);
             btnOk.Size = new Size(90, 30);
             btnOk.DialogResult = DialogResult.OK;
 
             Button btnAnnuler = new Button();
             btnAnnuler.Text = "Annuler";
-            btnAnnuler.Location = new Point(165, 150);
+            btnAnnuler.Location = new Point(185, 265);
             btnAnnuler.Size = new Size(90, 30);
             btnAnnuler.DialogResult = DialogResult.Cancel;
 
             dlg.Controls.AddRange(new Control[]
             {
-                lblPos, cboPosition,
-                lblTemps, nudTemps,
-                lblQuittance, cboQuittance,
-                btnOk, btnAnnuler
+        lblNom, txtNom,
+        lblPos, cboPosition,
+        lblSens, cboSens,
+        lblNbTours, nudNbTours,
+        lblTemps, nudTemps,
+        lblCycleVerin, cboCycleVerin,
+        lblQuittance, cboQuittance,
+        btnOk, btnAnnuler
             });
 
             dlg.AcceptButton = btnOk;
@@ -274,8 +326,12 @@ namespace App_Gestion_lots_M3.UI
             {
                 // Ajoute la nouvelle opération dans la grille
                 dgvOperations.Rows.Add(
+                    txtNom.Text,
                     cboPosition.SelectedItem.ToString(),
+                    cboSens.SelectedItem.ToString(),
+                    (int)nudNbTours.Value,
                     (int)nudTemps.Value,
+                    cboCycleVerin.SelectedItem.ToString(),
                     cboQuittance.SelectedItem.ToString()
                 );
             }

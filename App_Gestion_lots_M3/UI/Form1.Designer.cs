@@ -39,8 +39,6 @@
             colTracDate = new DataGridViewTextBoxColumn();
             colTracHeure = new DataGridViewTextBoxColumn();
             colTracEvenement = new DataGridViewTextBoxColumn();
-            cboSelectLotTrace = new ComboBox();
-            label1 = new Label();
             btnVoirTracabilite = new Button();
             tabControl1.SuspendLayout();
             Lots.SuspendLayout();
@@ -199,8 +197,6 @@
             // 
             Historique.Controls.Add(btnVoirStatistiques);
             Historique.Controls.Add(dgvTracabilite);
-            Historique.Controls.Add(cboSelectLotTrace);
-            Historique.Controls.Add(label1);
             Historique.Controls.Add(btnVoirTracabilite);
             Historique.Location = new Point(4, 24);
             Historique.Name = "Historique";
@@ -227,9 +223,9 @@
             dgvTracabilite.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvTracabilite.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvTracabilite.Columns.AddRange(new DataGridViewColumn[] { colTracDate, colTracHeure, colTracEvenement });
-            dgvTracabilite.Location = new Point(8, 76);
+            dgvTracabilite.Location = new Point(8, 6);
             dgvTracabilite.Name = "dgvTracabilite";
-            dgvTracabilite.Size = new Size(936, 212);
+            dgvTracabilite.Size = new Size(936, 282);
             dgvTracabilite.TabIndex = 8;
             dgvTracabilite.CellContentClick += dgvTracabilite_CellContentClick;
             // 
@@ -247,24 +243,6 @@
             // 
             colTracEvenement.HeaderText = "Événement";
             colTracEvenement.Name = "colTracEvenement";
-            // 
-            // cboSelectLotTrace
-            // 
-            cboSelectLotTrace.FormattingEnabled = true;
-            cboSelectLotTrace.Location = new Point(8, 36);
-            cboSelectLotTrace.Name = "cboSelectLotTrace";
-            cboSelectLotTrace.Size = new Size(241, 23);
-            cboSelectLotTrace.TabIndex = 7;
-            cboSelectLotTrace.SelectedIndexChanged += cboSelectLotTrace_SelectedIndexChanged;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(8, 18);
-            label1.Name = "label1";
-            label1.Size = new Size(241, 15);
-            label1.TabIndex = 6;
-            label1.Text = "Sélectionner un lot pour voir son historique :";
             // 
             // btnVoirTracabilite
             // 
@@ -292,7 +270,6 @@
             Recette.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvRecettes).EndInit();
             Historique.ResumeLayout(false);
-            Historique.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTracabilite).EndInit();
             ResumeLayout(false);
         }
@@ -319,8 +296,6 @@
         private DataGridViewTextBoxColumn colTracDate;
         private DataGridViewTextBoxColumn colTracHeure;
         private DataGridViewTextBoxColumn colTracEvenement;
-        private ComboBox cboSelectLotTrace;
-        private Label label1;
         private Button btnDetailLot;
         private Button btnDetailRecette;
         private Button btnVoirStatistiques;

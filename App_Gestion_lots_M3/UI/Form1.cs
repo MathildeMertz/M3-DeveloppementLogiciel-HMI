@@ -21,10 +21,15 @@ namespace App_Gestion_lots_M3
 
             ChargerLots();
             ChargerRecettes();
+            ChargerDerniersEvenements();
         }
 
+        // ================================================
+        // CHARGEMENT DES DONNÉES
+        // ================================================
+
         /// <summary>
-        /// Chargement des données du Lot
+        /// Chargement des données des lots dans le tableau
         /// </summary>
         private void ChargerLots()
         {
@@ -40,8 +45,9 @@ namespace App_Gestion_lots_M3
                 );
             }
         }
+
         /// <summary>
-        /// Chargement des données de la Recette
+        /// Chargement des données des recettes dans le tableau
         /// </summary>
         private void ChargerRecettes()
         {
@@ -57,7 +63,45 @@ namespace App_Gestion_lots_M3
         }
 
         /// <summary>
-        /// Bouton pour un nouveau lot
+        /// Charge les 10 derniers événements de tous les lots dans l'onglet Traçabilité
+        /// </summary>
+        private void ChargerDerniersEvenements()
+        {
+            dgvTracabilite.Rows.Clear();
+
+            // Récupère tous les événements de tous les lots
+            List<Evenement> tousEvenements = new List<Evenement>();
+            List<Lot> lots = DAL.GetLots();
+            foreach (Lot lot in lots)
+            {
+                List<Evenement> evts = DAL.GetEvenements(lot.Id_Lot);
+                foreach (Evenement evt in evts)
+                    tousEvenements.Add(evt);
+            }
+
+            // Trier par date décroissante
+            tousEvenements.Sort((a, b) => b.EVE_DateHeure.CompareTo(a.EVE_DateHeure));
+
+            // Afficher les 10 derniers
+            int compteur = 0;
+            foreach (Evenement evt in tousEvenements)
+            {
+                if (compteur >= 10) break;
+                dgvTracabilite.Rows.Add(
+                    evt.EVE_DateHeure.ToString("dd/MM/yyyy"),
+                    evt.EVE_DateHeure.ToString("HH:mm:ss"),
+                    evt.EVE_Message
+                );
+                compteur++;
+            }
+        }
+
+        // ================================================
+        // NAVIGATION LOTS
+        // ================================================
+
+        /// <summary>
+        /// Bouton pour créer un nouveau lot
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -69,8 +113,9 @@ namespace App_Gestion_lots_M3
             ChargerLots();
             this.Show();
         }
+
         /// <summary>
-        /// Bouton Détail lot
+        /// Bouton pour voir le détail d'un lot
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -93,8 +138,9 @@ namespace App_Gestion_lots_M3
             ChargerLots();
             this.Show();
         }
+
         /// <summary>
-        /// Double clique pour le lot
+        /// Double clic sur un lot pour voir son détail
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -110,8 +156,12 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
+        // ================================================
+        // NAVIGATION RECETTES
+        // ================================================
+
         /// <summary>
-        /// Bouton nouvelle recette
+        /// Bouton pour créer une nouvelle recette
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -123,8 +173,9 @@ namespace App_Gestion_lots_M3
             ChargerRecettes();
             this.Show();
         }
+
         /// <summary>
-        /// Bouton détail de la recette
+        /// Bouton pour voir le détail d'une recette
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -147,8 +198,9 @@ namespace App_Gestion_lots_M3
             ChargerRecettes();
             this.Show();
         }
+
         /// <summary>
-        /// Double clique pour le tableau de la recette
+        /// Double clic sur une recette pour voir son détail
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -164,8 +216,12 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
+        // ================================================
+        // NAVIGATION TRAÇABILITÉ
+        // ================================================
+
         /// <summary>
-        /// Boutuon pour voir l'historique
+        /// Bouton pour voir l'historique complet dans FormTracabilite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -174,10 +230,12 @@ namespace App_Gestion_lots_M3
             this.Hide();
             FormTracabilite formTracabilite = new FormTracabilite();
             formTracabilite.ShowDialog();
+            ChargerDerniersEvenements();
             this.Show();
         }
+
         /// <summary>
-        /// Bouton voir statistique
+        /// Bouton pour voir les statistiques
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -190,15 +248,13 @@ namespace App_Gestion_lots_M3
         }
 
         // ================================================
-        // Autres
+        // ÉVÉNEMENTS NON UTILISÉS
         // ================================================
         private void dgvLots_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void dgvRecettes_CellContentClick_1(object sender, DataGridViewCellEventArgs e) { }
         private void dgvTracabilite_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
-        private void cboSelectLotTrace_SelectedIndexChanged(object sender, EventArgs e) { }
         private void Lots_Click(object sender, EventArgs e) { }
         private void Historique_Click(object sender, EventArgs e) { }
         private void Recette_Click(object sender, EventArgs e) { }
-
     }
 }

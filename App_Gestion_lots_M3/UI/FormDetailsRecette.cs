@@ -91,6 +91,10 @@ namespace App_Gestion_lots_M3.UI
         // ================================================
         // CHARGEMENT DES OPÉRATIONS
         // ================================================
+        /// <summary>
+        /// Charge les opérations de la recette dans le DataGridView
+        /// </summary>
+        /// <param name="idRecette">Identifiant de la recette</param>
         private void ChargerOperations(int idRecette)
         {
             dgvOperations.Rows.Clear();
@@ -99,14 +103,15 @@ namespace App_Gestion_lots_M3.UI
 
             foreach (Operation op in operations)
             {
+                // Ordre des colonnes : NomPas, Position, SensRotation, NbTours, TempsArret, CycleVerin, Quittance
                 dgvOperations.Rows.Add(
-                    op.OPE_Position,        // était OPE_PositionMoteur
+                    op.OPE_Nom,
+                    op.OPE_Position,
                     op.OPE_SensRotation,
                     op.OPE_NbTours,
-                    op.OPE_TempsArret,      // était OPE_TempsAttente
+                    op.OPE_TempsArret,
                     op.OPE_CycleVerin ? "Oui" : "Non",
-                    op.OPE_Quittance ? "Oui" : "Non",
-                    op.OPE_Nom
+                    op.OPE_Quittance ? "Oui" : "Non"
                 );
             }
         }
@@ -164,5 +169,10 @@ namespace App_Gestion_lots_M3.UI
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) { }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) { }
+
+        private void dgvOperations_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
