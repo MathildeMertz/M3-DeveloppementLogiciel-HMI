@@ -1,18 +1,21 @@
+using App_Gestion_lots_M3.UI;
+
 namespace App_Gestion_lots_M3
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
 
+            // Ouvre le login d'abord
+            FormLogin formLogin = new FormLogin();
+            if (formLogin.ShowDialog() == DialogResult.OK)
+            {
+                // Login réussi → ouvre Form1
+                Application.Run(new Form1());
+            }
         }
     }
 }
