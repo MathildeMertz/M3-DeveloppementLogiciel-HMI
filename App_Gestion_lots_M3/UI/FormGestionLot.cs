@@ -209,5 +209,30 @@ namespace App_Gestion_lots_M3.UI
         // ÉVÉNEMENTS NON UTILISÉS
         // ================================================
         private void txtNomLot_TextChanged(object sender, EventArgs e) { }
+
+
+        /// <summary>
+        /// Bouton pour créer une nouvelle recette sans perdre les données du lot
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnNouvelleRecette_Click(object sender, EventArgs e)
+        {
+            // Ouvre FormGestionRecette sans cacher le formulaire actuel
+            FormGestionRecette formGestionRecette = new FormGestionRecette(null);
+            formGestionRecette.ShowDialog();
+
+            // Recharge les recettes dans le ComboBox après fermeture
+            string recetteSelectionnee = cboRecette.SelectedItem?.ToString();
+            cboRecette.Items.Clear();
+            foreach (Recette recette in DAL.GetRecettes())
+            {
+                cboRecette.Items.Add(recette.REC_Nom);
+            }
+
+            // Resélectionner la dernière recette créée (la dernière de la liste)
+            if (cboRecette.Items.Count > 0)
+                cboRecette.SelectedIndex = cboRecette.Items.Count - 1;
+        }
     }
 }
