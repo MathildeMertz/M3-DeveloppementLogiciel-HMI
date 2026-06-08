@@ -19,12 +19,7 @@
         {
             tabControl1 = new TabControl();
             Lots = new TabPage();
-
-            btnModifierLot = new Button();
-
-            btnStatistique = new Button();
             btnDetailLot = new Button();
-
             btnNouveauLot = new Button();
             dgvLots = new DataGridView();
             colNomLot = new DataGridViewTextBoxColumn();
@@ -32,18 +27,18 @@
             colRecette = new DataGridViewTextBoxColumn();
             colEtat = new DataGridViewTextBoxColumn();
             Recette = new TabPage();
+            btnDetailRecette = new Button();
             btnNouvelleRecette = new Button();
             dgvRecettes = new DataGridView();
             colNomRecette = new DataGridViewTextBoxColumn();
             colDateCreation = new DataGridViewTextBoxColumn();
             colNbOperations = new DataGridViewTextBoxColumn();
             Historique = new TabPage();
+            btnVoirStatistiques = new Button();
             dgvTracabilite = new DataGridView();
             colTracDate = new DataGridViewTextBoxColumn();
             colTracHeure = new DataGridViewTextBoxColumn();
             colTracEvenement = new DataGridViewTextBoxColumn();
-            cboSelectLotTrace = new ComboBox();
-            label1 = new Label();
             btnVoirTracabilite = new Button();
             tabControl1.SuspendLayout();
             Lots.SuspendLayout();
@@ -69,12 +64,7 @@
             // 
             // Lots
             // 
-
-            Lots.Controls.Add(btnModifierLot);
-
-            Lots.Controls.Add(btnStatistique);
             Lots.Controls.Add(btnDetailLot);
-
             Lots.Controls.Add(btnNouveauLot);
             Lots.Controls.Add(dgvLots);
             Lots.Location = new Point(4, 24);
@@ -86,27 +76,16 @@
             Lots.UseVisualStyleBackColor = true;
             Lots.Click += Lots_Click;
             // 
-            // btnModifierLot
-            // 
-            btnModifierLot.Anchor = AnchorStyles.Bottom;
-            btnModifierLot.Location = new Point(160, 296);
-            btnModifierLot.Name = "btnModifierLot";
-            btnModifierLot.Size = new Size(149, 36);
-            btnModifierLot.TabIndex = 3;
-            btnModifierLot.Text = "Modifier Lots";
-            btnModifierLot.UseVisualStyleBackColor = true;
-            btnModifierLot.Click += btnModifierLot_Click;
-            // 
             // btnDetailLot
             // 
             btnDetailLot.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnDetailLot.Location = new Point(160, 296);
             btnDetailLot.Name = "btnDetailLot";
-            btnDetailLot.Size = new Size(149, 36);
-            btnDetailLot.TabIndex = 3;
-            btnDetailLot.Text = "Détails Lots";
+            btnDetailLot.Size = new Size(162, 36);
+            btnDetailLot.TabIndex = 4;
+            btnDetailLot.Text = "Detail Lot";
             btnDetailLot.UseVisualStyleBackColor = true;
-            btnDetailLot.Click += btnModifierLot_Click;
+            btnDetailLot.Click += btnDetailLot_Click;
             // 
             // btnNouveauLot
             // 
@@ -129,6 +108,7 @@
             dgvLots.Size = new Size(764, 282);
             dgvLots.TabIndex = 0;
             dgvLots.CellContentClick += dgvLots_CellContentClick;
+            dgvLots.CellDoubleClick += dgvLots_CellDoubleClick;
             // 
             // colNomLot
             // 
@@ -152,6 +132,7 @@
             // 
             // Recette
             // 
+            Recette.Controls.Add(btnDetailRecette);
             Recette.Controls.Add(btnNouvelleRecette);
             Recette.Controls.Add(dgvRecettes);
             Recette.Location = new Point(4, 24);
@@ -162,6 +143,17 @@
             Recette.Text = "Recettes";
             Recette.UseVisualStyleBackColor = true;
             Recette.Click += Recette_Click;
+            // 
+            // btnDetailRecette
+            // 
+            btnDetailRecette.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnDetailRecette.Location = new Point(138, 296);
+            btnDetailRecette.Name = "btnDetailRecette";
+            btnDetailRecette.Size = new Size(133, 36);
+            btnDetailRecette.TabIndex = 7;
+            btnDetailRecette.Text = "Détail Recette";
+            btnDetailRecette.UseVisualStyleBackColor = true;
+            btnDetailRecette.Click += btnDetailRecette_Click;
             // 
             // btnNouvelleRecette
             // 
@@ -183,6 +175,8 @@
             dgvRecettes.Name = "dgvRecettes";
             dgvRecettes.Size = new Size(933, 273);
             dgvRecettes.TabIndex = 4;
+            dgvRecettes.CellContentClick += dgvRecettes_CellContentClick_1;
+            dgvRecettes.CellDoubleClick += dgvRecettes_CellDoubleClick;
             // 
             // colNomRecette
             // 
@@ -201,9 +195,8 @@
             // 
             // Historique
             // 
+            Historique.Controls.Add(btnVoirStatistiques);
             Historique.Controls.Add(dgvTracabilite);
-            Historique.Controls.Add(cboSelectLotTrace);
-            Historique.Controls.Add(label1);
             Historique.Controls.Add(btnVoirTracabilite);
             Historique.Location = new Point(4, 24);
             Historique.Name = "Historique";
@@ -214,15 +207,27 @@
             Historique.UseVisualStyleBackColor = true;
             Historique.Click += Historique_Click;
             // 
+            // btnVoirStatistiques
+            // 
+            btnVoirStatistiques.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVoirStatistiques.Location = new Point(134, 296);
+            btnVoirStatistiques.Name = "btnVoirStatistiques";
+            btnVoirStatistiques.Size = new Size(142, 34);
+            btnVoirStatistiques.TabIndex = 10;
+            btnVoirStatistiques.Text = "Voir Statistique";
+            btnVoirStatistiques.UseVisualStyleBackColor = true;
+            btnVoirStatistiques.Click += btnVoirStatistiques_Click_1;
+            // 
             // dgvTracabilite
             // 
             dgvTracabilite.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvTracabilite.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvTracabilite.Columns.AddRange(new DataGridViewColumn[] { colTracDate, colTracHeure, colTracEvenement });
-            dgvTracabilite.Location = new Point(8, 76);
+            dgvTracabilite.Location = new Point(8, 6);
             dgvTracabilite.Name = "dgvTracabilite";
-            dgvTracabilite.Size = new Size(936, 212);
+            dgvTracabilite.Size = new Size(936, 282);
             dgvTracabilite.TabIndex = 8;
+            dgvTracabilite.CellContentClick += dgvTracabilite_CellContentClick;
             // 
             // colTracDate
             // 
@@ -238,23 +243,6 @@
             // 
             colTracEvenement.HeaderText = "Événement";
             colTracEvenement.Name = "colTracEvenement";
-            // 
-            // cboSelectLotTrace
-            // 
-            cboSelectLotTrace.FormattingEnabled = true;
-            cboSelectLotTrace.Location = new Point(8, 36);
-            cboSelectLotTrace.Name = "cboSelectLotTrace";
-            cboSelectLotTrace.Size = new Size(241, 23);
-            cboSelectLotTrace.TabIndex = 7;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(8, 18);
-            label1.Name = "label1";
-            label1.Size = new Size(241, 15);
-            label1.TabIndex = 6;
-            label1.Text = "Sélectionner un lot pour voir son historique :";
             // 
             // btnVoirTracabilite
             // 
@@ -282,7 +270,6 @@
             Recette.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvRecettes).EndInit();
             Historique.ResumeLayout(false);
-            Historique.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTracabilite).EndInit();
             ResumeLayout(false);
         }
@@ -294,7 +281,6 @@
         private TabPage Recette;
         private TabPage Historique;
         private DataGridView dgvLots;
-        private Button btnModifierLot;
         private Button btnNouveauLot;
         private DataGridViewTextBoxColumn colNomLot;
         private DataGridViewTextBoxColumn colQuantite;
@@ -310,12 +296,8 @@
         private DataGridViewTextBoxColumn colTracDate;
         private DataGridViewTextBoxColumn colTracHeure;
         private DataGridViewTextBoxColumn colTracEvenement;
-        private ComboBox cboSelectLotTrace;
-        private Label label1;
-
-
-        private Button btnStatistique;
         private Button btnDetailLot;
-
+        private Button btnDetailRecette;
+        private Button btnVoirStatistiques;
     }
 }

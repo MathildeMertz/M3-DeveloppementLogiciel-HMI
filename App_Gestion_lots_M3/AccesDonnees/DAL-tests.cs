@@ -7,8 +7,14 @@ namespace App_Gestion_lots_M3.AccesDonnees
         // ================================================
         // ÉTATS
         // ================================================
+
+        /// <summary>
+        /// Retourne la liste de tous les états possibles d'un lot
+        /// </summary>
+        /// <returns>Liste des états</returns>
         public static List<Etat> GetEtats()
         {
+            // Les états sont fixes, pas besoin de liste statique
             return new List<Etat>
             {
                 new Etat { Id_Etat = 1, ETA_Libelle = "En attente"    },
@@ -21,45 +27,150 @@ namespace App_Gestion_lots_M3.AccesDonnees
         // ================================================
         // RECETTES
         // ================================================
+
+        /// <summary>
+        /// Liste statique des recettes pour persister les données en session
+        /// </summary>
+        private static List<Recette> listeRecettes = null;
+
+        /// <summary>
+        /// Retourne la liste de toutes les recettes
+        /// </summary>
+        /// <returns>Liste des recettes</returns>
         public static List<Recette> GetRecettes()
         {
-            return new List<Recette>
+            if (listeRecettes == null)
             {
-                new Recette { Id_Recette = 1, REC_Nom = "AM203", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
-                new Recette { Id_Recette = 2, REC_Nom = "BM450", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
-                new Recette { Id_Recette = 3, REC_Nom = "CX120", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
-                new Recette { Id_Recette = 4, REC_Nom = "DX900", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
-                new Recette { Id_Recette = 5, REC_Nom = "EX310", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
-            };
+                // Données de démonstration — sera remplacé par SELECT MySQL
+                listeRecettes = new List<Recette>
+                {
+                    new Recette { Id_Recette = 1, REC_Nom = "AM203", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
+                    new Recette { Id_Recette = 2, REC_Nom = "BM450", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
+                    new Recette { Id_Recette = 3, REC_Nom = "CX120", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
+                    new Recette { Id_Recette = 4, REC_Nom = "DX900", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
+                    new Recette { Id_Recette = 5, REC_Nom = "EX310", REC_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0) },
+                };
+            }
+            return listeRecettes;
         }
 
-        // ================================================
-        // LOTS
-        // ================================================
-        // Ajoute cette variable statique en haut de la classe DAL
+        /// <summary>
+        /// Ajoute une nouvelle recette dans la liste
+        /// </summary>
+        /// <param name="nouvelleRecette">Recette à ajouter</param>
+        public static void AjouterRecette(Recette nouvelleRecette)
+        {
+            // TODO : remplacer par INSERT MySQL
+            nouvelleRecette.Id_Recette = GetRecettes().Count + 1;
+            GetRecettes().Add(nouvelleRecette);
+        }
+
+        /// <summary>
+        /// Modifie une recette existante dans la liste
+        /// </summary>
+        /// <param name="nomRecette">Nom de la recette à modifier</param>
+        /// <param name="recetteModifiee">Nouvelles données de la recette</param>
+        public static void ModifierRecette(string nomRecette, Recette recetteModifiee)
+        {
+            // TODO : remplacer par UPDATE MySQL
+            List<Recette> recettes = GetRecettes();
+            for (int i = 0; i < recettes.Count; i++)
+            {
+                if (recettes[i].REC_Nom == nomRecette)
+                {
+                    recettes[i] = recetteModifiee;
+                    break;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Liste statique des lots pour persister les données en session
+        /// </summary>
         private static List<Lot> listeLots = null;
 
+        /// <summary>
+        /// Retourne la liste de tous les lots
+        /// </summary>
+        /// <returns>Liste des lots</returns>
         public static List<Lot> GetLots()
         {
             if (listeLots == null)
             {
+                // Données de démonstration — sera remplacé par SELECT MySQL
                 listeLots = new List<Lot>
-        {
-            new Lot { Id_Lot = 1, LOT_Nom = "LOT001", LOT_Quantite = 1500, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 2, ETA_Libelle = "En production", Id_Recette = 1, REC_Nom = "AM203" },
-            new Lot { Id_Lot = 2, LOT_Nom = "LOT002", LOT_Quantite = 1000, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 4, ETA_Libelle = "Terminé",       Id_Recette = 2, REC_Nom = "BM450" },
-            new Lot { Id_Lot = 3, LOT_Nom = "LOT003", LOT_Quantite = 750,  LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 1, ETA_Libelle = "En attente",    Id_Recette = 3, REC_Nom = "CX120" },
-            new Lot { Id_Lot = 4, LOT_Nom = "LOT004", LOT_Quantite = 500,  LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 3, ETA_Libelle = "En erreur",     Id_Recette = 4, REC_Nom = "DX900" },
-            new Lot { Id_Lot = 5, LOT_Nom = "LOT005", LOT_Quantite = 2000, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 4, ETA_Libelle = "Terminé",       Id_Recette = 5, REC_Nom = "EX310" },
-        };
+                {
+                    new Lot { Id_Lot = 1, LOT_Nom = "LOT001", LOT_Quantite = 1500, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 2, ETA_Libelle = "En production", Id_Recette = 1, REC_Nom = "AM203" },
+                    new Lot { Id_Lot = 2, LOT_Nom = "LOT002", LOT_Quantite = 1000, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 4, ETA_Libelle = "Terminé",       Id_Recette = 2, REC_Nom = "BM450" },
+                    new Lot { Id_Lot = 3, LOT_Nom = "LOT003", LOT_Quantite = 750,  LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 1, ETA_Libelle = "En attente",    Id_Recette = 3, REC_Nom = "CX120" },
+                    new Lot { Id_Lot = 4, LOT_Nom = "LOT004", LOT_Quantite = 500,  LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 3, ETA_Libelle = "En erreur",     Id_Recette = 4, REC_Nom = "DX900" },
+                    new Lot { Id_Lot = 5, LOT_Nom = "LOT005", LOT_Quantite = 2000, LOT_DateHeureCreation = new DateTime(2026, 5, 4, 9, 0, 0), Id_Etat = 4, ETA_Libelle = "Terminé",       Id_Recette = 5, REC_Nom = "EX310" },
+                };
             }
             return listeLots;
+        }
+
+        /// <summary>
+        /// Ajoute un nouveau lot dans la liste
+        /// </summary>
+        /// <param name="nouveauLot">Lot à ajouter</param>
+        public static void AjouterLot(Lot nouveauLot)
+        {
+            // TODO : remplacer par INSERT MySQL
+            nouveauLot.Id_Lot = GetLots().Count + 1;
+            GetLots().Add(nouveauLot);
+        }
+
+        /// <summary>
+        /// Modifie un lot existant dans la liste
+        /// </summary>
+        /// <param name="nomLot">Nom du lot à modifier</param>
+        /// <param name="lotModifie">Nouvelles données du lot</param>
+        public static void ModifierLot(string nomLot, Lot lotModifie)
+        {
+            // TODO : remplacer par UPDATE MySQL
+            List<Lot> lots = GetLots();
+            for (int i = 0; i < lots.Count; i++)
+            {
+                if (lots[i].LOT_Nom == nomLot)
+                {
+                    lots[i] = lotModifie;
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Supprime un lot de la liste
+        /// </summary>
+        /// <param name="nomLot">Nom du lot à supprimer</param>
+        public static void SupprimerLot(string nomLot)
+        {
+            // TODO : remplacer par DELETE MySQL
+            List<Lot> lots = GetLots();
+            for (int i = 0; i < lots.Count; i++)
+            {
+                if (lots[i].LOT_Nom == nomLot)
+                {
+                    lots.Remove(lots[i]);
+                    break;
+                }
+            }
         }
 
         // ================================================
         // ÉVÉNEMENTS PAR LOT
         // ================================================
+
+        /// <summary>
+        /// Retourne la liste des événements pour un lot donné
+        /// </summary>
+        /// <param name="idLot">Identifiant du lot</param>
+        /// <returns>Liste des événements filtrés par lot</returns>
         public static List<Evenement> GetEvenements(int idLot)
         {
+            // Données de démonstration — sera remplacé par SELECT MySQL
             var tousEvenements = new List<Evenement>
             {
                 new Evenement { Id_Evenement = 1,  EVE_Message = "Début du lot LOT001",       EVE_DateHeure = new DateTime(2026, 5, 4, 9, 4, 6),  Id_Lot = 1 },
@@ -79,6 +190,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 new Evenement { Id_Evenement = 15, EVE_Message = "Fin du lot LOT005",         EVE_DateHeure = new DateTime(2026, 5, 4, 14, 0, 0), Id_Lot = 5 },
             };
 
+            // Filtrer les événements par lot
             List<Evenement> resultat = new List<Evenement>();
             foreach (Evenement evt in tousEvenements)
             {
@@ -88,60 +200,80 @@ namespace App_Gestion_lots_M3.AccesDonnees
             return resultat;
         }
 
-        // ================================================
-        // OPÉRATIONS PAR RECETTE
-        // ================================================
-        /*
+
+        /// <summary>
+        /// Dictionnaire statique des opérations par recette pour persister les données en session
+        /// </summary>
+        private static Dictionary<int, List<Operation>> listeOperations = null;
+
+        /// <summary>
+        /// Retourne la liste des opérations pour une recette donnée
+        /// </summary>
+        /// <param name="idRecette">Identifiant de la recette</param>
+        /// <returns>Liste des opérations de la recette</returns>
+
         public static List<Operation> GetOperations(int idRecette)
         {
-            return new List<Operation>
+            if (listeOperations == null)
             {
-                new Operation { Id_Operation = 1, OPE_Nom = "Position 1", OPE_PositionMoteur = 1, OPE_TempsAttente = 1, OPE_CycleVerin = 1, OPE_Quittance = true,  OPE_SensMoteur = 1, CON_NoOperation = 1 },
-                new Operation { Id_Operation = 2, OPE_Nom = "Position 2", OPE_PositionMoteur = 2, OPE_TempsAttente = 2, OPE_CycleVerin = 0, OPE_Quittance = false, OPE_SensMoteur = 1, CON_NoOperation = 2 },
-                new Operation { Id_Operation = 3, OPE_Nom = "Position 3", OPE_PositionMoteur = 3, OPE_TempsAttente = 3, OPE_CycleVerin = 1, OPE_Quittance = false, OPE_SensMoteur = 0, CON_NoOperation = 3 },
-            };
+                // Données de démonstration — sera remplacé par SELECT MySQL
+                listeOperations = new Dictionary<int, List<Operation>>
+                {
+                    {
+                        1, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 1, OPE_Nom = "Pas 1", OPE_Position = "3H",  OPE_SensRotation = "Horaire",       OPE_NbTours = 2, OPE_TempsArret = 5,  OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 2, OPE_Nom = "Pas 2", OPE_Position = "6H",  OPE_SensRotation = "Anti-Horaire",  OPE_NbTours = 1, OPE_TempsArret = 8,  OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 2 },
+                            new Operation { Id_Operation = 3, OPE_Nom = "Pas 3", OPE_Position = "12H", OPE_SensRotation = "Horaire",       OPE_NbTours = 3, OPE_TempsArret = 10, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 3 },
+                        }
+                    },
+                    {
+                        2, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 4, OPE_Nom = "Pas 1", OPE_Position = "3H", OPE_SensRotation = "Horaire",      OPE_NbTours = 1, OPE_TempsArret = 3, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 5, OPE_Nom = "Pas 2", OPE_Position = "9H", OPE_SensRotation = "Anti-Horaire", OPE_NbTours = 2, OPE_TempsArret = 6, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 2 },
+                        }
+                    },
+                    {
+                        3, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 6, OPE_Nom = "Pas 1", OPE_Position = "6H",  OPE_SensRotation = "Horaire",      OPE_NbTours = 1, OPE_TempsArret = 4, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 7, OPE_Nom = "Pas 2", OPE_Position = "12H", OPE_SensRotation = "Anti-Horaire", OPE_NbTours = 2, OPE_TempsArret = 7, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 2 },
+                            new Operation { Id_Operation = 8, OPE_Nom = "Pas 3", OPE_Position = "3H",  OPE_SensRotation = "Horaire",      OPE_NbTours = 1, OPE_TempsArret = 2, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 3 },
+                        }
+                    },
+                    {
+                        4, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 9,  OPE_Nom = "Pas 1", OPE_Position = "9H",  OPE_SensRotation = "Horaire",      OPE_NbTours = 3, OPE_TempsArret = 5, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 10, OPE_Nom = "Pas 2", OPE_Position = "12H", OPE_SensRotation = "Anti-Horaire", OPE_NbTours = 1, OPE_TempsArret = 3, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 2 },
+                        }
+                    },
+                    {
+                        5, new List<Operation>
+                        {
+                            new Operation { Id_Operation = 11, OPE_Nom = "Pas 1", OPE_Position = "3H", OPE_SensRotation = "Horaire",      OPE_NbTours = 2, OPE_TempsArret = 8, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 1 },
+                            new Operation { Id_Operation = 12, OPE_Nom = "Pas 2", OPE_Position = "6H", OPE_SensRotation = "Anti-Horaire", OPE_NbTours = 1, OPE_TempsArret = 5, OPE_CycleVerin = true,  OPE_Quittance = true,  CON_NoOperation = 2 },
+                            new Operation { Id_Operation = 13, OPE_Nom = "Pas 3", OPE_Position = "9H", OPE_SensRotation = "Horaire",      OPE_NbTours = 3, OPE_TempsArret = 3, OPE_CycleVerin = false, OPE_Quittance = false, CON_NoOperation = 3 },
+                        }
+                    },
+                };
+            }
+
+            // Retourne les opérations de la recette ou liste vide si inexistante
+            if (listeOperations.ContainsKey(idRecette))
+                return listeOperations[idRecette];
+
+            return new List<Operation>();
         }
-        */
-        // ================================================
-        // AJOUTER UN LOT
-        // ================================================
+
         public static void AjouterLot(Lot nouveauLot)
         {
             // TODO : remplacer par INSERT MySQL
-            nouveauLot.Id_Lot = listeLots.Count + 1;
-            listeLots.Add(nouveauLot);
-        }
+            if (listeOperations == null)
+                GetOperations(0); // Initialise le dictionnaire
 
-        // ================================================
-        // MODIFIER UN LOT
-        // ================================================
-        public static void ModifierLot(string nomLot, Lot lotModifie)
-        {
-            // TODO : remplacer par UPDATE MySQL
-            for (int i = 0; i < listeLots.Count; i++)
-            {
-                if (listeLots[i].LOT_Nom == nomLot)
-                {
-                    listeLots[i] = lotModifie;
-                    break;
-                }
-            }
-        }
-
-        // ================================================
-        // SUPPRIMER UN LOT
-        // ================================================
-        public static void SupprimerLot(string nomLot)
-        {
-            // TODO : remplacer par DELETE MySQL
-            for (int i = 0; i < listeLots.Count; i++)
-            {
-                if (listeLots[i].LOT_Nom == nomLot)
-                {
-                    listeLots.Remove(listeLots[i]);
-                    break;
-                }
-            }
+            listeOperations[idRecette] = operations;
         }
     }
 }

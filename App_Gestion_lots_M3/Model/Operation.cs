@@ -2,6 +2,7 @@
 {
     public class Operation
     {
+
         public string nomOpe { get; set; }
         public int posMoteurOpe { get; set; }
         public int tempsAttenteOpe { get; set; }
@@ -9,5 +10,6 @@
         public bool quittanceOpe { get; set; }
         public int sensMoteurOpe { get; set; }
         public int noOpe { get; set; }
+
     }
 }

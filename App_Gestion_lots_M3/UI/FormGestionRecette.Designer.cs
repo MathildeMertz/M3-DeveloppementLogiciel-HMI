@@ -22,8 +22,12 @@
             txtNomRecette = new TextBox();
             txtDateCreation = new TextBox();
             dgvOperations = new DataGridView();
+            colNomPas = new DataGridViewTextBoxColumn();
             colPosition = new DataGridViewTextBoxColumn();
-            colTemps = new DataGridViewTextBoxColumn();
+            colSensRotation = new DataGridViewTextBoxColumn();
+            colNbTours = new DataGridViewTextBoxColumn();
+            colTempsArret = new DataGridViewTextBoxColumn();
+            colCycleVerin = new DataGridViewTextBoxColumn();
             colQuittance = new DataGridViewTextBoxColumn();
             btnAjouterOperation = new Button();
             btnSupprimerOperation = new Button();
@@ -48,59 +52,82 @@
             txtNomRecette.Name = "txtNomRecette";
             txtNomRecette.Size = new Size(200, 23);
             txtNomRecette.TabIndex = 2;
+            txtNomRecette.TextChanged += new System.EventHandler(this.txtNomRecette_TextChanged);
             // txtDateCreation
             txtDateCreation.Location = new Point(218, 72);
             txtDateCreation.Name = "txtDateCreation";
+            txtDateCreation.ReadOnly = true;
             txtDateCreation.Size = new Size(200, 23);
             txtDateCreation.TabIndex = 3;
-            txtDateCreation.ReadOnly = true;
+            txtDateCreation.TextChanged += new System.EventHandler(this.txtDateCreation_TextChanged);
             // dgvOperations
+            dgvOperations.AllowUserToAddRows = false;
             dgvOperations.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvOperations.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvOperations.Columns.AddRange(new DataGridViewColumn[] { colPosition, colTemps, colQuittance });
+            dgvOperations.Columns.AddRange(new DataGridViewColumn[] { colNomPas, colPosition, colSensRotation, colNbTours, colTempsArret, colCycleVerin, colQuittance });
             dgvOperations.Location = new Point(12, 116);
             dgvOperations.Name = "dgvOperations";
-            dgvOperations.Size = new Size(400, 150);
-            dgvOperations.TabIndex = 4;
-            dgvOperations.AllowUserToAddRows = false;
             dgvOperations.RowHeadersVisible = false;
+            dgvOperations.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvOperations.MultiSelect = false;
+            dgvOperations.ReadOnly = true;
+            dgvOperations.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvOperations.Size = new Size(760, 150);
+            dgvOperations.TabIndex = 4;
+            dgvOperations.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOperations_CellContentClick);
+            // colNomPas
+            colNomPas.HeaderText = "Nom Pas";
+            colNomPas.Name = "colNomPas";
             // colPosition
             colPosition.HeaderText = "Position";
             colPosition.Name = "colPosition";
-            // colTemps
-            colTemps.HeaderText = "Temps (s)";
-            colTemps.Name = "colTemps";
+            // colSensRotation
+            colSensRotation.HeaderText = "Sens Rotation";
+            colSensRotation.Name = "colSensRotation";
+            // colNbTours
+            colNbTours.HeaderText = "Nb Tours";
+            colNbTours.Name = "colNbTours";
+            // colTempsArret
+            colTempsArret.HeaderText = "Temps Arrêt (s)";
+            colTempsArret.Name = "colTempsArret";
+            // colCycleVerin
+            colCycleVerin.HeaderText = "Cycle Vérin";
+            colCycleVerin.Name = "colCycleVerin";
             // colQuittance
-            colQuittance.HeaderText = "Quittance Manuelle";
+            colQuittance.HeaderText = "Quittance";
             colQuittance.Name = "colQuittance";
             // btnAjouterOperation
+            btnAjouterOperation.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnAjouterOperation.Location = new Point(15, 284);
             btnAjouterOperation.Name = "btnAjouterOperation";
-            btnAjouterOperation.Size = new Size(129, 23);
+            btnAjouterOperation.Size = new Size(150, 30);
             btnAjouterOperation.TabIndex = 5;
             btnAjouterOperation.Text = "Ajouter Opération";
             btnAjouterOperation.UseVisualStyleBackColor = true;
             btnAjouterOperation.Click += new System.EventHandler(this.btnAjouterOperation_Click);
             // btnSupprimerOperation
-            btnSupprimerOperation.Location = new Point(240, 284);
+            btnSupprimerOperation.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnSupprimerOperation.Location = new Point(175, 284);
             btnSupprimerOperation.Name = "btnSupprimerOperation";
-            btnSupprimerOperation.Size = new Size(154, 23);
+            btnSupprimerOperation.Size = new Size(150, 30);
             btnSupprimerOperation.TabIndex = 6;
             btnSupprimerOperation.Text = "Supprimer Opération";
             btnSupprimerOperation.UseVisualStyleBackColor = true;
             btnSupprimerOperation.Click += new System.EventHandler(this.btnSupprimerOperation_Click);
             // btnEnregistrerRecette
-            btnEnregistrerRecette.Location = new Point(59, 313);
+            btnEnregistrerRecette.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnEnregistrerRecette.Location = new Point(15, 324);
             btnEnregistrerRecette.Name = "btnEnregistrerRecette";
-            btnEnregistrerRecette.Size = new Size(146, 40);
+            btnEnregistrerRecette.Size = new Size(180, 40);
             btnEnregistrerRecette.TabIndex = 7;
             btnEnregistrerRecette.Text = "Enregistrer Recette";
             btnEnregistrerRecette.UseVisualStyleBackColor = true;
             btnEnregistrerRecette.Click += new System.EventHandler(this.btnEnregistrerRecette_Click);
             // btnFermer
-            btnFermer.Location = new Point(211, 313);
+            btnFermer.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnFermer.Location = new Point(205, 324);
             btnFermer.Name = "btnFermer";
-            btnFermer.Size = new Size(149, 40);
+            btnFermer.Size = new Size(150, 40);
             btnFermer.TabIndex = 8;
             btnFermer.Text = "Fermer";
             btnFermer.UseVisualStyleBackColor = true;
@@ -134,8 +161,12 @@
         private TextBox txtNomRecette;
         private TextBox txtDateCreation;
         private DataGridView dgvOperations;
+        private DataGridViewTextBoxColumn colNomPas;
         private DataGridViewTextBoxColumn colPosition;
-        private DataGridViewTextBoxColumn colTemps;
+        private DataGridViewTextBoxColumn colSensRotation;
+        private DataGridViewTextBoxColumn colNbTours;
+        private DataGridViewTextBoxColumn colTempsArret;
+        private DataGridViewTextBoxColumn colCycleVerin;
         private DataGridViewTextBoxColumn colQuittance;
         private Button btnAjouterOperation;
         private Button btnSupprimerOperation;

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace App_Gestion_lots_M3.UI
 {
     public partial class FormDetailsLot : Form
-  
+
 
     {
         private List<Lot> listeLots;
@@ -118,11 +118,18 @@ namespace App_Gestion_lots_M3.UI
         // ================================================
         // ÉVÉNEMENTS BOUTONS
         // ================================================
+        /// <summary>
+        /// Bouton pour voir la traçabilité du lot affiché
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnVoirTracabilite_Click(object sender, EventArgs e)
         {
+            // Récupère le nom du lot actuellement affiché
+            string nomLot = listeLots[cboSelectLot.SelectedIndex].LOT_Nom;
+
             this.Hide();
-            FormTracabilite formTracabilite = new FormTracabilite();
-            formTracabilite.WindowState = FormWindowState.Maximized;
+            FormTracabilite formTracabilite = new FormTracabilite(nomLot);
             formTracabilite.ShowDialog();
             this.Show();
         }
@@ -161,5 +168,9 @@ namespace App_Gestion_lots_M3.UI
         private void lblDateFin_Click(object sender, EventArgs e) { }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
 
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
