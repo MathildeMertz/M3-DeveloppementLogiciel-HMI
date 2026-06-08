@@ -44,10 +44,10 @@ namespace App_Gestion_lots_M3.AccesDonnees
         }
 
         /// <summary>
-        /// 
+        /// Retourne la liste des événements pour un lot donné
         /// </summary>
-        /// <param name="idLot"></param>
-        /// <returns></returns>
+        /// <param name="idLot">Identifiant du lot</param>
+        /// <returns>Liste des événements</returns>
         public static List<Evenement> GetEvenements(int idLot)
         {
             MySqlConnection conn = DbManager.GetDBConnection();
@@ -66,13 +66,30 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 {
                     while (reader.Read())
                     {
-                        evenements.Add(new Evenement
-                        {
-                            idEve = reader.GetInt32("Id_Evenement"),
-                            dateHeureEve = reader.GetDateTime("EVE_DateHeure"),
-                            messageEve = reader.GetString("EVE_Message"),
-                            idLot = reader.GetInt32("Id_Lot")
-                        });
+                        Evenement eve = new Evenement();
+
+                        // Lecture de l'id
+                        eve.idEve = reader.GetInt32("Id_Evenement");
+
+                        // Lecture de la date — peut être null dans la BDD
+                        if (reader.IsDBNull(reader.GetOrdinal("EVE_DateHeure")))
+                            eve.dateHeureEve = DateTime.MinValue;
+                        else
+                            eve.dateHeureEve = reader.GetDateTime("EVE_DateHeure");
+
+                        // Lecture du message — peut être null dans la BDD
+                        if (reader.IsDBNull(reader.GetOrdinal("EVE_Message")))
+                            eve.messageEve = "";
+                        else
+                            eve.messageEve = reader.GetString("EVE_Message");
+
+                        // Lecture de l'id du lot — peut être null dans la BDD
+                        if (reader.IsDBNull(reader.GetOrdinal("Id_Lot")))
+                            eve.idLot = 0;
+                        else
+                            eve.idLot = reader.GetInt32("Id_Lot");
+
+                        evenements.Add(eve);
                     }
                 }
             }
@@ -313,36 +330,22 @@ namespace App_Gestion_lots_M3.AccesDonnees
         /// <param name="transaction"></param>
         public static void InsererOperations(int idRecette, List<Operation> operations, MySqlConnection conn, MySqlTransaction transaction)
         {
-            string sql = @"INSERT INTO Operation (CON_NoOperation, OPE_Nom, OPE_Position,
-                                                  OPE_SensRotation, OPE_NbTours, OPE_TempsArret,
-                                                  OPE_CycleVerin, OPE_Quittance, Id_Recette)
-                           VALUES (@noOpe, @nom, @position, @sens, @nbTours,
-                                   @tempsArret, @cycleVerin, @quittance, @idRecette)";
+            string sql = @"INSERT INTO Operation (OPE_Nom, OPE_PositionMoteur, OPE_SensMoteur, 
+                                          OPE_TempsAttente, OPE_CycleVerin, OPE_Quittance, Id_Recette)
+                   VALUES (@nom, @position, @sens, @tempsAttente, @cycleVerin, @quittance, @idRecette)";
 
             foreach (Operation op in operations)
             {
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn, transaction))
                 {
-                    cmd.Parameters.AddWithValue("@noOpe", op.noOpe);
                     cmd.Parameters.AddWithValue("@nom", op.nomOpe);
                     cmd.Parameters.AddWithValue("@position", op.posMoteurOpe);
                     cmd.Parameters.AddWithValue("@sens", op.sensMoteurOpe);
-                    cmd.Parameters.AddWithValue("@nbTours", op.nbreToursOpe);
-                    cmd.Parameters.AddWithValue("@tempsArret", op.tempsAttenteOpe);
+                    cmd.Parameters.AddWithValue("@tempsAttente", op.tempsAttenteOpe);
                     cmd.Parameters.AddWithValue("@cycleVerin", op.cycleVerrinOpe);
                     cmd.Parameters.AddWithValue("@quittance", op.quittanceOpe);
                     cmd.Parameters.AddWithValue("@idRecette", idRecette);
-
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception)
-                    {
-
-                        throw;
-                    }
-
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
