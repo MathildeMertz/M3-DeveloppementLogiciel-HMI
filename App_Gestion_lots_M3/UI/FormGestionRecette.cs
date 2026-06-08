@@ -114,7 +114,7 @@ namespace App_Gestion_lots_M3.UI
         private void ChargerOperations()
         {
             dgvOperations.Rows.Clear();
-            List<Operation> operations = DAL.GetOperations(recetteEnCours.Id_Recette);
+            List<Operation> operations = DataManager.GetOperations(recetteEnCours.Id_Recette);
             foreach (Operation op in operations)
             {
                 dgvOperations.Rows.Add(
@@ -122,7 +122,7 @@ namespace App_Gestion_lots_M3.UI
                     op.sensMoteurOpe,
                     op.noOpe,
                     op.tempsAttenteOpe,      // était OPE_TempsAttente
-                    op.cycleVerrinOpe ? "1" : "0",
+                    op.cycleVerrinOpe ? "Oui" : "Non",
                     op.quittanceOpe ? "Oui" : "Non",
                     op.nomOpe
                 );
@@ -182,7 +182,7 @@ namespace App_Gestion_lots_M3.UI
         /// <returns>True si le nom existe déjà, false sinon</returns>
         private bool NomRecetteExisteDeja(string nomRecette)
         {
-            List<Recette> recettes = DAL.GetRecettes();
+            List<Recette> recettes = DataManager.GetRecettes();
             foreach (Recette r in recettes)
             {
                 if (r.REC_Nom.ToLower() == nomRecette.ToLower())
@@ -434,13 +434,13 @@ namespace App_Gestion_lots_M3.UI
             {
                 Operation op = new Operation
                 {
-                    OPE_Nom = dgvOperations.Rows[i].Cells["colNomPas"].Value?.ToString() ?? "",
-                    OPE_Position = dgvOperations.Rows[i].Cells["colPosition"].Value?.ToString() ?? "",
-                    OPE_SensRotation = dgvOperations.Rows[i].Cells["colSensRotation"].Value?.ToString() ?? "",
-                    OPE_NbTours = Convert.ToInt32(dgvOperations.Rows[i].Cells["colNbTours"].Value ?? 0),
-                    OPE_TempsArret = Convert.ToInt32(dgvOperations.Rows[i].Cells["colTempsArret"].Value ?? 0),
-                    OPE_CycleVerin = dgvOperations.Rows[i].Cells["colCycleVerin"].Value?.ToString() == "Oui",
-                    OPE_Quittance = dgvOperations.Rows[i].Cells["colQuittance"].Value?.ToString() == "Oui",
+                    nomOpe = dgvOperations.Rows[i].Cells["colNomPas"].Value?.ToString() ?? "",
+                   posMoteurOpe = dgvOperations.Rows[i].Cells["colPosition"].Value?.ToString() ?? "",
+                    sensMoteurOpe = dgvOperations.Rows[i].Cells["colSensRotation"].Value?.ToString() ?? "",
+                    noOpe = Convert.ToInt32(dgvOperations.Rows[i].Cells["colNbTours"].Value ?? 0),
+                    tempsAttenteOpe = Convert.ToInt32(dgvOperations.Rows[i].Cells["colTempsArret"].Value ?? 0),
+                    cycleVerrinOpe = dgvOperations.Rows[i].Cells["colCycleVerin"].Value?.ToString() == "Oui",
+                    quittanceOpe = dgvOperations.Rows[i].Cells["colQuittance"].Value?.ToString() == "Oui",
                     CON_NoOperation = i + 1
                 };
                 operations.Add(op);
