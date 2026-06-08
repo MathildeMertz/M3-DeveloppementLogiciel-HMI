@@ -3,7 +3,7 @@
     public class Lot
 
     {
-        public int Id_Lot { get; set; }
+        public int idLot { get; set; }
         public string LOT_Nom { get; set; }
         public int LOT_Quantite { get; set; }
         public DateTime LOT_DateHeureCreation { get; set; }

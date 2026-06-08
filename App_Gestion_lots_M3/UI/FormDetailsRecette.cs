@@ -22,7 +22,7 @@ namespace App_Gestion_lots_M3.UI
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
             recetteInitiale = nomRecette;
-            listeRecettes = DAL.GetRecettes();
+            listeRecettes = DataManager.GetRecettes();
 
             // Désactiver l'événement pendant le chargement
             cboSelectRecette.SelectedIndexChanged -= cboSelectRecette_SelectedIndexChanged;
@@ -98,20 +98,20 @@ namespace App_Gestion_lots_M3.UI
         private void ChargerOperations(int idRecette)
         {
             dgvOperations.Rows.Clear();
-            List<Operation> operations = DAL.GetOperations(idRecette);
+            List<Operation> operations = DataManager.GetOperations(idRecette);
             lblNbOperation.Text = operations.Count.ToString();
 
             foreach (Operation op in operations)
             {
                 // Ordre des colonnes : NomPas, Position, SensRotation, NbTours, TempsArret, CycleVerin, Quittance
                 dgvOperations.Rows.Add(
-                    op.OPE_Nom,
-                    op.OPE_Position,
-                    op.OPE_SensRotation,
-                    op.OPE_NbTours,
-                    op.OPE_TempsArret,
-                    op.OPE_CycleVerin ? "Oui" : "Non",
-                    op.OPE_Quittance ? "Oui" : "Non"
+                    op.nomOpe,
+                    op.posMoteurOpe,
+                    op.sensMoteurOpe,
+                    op.nbreToursOpe,
+                    op.tempsAttenteOpe,
+                    op.cycleVerrinOpe,
+                    op.quittanceOpe ? "Oui" : "Non"
                 );
             }
         }
@@ -148,7 +148,7 @@ namespace App_Gestion_lots_M3.UI
             formGestionRecette.WindowState = FormWindowState.Maximized;
             formGestionRecette.ShowDialog();
 
-            listeRecettes = DAL.GetRecettes();
+            listeRecettes = DataManager.GetRecettes();
             AfficherRecette(cboSelectRecette.SelectedIndex);
             this.Show();
         }

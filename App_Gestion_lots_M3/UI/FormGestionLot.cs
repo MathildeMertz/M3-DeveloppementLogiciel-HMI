@@ -9,9 +9,6 @@ namespace App_Gestion_lots_M3.UI
 {
     public partial class FormGestionLot : Form
     {
-        // ================================================
-        // VARIABLES
-        // ================================================
         private Lot lotEnCours;
         private bool estNouveauLot;
 
@@ -42,7 +39,7 @@ namespace App_Gestion_lots_M3.UI
         private void RemplirComboBoxRecette()
         {
             cboRecette.Items.Clear();
-            List<Recette> recettes = DAL.GetRecettes();
+            List<Recette> recettes = DataManager.GetRecettes();
             foreach (Recette recette in recettes)
             {
                 cboRecette.Items.Add(recette.REC_Nom);
@@ -54,10 +51,10 @@ namespace App_Gestion_lots_M3.UI
         private void RemplirComboBoxEtat()
         {
             cboEtat.Items.Clear();
-            List<Etat> etats = DAL.GetEtats();
+            List<Etat> etats = DataManager.GetEtats();
             foreach (Etat etat in etats)
             {
-                cboEtat.Items.Add(etat.ETA_Libelle);
+                cboEtat.Items.Add(etat.libEtat);
             }
             if (cboEtat.Items.Count > 0)
                 cboEtat.SelectedIndex = 0;
@@ -129,7 +126,7 @@ namespace App_Gestion_lots_M3.UI
 
         private bool NomLotExisteDeja(string nomLot)
         {
-            List<Lot> lots = DAL.GetLots();
+            List<Lot> lots = DataManager.GetLots();
             foreach (Lot lot in lots)
             {
                 if (lot.LOT_Nom.ToLower() == nomLot.ToLower())
@@ -153,13 +150,13 @@ namespace App_Gestion_lots_M3.UI
                 return;
             }
 
-            DAL.AjouterLot(new Lot
+            DataManager.AjouterLot(new Lot
             {
                 LOT_Nom = txtNomLot.Text,
                 LOT_Quantite = int.Parse(txtQuantite.Text),
-                LOT_DateHeureCreation = DateTime.Now,
-                REC_Nom = cboRecette.SelectedItem.ToString(),
-                ETA_Libelle = cboEtat.SelectedItem.ToString()
+                ETA_Libelle = cboEtat.SelectedItem.ToString(),
+                REC_Nom = cboRecette.SelectedItem.ToString()
+                
             });
 
             MessageBox.Show("Lot enregistré avec succès !",
@@ -171,7 +168,7 @@ namespace App_Gestion_lots_M3.UI
         {
             if (!ValiderFormulaire()) return;
 
-            DAL.ModifierLot(lotEnCours.LOT_Nom, new Lot
+            DataManager.ModifierLot(lotEnCours.LOT_Nom, new Lot
             {
                 LOT_Nom = txtNomLot.Text,
                 LOT_Quantite = int.Parse(txtQuantite.Text),
@@ -193,7 +190,7 @@ namespace App_Gestion_lots_M3.UI
 
             if (reponse == DialogResult.Yes)
             {
-                DAL.SupprimerLot(lotEnCours.LOT_Nom);
+                DataManager.SupprimerLot(lotEnCours.LOT_Nom);
                 MessageBox.Show("Lot supprimé avec succès.",
                     "Suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
@@ -225,7 +222,7 @@ namespace App_Gestion_lots_M3.UI
             // Recharge les recettes dans le ComboBox après fermeture
             string recetteSelectionnee = cboRecette.SelectedItem?.ToString();
             cboRecette.Items.Clear();
-            foreach (Recette recette in DAL.GetRecettes())
+            foreach (Recette recette in DataManager.GetRecettes())
             {
                 cboRecette.Items.Add(recette.REC_Nom);
             }

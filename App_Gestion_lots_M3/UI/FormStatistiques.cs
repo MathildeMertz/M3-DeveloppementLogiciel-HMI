@@ -54,7 +54,7 @@ namespace App_Gestion_lots_M3.UI
         /// </summary>
         private void CalculerStatistiques()
         {
-            List<Lot> lots = DAL.GetLots();
+            List<Lot> lots = DataManager.GetLots();
 
             int enAttente = 0;
             int enProduction = 0;
