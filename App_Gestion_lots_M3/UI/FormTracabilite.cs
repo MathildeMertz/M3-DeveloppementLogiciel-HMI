@@ -92,7 +92,7 @@ namespace App_Gestion_lots_M3.UI
         private void ChargerComboBoxLots()
         {
             cboSelectLot.Items.Clear();
-            List<Lot> lots = DAL.GetLots();
+            List<Lot> lots = DataManager.GetLots();
             foreach (Lot lot in lots)
             {
                 cboSelectLot.Items.Add(lot.LOT_Nom);
@@ -114,7 +114,7 @@ namespace App_Gestion_lots_M3.UI
             string nomLot = cboSelectLot.SelectedItem.ToString();
 
             // Trouver le lot correspondant
-            List<Lot> lots = DAL.GetLots();
+            List<Lot> lots = DataManager.GetLots();
             Lot lotTrouve = null;
             foreach (Lot lot in lots)
             {
@@ -128,7 +128,7 @@ namespace App_Gestion_lots_M3.UI
             if (lotTrouve == null) return;
 
             // Charger tous les événements du lot
-            tousEvenements = DAL.GetEvenements(lotTrouve.Id_Lot);
+            tousEvenements = DataManager.GetEvenements(lotTrouve.idLot);
 
             // Appliquer les filtres
             AppliquerFiltres();
@@ -146,23 +146,23 @@ namespace App_Gestion_lots_M3.UI
                 // Filtre par date — ignoré si "Tout afficher" est coché
                 if (!chkToutesLesDates.Checked)
                 {
-                    if (evt.EVE_DateHeure.Date < dtpDu.Value.Date) continue;
-                    if (evt.EVE_DateHeure.Date > dtpAu.Value.Date) continue;
+                    if (evt.dateHeureEve.Date < dtpDu.Value.Date) continue;
+                    if (evt.dateHeureEve.Date > dtpAu.Value.Date) continue;
                 }
 
                 // Filtre par type d'événement
-                if (rbDebut.Checked && !evt.EVE_Message.ToLower().Contains("début")) continue;
-                if (rbFin.Checked && !evt.EVE_Message.ToLower().Contains("fin")) continue;
+                if (rbDebut.Checked && !evt.messageEve.ToLower().Contains("début")) continue;
+                if (rbFin.Checked && !evt.messageEve.ToLower().Contains("fin")) continue;
                 if (rbAlarmes.Checked &&
-                    !evt.EVE_Message.ToLower().Contains("alarme") &&
-                    !evt.EVE_Message.ToLower().Contains("barrière") &&
-                    !evt.EVE_Message.ToLower().Contains("erreur")) continue;
+                    !evt.messageEve.ToLower().Contains("alarme") &&
+                    !evt.messageEve.ToLower().Contains("barrière") &&
+                    !evt.messageEve.ToLower().Contains("erreur")) continue;
 
                 // Ajouter la ligne
                 dgvEvenements.Rows.Add(
-                    evt.EVE_DateHeure.ToString("dd/MM/yyyy"),
-                    evt.EVE_DateHeure.ToString("HH:mm:ss"),
-                    evt.EVE_Message
+                    evt.dateHeureEve.ToString("dd/MM/yyyy"),
+                    evt.dateHeureEve.ToString("HH:mm:ss"),
+                    evt.messageEve
                 );
             }
         }

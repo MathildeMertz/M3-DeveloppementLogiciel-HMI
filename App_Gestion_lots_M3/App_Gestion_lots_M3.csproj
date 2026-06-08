@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AccesDonnees\DAL-tests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Gestion\" />
   </ItemGroup>
 

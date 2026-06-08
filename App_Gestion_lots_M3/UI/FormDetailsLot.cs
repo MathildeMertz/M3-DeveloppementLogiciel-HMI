@@ -19,7 +19,7 @@ namespace App_Gestion_lots_M3.UI
         public FormDetailsLot(string nomLot = null)
         {
             InitializeComponent();
-            listeLots = AccesDonnees.DAL.GetLots();
+            listeLots = AccesDonnees.DataManager.GetLots();
             RemplirComboBox();
 
             if (listeLots.Count == 0) return;
@@ -73,7 +73,7 @@ namespace App_Gestion_lots_M3.UI
             cboSelectLot.SelectedIndex = index;
             cboSelectLot.SelectedIndexChanged += cboSelectLot_SelectedIndexChanged;
 
-            ChargerEvenements(lot.Id_Lot);
+            ChargerEvenements(lot.idLot);
         }
 
         // ================================================
@@ -83,13 +83,13 @@ namespace App_Gestion_lots_M3.UI
         {
             dataGridView1.Rows.Clear();
 
-            List<Evenement> evenements = AccesDonnees.DAL.GetEvenements(idLot);
+            List<Evenement> evenements = AccesDonnees.DataManager.GetEvenements(idLot);
             foreach (Evenement evt in evenements)
             {
                 dataGridView1.Rows.Add(
-                    evt.EVE_DateHeure.ToString("dd/MM/yyyy"),
-                    evt.EVE_DateHeure.ToString("HH:mm:ss"),
-                    evt.EVE_Message,
+                    evt.dateHeureEve.ToString("dd/MM/yyyy"),
+                    evt.dateHeureEve.ToString("HH:mm:ss"),
+                    evt.messageEve,
                     ""
                 );
             }
@@ -145,7 +145,7 @@ namespace App_Gestion_lots_M3.UI
             formGestionLot.ShowDialog();
 
             // Recharger les lots après modification
-            listeLots = AccesDonnees.DAL.GetLots();
+            listeLots = AccesDonnees.DataManager.GetLots();
             AfficherLot(cboSelectLot.SelectedIndex);
             this.Show();
         }
