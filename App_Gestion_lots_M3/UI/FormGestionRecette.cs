@@ -118,13 +118,13 @@ namespace App_Gestion_lots_M3.UI
             foreach (Operation op in operations)
             {
                 dgvOperations.Rows.Add(
-                    op.OPE_Position,        // était OPE_PositionMoteur
-                    op.OPE_SensRotation,
-                    op.OPE_NbTours,
-                    op.OPE_TempsArret,      // était OPE_TempsAttente
-                    op.OPE_CycleVerin ? "Oui" : "Non",
-                    op.OPE_Quittance ? "Oui" : "Non",
-                    op.OPE_Nom
+                    op.posMoteurOpe,        // était OPE_PositionMoteur
+                    op.sensMoteurOpe,
+                    op.noOpe,
+                    op.tempsAttenteOpe,      // était OPE_TempsAttente
+                    op.cycleVerrinOpe ? "1" : "0",
+                    op.quittanceOpe ? "Oui" : "Non",
+                    op.nomOpe
                 );
             }
         }
