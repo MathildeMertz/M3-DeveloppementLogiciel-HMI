@@ -84,9 +84,6 @@ namespace App_Gestion_lots_M3.AccesDonnees
             }
         }
 
-        // ================================================
-        // LOTS
-        // ================================================
 
         /// <summary>
         /// Liste statique des lots pour persister les données en session
@@ -203,9 +200,6 @@ namespace App_Gestion_lots_M3.AccesDonnees
             return resultat;
         }
 
-        // ================================================
-        // OPÉRATIONS PAR RECETTE
-        // ================================================
 
         /// <summary>
         /// Dictionnaire statique des opérations par recette pour persister les données en session
@@ -217,6 +211,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
         /// </summary>
         /// <param name="idRecette">Identifiant de la recette</param>
         /// <returns>Liste des opérations de la recette</returns>
+
         public static List<Operation> GetOperations(int idRecette)
         {
             if (listeOperations == null)
@@ -272,12 +267,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
             return new List<Operation>();
         }
 
-        /// <summary>
-        /// Ajoute ou met à jour les opérations d'une recette
-        /// </summary>
-        /// <param name="idRecette">Identifiant de la recette</param>
-        /// <param name="operations">Liste des opérations à enregistrer</param>
-        public static void AjouterOperations(int idRecette, List<Operation> operations)
+        public static void AjouterLot(Lot nouveauLot)
         {
             // TODO : remplacer par INSERT MySQL
             if (listeOperations == null)
