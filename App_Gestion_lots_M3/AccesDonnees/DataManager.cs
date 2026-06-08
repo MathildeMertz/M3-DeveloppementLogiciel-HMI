@@ -9,12 +9,13 @@ namespace App_Gestion_lots_M3.AccesDonnees
     internal class DataManager
     {
         /// <summary>
-        /// 
+        /// Requete permettant d'ajouter un lot à la DB, en précisant son nom,
+        /// sa quantité d'éléments, son état et la recette associée
         /// </summary>
-        /// <param name="nomLot"></param>
-        /// <param name="quantiteElementsLot"></param>
-        /// <param name="idEtatLot"></param>
-        /// <param name="idRecette"></param>
+        /// <param name="nomLot"> nom du lot </param>
+        /// <param name="quantiteElementsLot"> quantité d'éléments dans le lot </param>
+        /// <param name="idEtatLot"> id de l'état du lot généré automatiquement </param>
+        /// <param name="idRecette"> id de la recette choisis par utilisateur </param>
         public static void AjouterLot(string nomLot, int quantiteElementsLot, int idEtatLot, int idRecette)
         {
             MySqlConnection conn = DbManager.GetDBConnection();
@@ -43,10 +44,11 @@ namespace App_Gestion_lots_M3.AccesDonnees
         }
 
         /// <summary>
-        /// 
+        /// Requete permettant d'ajouter une recette à la DB, 
+        /// en précisant son nom et la liste des opérations associées
         /// </summary>
-        /// <param name="nomRecette"></param>
-        /// <param name="operations"></param>
+        /// <param name="nomRecette"> nom de la recette </param>
+        /// <param name="operations"> liste des opérations souhaité </param>
         public static void AjouterRecette(string nomRecette, List<Operation> operations)
         {
             MySqlConnection conn = DbManager.GetDBConnection();

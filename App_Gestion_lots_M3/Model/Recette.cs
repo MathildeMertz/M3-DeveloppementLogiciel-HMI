@@ -42,7 +42,7 @@ namespace App_Gestion_lots_M3.Model
         }
 
         /// <summary>
-        /// 
+        /// Vérifie si l'oéparation existe déja dans la recette.
         /// </summary>
         /// <param name="idOperation"></param>
         /// <returns></returns>
