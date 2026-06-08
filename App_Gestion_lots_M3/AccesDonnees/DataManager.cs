@@ -12,7 +12,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
         /// Requete permettant d'ajouter un lot à la DB, en précisant son nom,
         /// sa quantité d'éléments, son état et la recette associée
         /// </summary>
-        /// <param name="nomLot"> nom du lot </param>
+        /// <param name="nomLot"> nom du lot </param> 
         /// <param name="quantiteElementsLot"> quantité d'éléments dans le lot </param>
         /// <param name="idEtatLot"> id de l'état du lot généré automatiquement </param>
         /// <param name="idRecette"> id de la recette choisis par utilisateur </param>
@@ -42,6 +42,142 @@ namespace App_Gestion_lots_M3.AccesDonnees
 
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idLot"></param>
+        /// <returns></returns>
+        public static List<Evenement> GetEvenements(int idLot)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            List<Evenement> evenements = new List<Evenement>();
+
+            string sql = @"SELECT Id_Evenement, EVE_DateHeure, EVE_Message, Id_Lot
+                   FROM Evenement
+                   WHERE Id_Lot = @idLot
+                   ORDER BY EVE_DateHeure DESC";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idLot", idLot);
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        evenements.Add(new Evenement
+                        {
+                            idEve = reader.GetInt32("Id_Evenement"),
+                            dateHeureEve = reader.GetDateTime("EVE_DateHeure"),
+                            messageEve = reader.GetString("EVE_Message"),
+                            idLot = reader.GetInt32("Id_Lot")
+                        });
+                    }
+                }
+            }
+
+            return evenements;
+        }
+
+
+        /// <summary>
+        /// Retourne la liste de tous les lots avec leur état et recette associés.
+        /// </summary>
+        /// <returns> la liste des lots </returns>
+        public static List<Lot> GetLots()
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            List<Lot> lots = new List<Lot>();
+
+            string sql = @"SELECT l.Id_Lot, l.LOT_Nom, l.LOT_Quantite, l.LOT_DateHeureCreation,
+                                  l.Id_Etat, e.ETA_Libelle, l.Id_Recette, r.REC_Nom
+                           FROM Lot l
+                           JOIN Etat e ON l.Id_Etat = e.Id_Etat
+                           JOIN Recette r ON l.Id_Recette = r.Id_Recette";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    lots.Add(new Lot
+                    {
+                        idLot = reader.GetInt32("Id_Lot"),
+                        LOT_Nom = reader.GetString("LOT_Nom"),
+                        LOT_Quantite = reader.GetInt32("LOT_Quantite"),
+                        LOT_DateHeureCreation = reader.GetDateTime("LOT_DateHeureCreation"),
+                        Id_Etat = reader.GetInt32("Id_Etat"),
+                        ETA_Libelle = reader.GetString("ETA_Libelle"),
+                        Id_Recette = reader.GetInt32("Id_Recette"),
+                        REC_Nom = reader.GetString("REC_Nom")
+                    });
+                }
+            }
+
+            return lots;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nomLot"></param>
+        /// <param name="quantite"></param>
+        /// <param name="idEtat"></param>
+        /// <param name="idRecette"></param>
+        public static void ModifierLot(string nomLot, int quantite, int idEtat, int idRecette)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+
+            string sql = @"UPDATE Lot 
+                   SET LOT_Quantite = @quantite, Id_Etat = @idEtat, Id_Recette = @idRecette
+                   WHERE LOT_Nom = @nom";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nom", nomLot);
+                cmd.Parameters.AddWithValue("@quantite", quantite);
+                cmd.Parameters.AddWithValue("@idEtat", idEtat);
+                cmd.Parameters.AddWithValue("@idRecette", idRecette);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine("Erreur lors de la modification du lot : " + ex.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nomLot"></param>
+        public static void SupprimerLot(string nomLot)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+
+            string sql = "DELETE FROM Lot WHERE LOT_Nom = @nom";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nom", nomLot);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine("Erreur lors de la suppression du lot : " + ex.Message);
+                }
+            }
+        }
+
+
+
 
         /// <summary>
         /// Requete permettant d'ajouter une recette à la DB, 
@@ -94,5 +230,213 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 throw;
             }
         }
+
+        /// <summary>
+        /// Supprime les opérations existantes d'une recette et les remplace par les nouvelles.
+        /// </summary>
+        /// <param name="idRecette"></param>
+        /// <param name="operations"></param>
+        public static void ModifierRecette(int idRecette, List<Operation> operations)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            MySqlTransaction transaction = conn.BeginTransaction();
+
+            try
+            {
+                string deleteOps = "DELETE FROM Operation WHERE Id_Recette = @idRecette";
+
+                using (MySqlCommand cmd = new MySqlCommand(deleteOps, conn, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@idRecette", idRecette);
+                    cmd.ExecuteNonQuery();
+                }
+
+                InsererOperations(idRecette, operations, conn, transaction);
+
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retourne la liste de toutes les recettes.
+        /// </summary>
+        /// <returns></returns>
+        public static List<Recette> GetRecettes()
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            List<Recette> recettes = new List<Recette>();
+
+            string sql = "SELECT Id_Recette, REC_Nom, REC_DateHeureCreation FROM Recette";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    recettes.Add(new Recette
+                    {
+                        Id_Recette = reader.GetInt32("Id_Recette"),
+                        REC_Nom = reader.GetString("REC_Nom"),
+                        REC_DateHeureCreation = reader.GetDateTime("REC_DateHeureCreation")
+                    });
+                }
+            }
+
+            return recettes;
+        }
+
+        public static int GetIdRecette(string nomRecette)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            string sql = "SELECT Id_Recette FROM Recette WHERE REC_Nom = @nom LIMIT 1";
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nom", nomRecette);
+                object result = cmd.ExecuteScalar();
+                if (result == null)
+                    throw new Exception("Recette introuvable : " + nomRecette);
+                return Convert.ToInt32(result);
+            }
+        }
+
+        /// <summary>
+        /// Insère une liste d'opérations dans la transaction en cours.
+        /// </summary>
+        /// <param name="idRecette"></param>
+        /// <param name="operations"></param>
+        /// <param name="conn"></param>
+        /// <param name="transaction"></param>
+        public static void InsererOperations(int idRecette, List<Operation> operations, MySqlConnection conn, MySqlTransaction transaction)
+        {
+            string sql = @"INSERT INTO Operation (CON_NoOperation, OPE_Nom, OPE_Position,
+                                                  OPE_SensRotation, OPE_NbTours, OPE_TempsArret,
+                                                  OPE_CycleVerin, OPE_Quittance, Id_Recette)
+                           VALUES (@noOpe, @nom, @position, @sens, @nbTours,
+                                   @tempsArret, @cycleVerin, @quittance, @idRecette)";
+
+            foreach (Operation op in operations)
+            {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@noOpe", op.noOpe);
+                    cmd.Parameters.AddWithValue("@nom", op.nomOpe);
+                    cmd.Parameters.AddWithValue("@position", op.posMoteurOpe);
+                    cmd.Parameters.AddWithValue("@sens", op.sensMoteurOpe);
+                    cmd.Parameters.AddWithValue("@nbTours", op.nbreToursOpe);
+                    cmd.Parameters.AddWithValue("@tempsArret", op.tempsAttenteOpe);
+                    cmd.Parameters.AddWithValue("@cycleVerin", op.cycleVerrinOpe);
+                    cmd.Parameters.AddWithValue("@quittance", op.quittanceOpe);
+                    cmd.Parameters.AddWithValue("@idRecette", idRecette);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Retourne la liste de tous les états disponibles.
+        /// </summary>
+        /// <returns></returns>
+        public static List<Etat> GetEtats()
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            List<Etat> etats = new List<Etat>();
+
+            string sql = "SELECT Id_Etat, ETA_Libelle FROM Etat";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    etats.Add(new Etat
+                    {
+                        idEtat = reader.GetInt32("Id_Etat"),
+                        libEtat = reader.GetString("ETA_Libelle")
+                    });
+                }
+            }
+
+            return etats;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="libelleEtat"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static int GetIdEtat(string libelleEtat)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            string sql = "SELECT Id_Etat FROM Etat WHERE ETA_Libelle = @libelle LIMIT 1";
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@libelle", libelleEtat);
+                object result = cmd.ExecuteScalar();
+                if (result == null)
+                    throw new Exception("État introuvable : " + libelleEtat);
+                return Convert.ToInt32(result);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idRecette"></param>
+        /// <returns></returns>
+        public static List<Operation> GetOperations(int idRecette)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            List<Operation> operations = new List<Operation>();
+
+            string sql = @"SELECT CON_NoOperation, OPE_Nom, OPE_Position,
+                          OPE_SensRotation, OPE_NbTours, OPE_TempsArret,
+                          OPE_CycleVerin, OPE_Quittance
+                   FROM Operation
+                   WHERE Id_Recette = @idRecette
+                   ORDER BY CON_NoOperation";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idRecette", idRecette);
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        operations.Add(new Operation
+                        {
+                            noOpe = reader.GetInt32("CON_NoOperation"),
+                            nomOpe = reader.GetString("OPE_Nom"),
+                            posMoteurOpe = reader.GetInt32("OPE_Position"),
+                            sensMoteurOpe = reader.GetInt32("OPE_SensRotation"),
+                            nbreToursOpe = reader.GetInt32("OPE_NbTours"),
+                            tempsAttenteOpe = reader.GetInt32("OPE_TempsArret"),
+                            cycleVerrinOpe = reader.GetInt32("OPE_CycleVerin"),
+                            quittanceOpe = reader.GetBoolean("OPE_Quittance")
+                        });
+                    }
+                }
+            }
+
+            return operations;
+        }
+
     }
 }

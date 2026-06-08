@@ -2,8 +2,8 @@
 {
     public class Etat
     {
-        public int Id_Etat { get; set; }
-        public string ETA_Libelle { get; set; }
+        public int idEtat { get; set; }
+        public string libEtat { get; set; }
     }
 
     

@@ -9,23 +9,18 @@ namespace App_Gestion_lots_M3.UI
 {
     public partial class FormGestionRecette : Form
     {
-        // ================================================
-        // VARIABLES
-        // ================================================
 
-        /// <summary>
-        /// Recette en cours de modification, null si nouvelle recette
-        /// </summary>
+        private static readonly string[] POSITION_MOTEUR = { "Aucun", "3H", "6H", "9H", "12H" };
+        private static readonly string[] SENS_ROTATION = { "Horaire", "Anti-Horaire" };
+        private static readonly string[] ETAT_CYCLE_VERRIN = { "Oui", "Non" };
+
+
+        // Recette en cours de modification, null si nouvelle recette
         private Recette recetteEnCours;
 
-        /// <summary>
-        /// Indique si on crée une nouvelle recette ou si on modifie une existante
-        /// </summary>
+        // Indique si on crée une nouvelle recette ou si on modifie une existante
         private bool estNouvelleRecette;
 
-        // ================================================
-        // CONSTRUCTEUR
-        // ================================================
 
         /// <summary>
         /// Constructeur du formulaire
@@ -39,9 +34,6 @@ namespace App_Gestion_lots_M3.UI
             estNouvelleRecette = (recette == null);
         }
 
-        // ================================================
-        // CHARGEMENT DU FORMULAIRE
-        // ================================================
 
         /// <summary>
         /// Événement déclenché au chargement du formulaire
@@ -52,9 +44,6 @@ namespace App_Gestion_lots_M3.UI
             ConfigurerFormulaire();
         }
 
-        // ================================================
-        // CONFIGURATION DE LA GRILLE
-        // ================================================
 
         /// <summary>
         /// Configure les propriétés du DataGridView des opérations
@@ -70,9 +59,7 @@ namespace App_Gestion_lots_M3.UI
             dgvOperations.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        // ================================================
-        // CONFIGURATION SELON NOUVEAU OU MODIFIER
-        // ================================================
+
 
         /// <summary>
         /// Configure le formulaire selon le mode (nouvelle recette ou modification)
@@ -104,41 +91,38 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // CHARGEMENT DES OPÉRATIONS EXISTANTES
-        // ================================================
-
         /// <summary>
-        /// Charge les opérations de la recette existante dans le DataGridView
+        /// 
         /// </summary>
         private void ChargerOperations()
         {
             dgvOperations.Rows.Clear();
-            List<Operation> operations = DAL.GetOperations(recetteEnCours.Id_Recette);
+            List<Operation> operations = DataManager.GetOperations(recetteEnCours.Id_Recette);
+
             foreach (Operation op in operations)
             {
+                string position = op.posMoteurOpe < POSITION_MOTEUR.Length ? POSITION_MOTEUR[op.posMoteurOpe] : op.posMoteurOpe.ToString();
+                string sens = op.sensMoteurOpe < SENS_ROTATION.Length ? SENS_ROTATION[op.sensMoteurOpe] : op.sensMoteurOpe.ToString();
+                string cycleVerin = op.cycleVerrinOpe == 1 ? "Oui" : "Non";
+
                 dgvOperations.Rows.Add(
-                    op.OPE_Position,        // était OPE_PositionMoteur
-                    op.OPE_SensRotation,
-                    op.OPE_NbTours,
-                    op.OPE_TempsArret,      // était OPE_TempsAttente
-                    op.OPE_CycleVerin ? "Oui" : "Non",
-                    op.OPE_Quittance ? "Oui" : "Non",
-                    op.OPE_Nom
+                    op.nomOpe,
+                    position,
+                    sens,
+                    op.nbreToursOpe,
+                    op.tempsAttenteOpe,
+                    cycleVerin,
+                    op.quittanceOpe ? "Oui" : "Non"
                 );
             }
         }
 
-        // ================================================
-        // VALIDATION
-        // ================================================
 
         /// <summary>
         /// Valide les données du formulaire avant enregistrement
         /// </summary>
         /// <returns>True si les données sont valides, false sinon</returns>
-        private bool ValiderFormulaire()
-        {
+        private bool ValiderFormulaire() {
             // Vérification du nom
             if (string.IsNullOrWhiteSpace(txtNomRecette.Text))
             {
@@ -182,7 +166,7 @@ namespace App_Gestion_lots_M3.UI
         /// <returns>True si le nom existe déjà, false sinon</returns>
         private bool NomRecetteExisteDeja(string nomRecette)
         {
-            List<Recette> recettes = DAL.GetRecettes();
+            List<Recette> recettes = DataManager.GetRecettes();
             foreach (Recette r in recettes)
             {
                 if (r.REC_Nom.ToLower() == nomRecette.ToLower())
@@ -384,66 +368,57 @@ namespace App_Gestion_lots_M3.UI
         {
             if (!ValiderFormulaire()) return;
 
-            if (estNouvelleRecette)
+            try
             {
-                // Création de la nouvelle recette
-                Recette nouvelleRecette = new Recette
-                {
-                    REC_Nom = txtNomRecette.Text,
-                    REC_DateHeureCreation = DateTime.Now
-                };
-                DAL.AjouterRecette(nouvelleRecette);
-
-                // Sauvegarde des opérations
                 List<Operation> operations = RecupererOperationsGrille();
-                DAL.AjouterOperations(nouvelleRecette.Id_Recette, operations);
 
-                MessageBox.Show("Recette enregistrée avec succès !",
-                    "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (estNouvelleRecette)
+                {
+                    DataManager.AjouterRecette(txtNomRecette.Text.Trim(), operations);
+                    MessageBox.Show("Recette enregistrée avec succès.",
+                        "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    DataManager.ModifierRecette(recetteEnCours.Id_Recette, operations);
+                    MessageBox.Show("Recette modifiée avec succès.",
+                        "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                this.Close();
             }
-            else
+            catch (Exception ex)
             {
-                // Modification de la recette existante
-                Recette recetteModifiee = new Recette
-                {
-                    REC_Nom = recetteEnCours.REC_Nom,
-                    REC_DateHeureCreation = recetteEnCours.REC_DateHeureCreation
-                };
-                DAL.ModifierRecette(recetteEnCours.REC_Nom, recetteModifiee);
-
-                // Mise à jour des opérations
-                List<Operation> operations = RecupererOperationsGrille();
-                DAL.AjouterOperations(recetteEnCours.Id_Recette, operations);
-
-                MessageBox.Show("Recette modifiée avec succès !",
-                    "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Erreur lors de l'enregistrement : " + ex.Message,
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            this.Close();
         }
 
         /// <summary>
-        /// Récupère les opérations depuis le DataGridView
+        /// 
         /// </summary>
-        /// <returns>Liste des opérations saisies</returns>
+        /// <returns></returns>
         private List<Operation> RecupererOperationsGrille()
         {
             List<Operation> operations = new List<Operation>();
 
             for (int i = 0; i < dgvOperations.Rows.Count; i++)
             {
-                Operation op = new Operation
+                string posStr = dgvOperations.Rows[i].Cells["colPosition"].Value?.ToString() ?? "";
+                string sensStr = dgvOperations.Rows[i].Cells["colSensRotation"].Value?.ToString() ?? "";
+                string cycleStr = dgvOperations.Rows[i].Cells["colCycleVerin"].Value?.ToString() ?? "Non";
+
+                operations.Add(new Operation
                 {
-                    OPE_Nom = dgvOperations.Rows[i].Cells["colNomPas"].Value?.ToString() ?? "",
-                    OPE_Position = dgvOperations.Rows[i].Cells["colPosition"].Value?.ToString() ?? "",
-                    OPE_SensRotation = dgvOperations.Rows[i].Cells["colSensRotation"].Value?.ToString() ?? "",
-                    OPE_NbTours = Convert.ToInt32(dgvOperations.Rows[i].Cells["colNbTours"].Value ?? 0),
-                    OPE_TempsArret = Convert.ToInt32(dgvOperations.Rows[i].Cells["colTempsArret"].Value ?? 0),
-                    OPE_CycleVerin = dgvOperations.Rows[i].Cells["colCycleVerin"].Value?.ToString() == "Oui",
-                    OPE_Quittance = dgvOperations.Rows[i].Cells["colQuittance"].Value?.ToString() == "Oui",
-                    CON_NoOperation = i + 1
-                };
-                operations.Add(op);
+                    noOpe = i + 1,
+                    nomOpe = dgvOperations.Rows[i].Cells["colNomPas"].Value?.ToString() ?? "",
+                    posMoteurOpe = Array.IndexOf(POSITION_MOTEUR, posStr),
+                    sensMoteurOpe = Array.IndexOf(SENS_ROTATION, sensStr),
+                    nbreToursOpe = Convert.ToInt32(dgvOperations.Rows[i].Cells["colNbTours"].Value ?? 0),
+                    tempsAttenteOpe = Convert.ToInt32(dgvOperations.Rows[i].Cells["colTempsArret"].Value ?? 0),
+                    cycleVerrinOpe = cycleStr == "Oui" ? 1 : 0,
+                    quittanceOpe = dgvOperations.Rows[i].Cells["colQuittance"].Value?.ToString() == "Oui"
+                });
             }
 
             return operations;

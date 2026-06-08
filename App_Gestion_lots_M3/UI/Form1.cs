@@ -34,7 +34,7 @@ namespace App_Gestion_lots_M3
         private void ChargerLots()
         {
             dgvLots.Rows.Clear();
-            List<Lot> lots = DAL.GetLots();
+            List<Lot> lots = DataManager.GetLots();
             foreach (Lot lot in lots)
             {
                 dgvLots.Rows.Add(
@@ -52,7 +52,7 @@ namespace App_Gestion_lots_M3
         private void ChargerRecettes()
         {
             dgvRecettes.Rows.Clear();
-            List<Recette> recettes = DAL.GetRecettes();
+            List<Recette> recettes = DataManager.GetRecettes();
             foreach (Recette recette in recettes)
             {
                 dgvRecettes.Rows.Add(
@@ -71,16 +71,16 @@ namespace App_Gestion_lots_M3
 
             // Récupère tous les événements de tous les lots
             List<Evenement> tousEvenements = new List<Evenement>();
-            List<Lot> lots = DAL.GetLots();
+            List<Lot> lots = DataManager.GetLots();
             foreach (Lot lot in lots)
             {
-                List<Evenement> evts = DAL.GetEvenements(lot.Id_Lot);
+                List<Evenement> evts = DataManager.GetEvenements(lot.idLot);
                 foreach (Evenement evt in evts)
                     tousEvenements.Add(evt);
             }
 
             // Trier par date décroissante
-            tousEvenements.Sort((a, b) => b.EVE_DateHeure.CompareTo(a.EVE_DateHeure));
+            tousEvenements.Sort((a, b) => b.dateHeureEve.CompareTo(a.dateHeureEve));
 
             // Afficher les 10 derniers
             int compteur = 0;
@@ -88,9 +88,9 @@ namespace App_Gestion_lots_M3
             {
                 if (compteur >= 10) break;
                 dgvTracabilite.Rows.Add(
-                    evt.EVE_DateHeure.ToString("dd/MM/yyyy"),
-                    evt.EVE_DateHeure.ToString("HH:mm:ss"),
-                    evt.EVE_Message
+                    evt.dateHeureEve.ToString("dd/MM/yyyy"),
+                    evt.dateHeureEve.ToString("HH:mm:ss"),
+                    evt.messageEve
                 );
                 compteur++;
             }

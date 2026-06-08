@@ -10,6 +10,7 @@
         public bool quittanceOpe { get; set; }
         public int sensMoteurOpe { get; set; }
         public int noOpe { get; set; }
+        public int nbreToursOpe { get; set; }
 
     }
 }
