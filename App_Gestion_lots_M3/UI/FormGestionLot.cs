@@ -12,9 +12,11 @@ namespace App_Gestion_lots_M3.UI
         private Lot lotEnCours;
         private bool estNouveauLot;
 
-        // ================================================
-        // CONSTRUCTEUR
-        // ================================================
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lot"></param>
         public FormGestionLot(Lot lot)
         {
             InitializeComponent();
@@ -23,9 +25,12 @@ namespace App_Gestion_lots_M3.UI
             estNouveauLot = (lot == null);
         }
 
-        // ================================================
-        // CHARGEMENT DU FORMULAIRE
-        // ================================================
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FormGestionLot_Load(object sender, EventArgs e)
         {
             RemplirComboBoxRecette();
@@ -33,9 +38,10 @@ namespace App_Gestion_lots_M3.UI
             ConfigurerFormulaire();
         }
 
-        // ================================================
-        // INITIALISATION DES COMBOBOX
-        // ================================================
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void RemplirComboBoxRecette()
         {
             cboRecette.Items.Clear();
@@ -48,6 +54,9 @@ namespace App_Gestion_lots_M3.UI
                 cboRecette.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void RemplirComboBoxEtat()
         {
             cboEtat.Items.Clear();
@@ -60,9 +69,10 @@ namespace App_Gestion_lots_M3.UI
                 cboEtat.SelectedIndex = 0;
         }
 
-        // ================================================
-        // CONFIGURATION SELON NOUVEAU OU MODIFIER
-        // ================================================
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void ConfigurerFormulaire()
         {
             txtDateCreation.ReadOnly = true;
@@ -91,9 +101,11 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // VALIDATION
-        // ================================================
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private bool ValiderFormulaire()
         {
             if (string.IsNullOrWhiteSpace(txtNomLot.Text))
@@ -124,6 +136,11 @@ namespace App_Gestion_lots_M3.UI
             return true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nomLot"></param>
+        /// <returns></returns>
         private bool NomLotExisteDeja(string nomLot)
         {
             List<Lot> lots = DataManager.GetLots();
@@ -135,9 +152,12 @@ namespace App_Gestion_lots_M3.UI
             return false;
         }
 
-        // ================================================
-        // ÉVÉNEMENTS BOUTONS
-        // ================================================
+ 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEnregistrer_Click(object sender, EventArgs e)
         {
             if (!ValiderFormulaire()) return;
@@ -150,38 +170,44 @@ namespace App_Gestion_lots_M3.UI
                 return;
             }
 
-            DataManager.AjouterLot(new Lot
-            {
-                LOT_Nom = txtNomLot.Text,
-                LOT_Quantite = int.Parse(txtQuantite.Text),
-                ETA_Libelle = cboEtat.SelectedItem.ToString(),
-                REC_Nom = cboRecette.SelectedItem.ToString()
-                
-            });
+            DataManager.AjouterLot(
+                txtNomLot.Text,
+                int.Parse(txtQuantite.Text),
+                DataManager.GetIdEtat(cboEtat.SelectedItem.ToString()),
+                DataManager.GetIdRecette(cboRecette.SelectedItem.ToString())
+            );
 
             MessageBox.Show("Lot enregistré avec succès !",
                 "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnModifier_Click(object sender, EventArgs e)
         {
             if (!ValiderFormulaire()) return;
 
-            DataManager.ModifierLot(lotEnCours.LOT_Nom, new Lot
-            {
-                LOT_Nom = txtNomLot.Text,
-                LOT_Quantite = int.Parse(txtQuantite.Text),
-                LOT_DateHeureCreation = lotEnCours.LOT_DateHeureCreation,
-                REC_Nom = cboRecette.SelectedItem.ToString(),
-                ETA_Libelle = cboEtat.SelectedItem.ToString()
-            });
+            DataManager.ModifierLot(
+                lotEnCours.LOT_Nom,
+                int.Parse(txtQuantite.Text),
+                DataManager.GetIdEtat(cboEtat.SelectedItem.ToString()),
+                DataManager.GetIdRecette(cboRecette.SelectedItem.ToString())
+            );
 
             MessageBox.Show("Lot modifié avec succès !",
                 "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSupprimer_Click(object sender, EventArgs e)
         {
             DialogResult reponse = MessageBox.Show(
@@ -205,6 +231,12 @@ namespace App_Gestion_lots_M3.UI
         // ================================================
         // ÉVÉNEMENTS NON UTILISÉS
         // ================================================
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtNomLot_TextChanged(object sender, EventArgs e) { }
 
 

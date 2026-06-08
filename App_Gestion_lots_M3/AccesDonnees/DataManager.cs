@@ -118,7 +118,66 @@ namespace App_Gestion_lots_M3.AccesDonnees
             return lots;
         }
 
-        // sup un lot de la DB
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nomLot"></param>
+        /// <param name="quantite"></param>
+        /// <param name="idEtat"></param>
+        /// <param name="idRecette"></param>
+        public static void ModifierLot(string nomLot, int quantite, int idEtat, int idRecette)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+
+            string sql = @"UPDATE Lot 
+                   SET LOT_Quantite = @quantite, Id_Etat = @idEtat, Id_Recette = @idRecette
+                   WHERE LOT_Nom = @nom";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nom", nomLot);
+                cmd.Parameters.AddWithValue("@quantite", quantite);
+                cmd.Parameters.AddWithValue("@idEtat", idEtat);
+                cmd.Parameters.AddWithValue("@idRecette", idRecette);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine("Erreur lors de la modification du lot : " + ex.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nomLot"></param>
+        public static void SupprimerLot(string nomLot)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+
+            string sql = "DELETE FROM Lot WHERE LOT_Nom = @nom";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nom", nomLot);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine("Erreur lors de la suppression du lot : " + ex.Message);
+                }
+            }
+        }
+
+
+
 
         /// <summary>
         /// Requete permettant d'ajouter une recette à la DB, 
@@ -231,6 +290,20 @@ namespace App_Gestion_lots_M3.AccesDonnees
             return recettes;
         }
 
+        public static int GetIdRecette(string nomRecette)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            string sql = "SELECT Id_Recette FROM Recette WHERE REC_Nom = @nom LIMIT 1";
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nom", nomRecette);
+                object result = cmd.ExecuteScalar();
+                if (result == null)
+                    throw new Exception("Recette introuvable : " + nomRecette);
+                return Convert.ToInt32(result);
+            }
+        }
+
         /// <summary>
         /// Insère une liste d'opérations dans la transaction en cours.
         /// </summary>
@@ -300,6 +373,26 @@ namespace App_Gestion_lots_M3.AccesDonnees
             }
 
             return etats;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="libelleEtat"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static int GetIdEtat(string libelleEtat)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            string sql = "SELECT Id_Etat FROM Etat WHERE ETA_Libelle = @libelle LIMIT 1";
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@libelle", libelleEtat);
+                object result = cmd.ExecuteScalar();
+                if (result == null)
+                    throw new Exception("État introuvable : " + libelleEtat);
+                return Convert.ToInt32(result);
+            }
         }
 
         /// <summary>
