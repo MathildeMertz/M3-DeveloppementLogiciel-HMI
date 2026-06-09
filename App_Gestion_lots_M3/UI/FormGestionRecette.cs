@@ -212,7 +212,7 @@ namespace App_Gestion_lots_M3.UI
             cboPosition.Location = new Point(180, 52);
             cboPosition.Size = new Size(170, 23);
             cboPosition.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboPosition.Items.AddRange(new string[] { "Aucun", "3H", "6H", "9H", "12H" });
+            cboPosition.Items.AddRange(new string[] { "3H", "6H", "9H", "12H" });
             cboPosition.SelectedIndex = 0;
 
             // Sens de rotation

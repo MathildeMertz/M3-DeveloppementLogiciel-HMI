@@ -209,9 +209,9 @@ namespace App_Gestion_lots_M3.AccesDonnees
 
             try
             {
-                // Insertion de la recette
+                // 1 — Insérer la recette
                 string insertRecette = @"INSERT INTO Recette (REC_Nom, REC_DateHeureCreation) 
-                                       VALUES (@nom, @date)";
+                                VALUES (@nom, @date)";
 
                 int idRecette;
 
@@ -223,21 +223,8 @@ namespace App_Gestion_lots_M3.AccesDonnees
                     idRecette = (int)cmd.LastInsertedId;
                 }
 
-                // Insertion de chaque opération liée à la recette
-                foreach (Operation op in operations)
-                {
-                    string insertOperation = @"INSERT INTO Operation (OPE_Position, OPE_TempsArret, OPE_Quittance, Id_Recette)
-                                       VALUES (@position, @tempsArret, @quittance, @idRecette)";
-
-                    using (MySqlCommand cmd = new MySqlCommand(insertOperation, conn, transaction))
-                    {
-                        cmd.Parameters.AddWithValue("@position", op.posMoteurOpe);
-                        cmd.Parameters.AddWithValue("@tempsArret", op.tempsAttenteOpe);
-                        cmd.Parameters.AddWithValue("@quittance", op.quittanceOpe);
-                        cmd.Parameters.AddWithValue("@idRecette", idRecette);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
+                // 2 — Insérer les opérations via InsererOperations
+                InsererOperations(idRecette, operations, conn, transaction);
 
                 transaction.Commit();
             }
@@ -260,14 +247,15 @@ namespace App_Gestion_lots_M3.AccesDonnees
 
             try
             {
-                string deleteOps = "DELETE FROM Operation WHERE Id_Recette = @idRecette";
-
-                using (MySqlCommand cmd = new MySqlCommand(deleteOps, conn, transaction))
+                // 1 — Supprimer les liens dans contenir
+                string deleteContenir = "DELETE FROM contenir WHERE Id_Recette = @idRecette";
+                using (MySqlCommand cmd = new MySqlCommand(deleteContenir, conn, transaction))
                 {
                     cmd.Parameters.AddWithValue("@idRecette", idRecette);
                     cmd.ExecuteNonQuery();
                 }
 
+                // 2 — Insérer les nouvelles opérations
                 InsererOperations(idRecette, operations, conn, transaction);
 
                 transaction.Commit();
@@ -322,7 +310,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
         }
 
         /// <summary>
-        /// Insère une liste d'opérations dans la transaction en cours.
+        /// Insère une liste d'opérations et les lie à la recette via la table contenir
         /// </summary>
         /// <param name="idRecette"></param>
         /// <param name="operations"></param>
@@ -330,13 +318,18 @@ namespace App_Gestion_lots_M3.AccesDonnees
         /// <param name="transaction"></param>
         public static void InsererOperations(int idRecette, List<Operation> operations, MySqlConnection conn, MySqlTransaction transaction)
         {
-            string sql = @"INSERT INTO Operation (OPE_Nom, OPE_PositionMoteur, OPE_SensMoteur, 
-                                          OPE_TempsAttente, OPE_CycleVerin, OPE_Quittance, Id_Recette)
-                   VALUES (@nom, @position, @sens, @tempsAttente, @cycleVerin, @quittance, @idRecette)";
+            int noOperation = 1;
 
             foreach (Operation op in operations)
             {
-                using (MySqlCommand cmd = new MySqlCommand(sql, conn, transaction))
+                // 1 — Insérer l'opération dans la table Operation
+                string sqlOperation = @"INSERT INTO Operation (OPE_Nom, OPE_PositionMoteur, OPE_SensMoteur, 
+                                                        OPE_TempsAttente, OPE_CycleVerin, OPE_Quittance)
+                                VALUES (@nom, @position, @sens, @tempsAttente, @cycleVerin, @quittance)";
+
+                int idOperation;
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlOperation, conn, transaction))
                 {
                     cmd.Parameters.AddWithValue("@nom", op.nomOpe);
                     cmd.Parameters.AddWithValue("@position", op.posMoteurOpe);
@@ -344,9 +337,25 @@ namespace App_Gestion_lots_M3.AccesDonnees
                     cmd.Parameters.AddWithValue("@tempsAttente", op.tempsAttenteOpe);
                     cmd.Parameters.AddWithValue("@cycleVerin", op.cycleVerrinOpe);
                     cmd.Parameters.AddWithValue("@quittance", op.quittanceOpe);
+                    cmd.ExecuteNonQuery();
+
+                    // Récupère l'id de l'opération insérée
+                    idOperation = (int)cmd.LastInsertedId;
+                }
+
+                // 2 — Lier l'opération à la recette via la table contenir
+                string sqlContenir = @"INSERT INTO contenir (Id_Operation_est_contenu_dans, Id_Recette, CON_NoOperation)
+                                VALUES (@idOperation, @idRecette, @noOperation)";
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlContenir, conn, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@idOperation", idOperation);
                     cmd.Parameters.AddWithValue("@idRecette", idRecette);
+                    cmd.Parameters.AddWithValue("@noOperation", noOperation);
                     cmd.ExecuteNonQuery();
                 }
+
+                noOperation++;
             }
         }
 
@@ -399,21 +408,20 @@ namespace App_Gestion_lots_M3.AccesDonnees
         }
 
         /// <summary>
-        /// 
+        /// Retourne la liste des opérations pour une recette donnée
         /// </summary>
-        /// <param name="idRecette"></param>
-        /// <returns></returns>
         public static List<Operation> GetOperations(int idRecette)
         {
             MySqlConnection conn = DbManager.GetDBConnection();
             List<Operation> operations = new List<Operation>();
 
-            string sql = @"SELECT CON_NoOperation, OPE_Nom, OPE_Position,
-                          OPE_SensRotation, OPE_NbTours, OPE_TempsArret,
-                          OPE_CycleVerin, OPE_Quittance
-                   FROM Operation
-                   WHERE Id_Recette = @idRecette
-                   ORDER BY CON_NoOperation";
+            // On joint Operation et contenir pour récupérer les opérations liées à la recette
+            string sql = @"SELECT o.Id_Operation, o.OPE_Nom, o.OPE_PositionMoteur, o.OPE_SensMoteur,
+                          o.OPE_TempsAttente, o.OPE_CycleVerin, o.OPE_Quittance, c.CON_NoOperation
+                   FROM Operation o
+                   JOIN contenir c ON o.Id_Operation = c.Id_Operation_est_contenu_dans
+                   WHERE c.Id_Recette = @idRecette
+                   ORDER BY c.CON_NoOperation";
 
             using (MySqlCommand cmd = new MySqlCommand(sql, conn))
             {
@@ -423,17 +431,23 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 {
                     while (reader.Read())
                     {
-                        operations.Add(new Operation
-                        {
-                            noOpe = reader.GetInt32("CON_NoOperation"),
-                            nomOpe = reader.GetString("OPE_Nom"),
-                            posMoteurOpe = reader.GetInt32("OPE_Position"),
-                            sensMoteurOpe = reader.GetInt32("OPE_SensRotation"),
-                            nbreToursOpe = reader.GetInt32("OPE_NbTours"),
-                            tempsAttenteOpe = reader.GetInt32("OPE_TempsArret"),
-                            cycleVerrinOpe = reader.GetInt32("OPE_CycleVerin"),
-                            quittanceOpe = reader.GetBoolean("OPE_Quittance")
-                        });
+                        Operation op = new Operation();
+
+                        op.noOpe = reader.GetInt32("CON_NoOperation");
+                        op.nomOpe = reader.GetString("OPE_Nom");
+                        op.posMoteurOpe = reader.GetInt32("OPE_PositionMoteur");
+                        op.sensMoteurOpe = reader.GetInt32("OPE_SensMoteur");
+                        op.tempsAttenteOpe = reader.GetInt32("OPE_TempsAttente");
+                        op.cycleVerrinOpe = reader.GetInt32("OPE_CycleVerin");
+                        op.quittanceOpe = reader.GetBoolean("OPE_Quittance");
+
+                        // OPE_Nom peut être null
+                        if (reader.IsDBNull(reader.GetOrdinal("OPE_Nom")))
+                            op.nomOpe = "";
+                        else
+                            op.nomOpe = reader.GetString("OPE_Nom");
+
+                        operations.Add(op);
                     }
                 }
             }
