@@ -108,5 +108,68 @@ namespace App_Gestion_lots_M3.UI
         private void label2_Click(object sender, EventArgs e) { }
         private void txtUtilisateur_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) { }
         private void txtMotDePasse_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) { }
+<<<<<<< Updated upstream
+=======
+        private void txtBaseDonnee_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) { }
+        private void txtServeur_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) { }
+
+        private void txtPort_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void txtServeur_MaskInputRejected_1(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void txtBaseDonnee_MaskInputRejected_1(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Bouton enregistrer — sauvegarde les paramètres dans appsettings.json
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEnregistrer_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                string cheminFichier = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+
+                // Construire la nouvelle connection string
+                string connectionString = $"Server={txtServeur.Text};" +
+                                          $"Port={txtPort.Text};" +
+                                          $"Database={txtBaseDonnee.Text};" +
+                                          $"Uid={txtUtilisateur.Text};" +
+                                          $"Pwd={txtMotDePasse.Text};";
+
+                // Construire le contenu JSON
+                string jsonContent = "{\n" +
+                                     "  \"ConnectionStrings\": {\n" +
+                                     $"    \"DefaultConnection\": \"{connectionString}\"\n" +
+                                     "  }\n" +
+                                     "}";
+
+                // Écrire dans le fichier
+                File.WriteAllText(cheminFichier, jsonContent);
+
+                MessageBox.Show("Paramètres enregistrés avec succès !",
+                    "Enregistrement", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de l'enregistrement : " + ex.Message,
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+>>>>>>> Stashed changes
     }
 }

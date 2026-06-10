@@ -259,15 +259,104 @@ namespace App_Gestion_lots_M3.UI
         // ================================================
 
         /// <summary>
-        /// Bouton pour exporter en PDF — à implémenter
+        /// Bouton pour exporter les événements en PDF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnExporterPDF_Click(object sender, EventArgs e)
         {
-            // TODO : implémenter export PDF
-            MessageBox.Show("Export PDF pas encore implémenté.",
-                "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (dgvEvenements.Rows.Count == 0)
+            {
+                MessageBox.Show("Aucun événement à exporter.",
+                    "Export PDF", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Fichier PDF (*.pdf)|*.pdf";
+            saveDialog.FileName = "Tracabilite_" + cboSelectLot.SelectedItem.ToString() + "_" + DateTime.Now.ToString("yyyyMMdd");
+
+            if (saveDialog.ShowDialog() != DialogResult.OK) return;
+
+            try
+            {
+                PdfSharp.Pdf.PdfDocument document = new PdfSharp.Pdf.PdfDocument();
+                document.Info.Title = "Historique de Tracabilite";
+
+                PdfSharp.Pdf.PdfPage page = document.AddPage();
+                PdfSharp.Drawing.XGraphics gfx = PdfSharp.Drawing.XGraphics.FromPdfPage(page);
+
+                // Polices
+                PdfSharp.Drawing.XFont fontTitre = new PdfSharp.Drawing.XFont("Arial", 16);
+                PdfSharp.Drawing.XFont fontNormal = new PdfSharp.Drawing.XFont("Arial", 10);
+                PdfSharp.Drawing.XFont fontEntete = new PdfSharp.Drawing.XFont("Arial", 10);
+
+                double y = 40;
+
+                // Titre
+                gfx.DrawString("Historique de Tracabilite - Lot : " + cboSelectLot.SelectedItem.ToString(),
+                    fontTitre, PdfSharp.Drawing.XBrushes.Black,
+                    new PdfSharp.Drawing.XRect(40, y, page.Width - 80, 30),
+                    PdfSharp.Drawing.XStringFormats.TopLeft);
+                y += 30;
+
+                // Date export
+                gfx.DrawString("Exporte le : " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
+                    fontNormal, PdfSharp.Drawing.XBrushes.Black,
+                    new PdfSharp.Drawing.XRect(40, y, page.Width - 80, 20),
+                    PdfSharp.Drawing.XStringFormats.TopLeft);
+                y += 30;
+
+                // Colonnes
+                double colDate = 40;
+                double colHeure = 140;
+                double colEvenement = 240;
+                double hauteurLigne = 20;
+
+                // En-têtes
+                gfx.DrawRectangle(PdfSharp.Drawing.XBrushes.LightGray,
+                    colDate, y, page.Width - 80, hauteurLigne);
+                gfx.DrawString("Date", fontEntete, PdfSharp.Drawing.XBrushes.Black, colDate + 2, y + 14);
+                gfx.DrawString("Heure", fontEntete, PdfSharp.Drawing.XBrushes.Black, colHeure + 2, y + 14);
+                gfx.DrawString("Evenement", fontEntete, PdfSharp.Drawing.XBrushes.Black, colEvenement + 2, y + 14);
+                y += hauteurLigne;
+
+                // Lignes
+                foreach (DataGridViewRow row in dgvEvenements.Rows)
+                {
+                    // Nouvelle page si nécessaire
+                    if (y > page.Height - 60)
+                    {
+                        page = document.AddPage();
+                        gfx = PdfSharp.Drawing.XGraphics.FromPdfPage(page);
+                        y = 40;
+                    }
+
+                    string date = row.Cells[0].Value?.ToString() ?? "";
+                    string heure = row.Cells[1].Value?.ToString() ?? "";
+                    string evenement = row.Cells[2].Value?.ToString() ?? "";
+
+                    gfx.DrawString(date, fontNormal, PdfSharp.Drawing.XBrushes.Black, colDate + 2, y + 14);
+                    gfx.DrawString(heure, fontNormal, PdfSharp.Drawing.XBrushes.Black, colHeure + 2, y + 14);
+                    gfx.DrawString(evenement, fontNormal, PdfSharp.Drawing.XBrushes.Black, colEvenement + 2, y + 14);
+
+                    // Ligne séparatrice
+                    gfx.DrawLine(PdfSharp.Drawing.XPens.LightGray,
+                        colDate, y + hauteurLigne, page.Width - 40, y + hauteurLigne);
+
+                    y += hauteurLigne;
+                }
+
+                document.Save(saveDialog.FileName);
+
+                MessageBox.Show("PDF exporte avec succes !\n" + saveDialog.FileName,
+                    "Export PDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de l'export PDF : " + ex.Message,
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>

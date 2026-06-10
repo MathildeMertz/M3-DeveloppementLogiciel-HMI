@@ -53,10 +53,18 @@ namespace App_Gestion_lots_M3.AccesDonnees
             MySqlConnection conn = DbManager.GetDBConnection();
             List<Evenement> evenements = new List<Evenement>();
 
+            // Filtre uniquement début, fin et erreurs/alarmes
             string sql = @"SELECT Id_Evenement, EVE_DateHeure, EVE_Message, Id_Lot
-                   FROM Evenement
-                   WHERE Id_Lot = @idLot
-                   ORDER BY EVE_DateHeure DESC";
+               FROM Evenement
+               WHERE Id_Lot = @idLot
+               AND (
+                   EVE_Message LIKE '%début de la production du lot%'
+                   OR EVE_Message LIKE '%fin de la production du lot%'
+                   OR EVE_Message LIKE '%erreur%'
+                   OR EVE_Message LIKE '%alarme%'
+                   OR EVE_Message LIKE '%barrière%'
+               )
+               ORDER BY EVE_DateHeure DESC";
 
             using (MySqlCommand cmd = new MySqlCommand(sql, conn))
             {
@@ -66,6 +74,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 {
                     while (reader.Read())
                     {
+<<<<<<< Updated upstream
                         evenements.Add(new Evenement
                         {
                             idEve = reader.GetInt32("Id_Evenement"),
@@ -73,6 +82,28 @@ namespace App_Gestion_lots_M3.AccesDonnees
                             messageEve = reader.GetString("EVE_Message"),
                             idLot = reader.GetInt32("Id_Lot")
                         });
+=======
+                        Evenement eve = new Evenement();
+
+                        eve.idEve = reader.GetInt32("Id_Evenement");
+
+                        if (reader.IsDBNull(reader.GetOrdinal("EVE_DateHeure")))
+                            eve.dateHeureEve = DateTime.MinValue;
+                        else
+                            eve.dateHeureEve = reader.GetDateTime("EVE_DateHeure");
+
+                        if (reader.IsDBNull(reader.GetOrdinal("EVE_Message")))
+                            eve.messageEve = "";
+                        else
+                            eve.messageEve = reader.GetString("EVE_Message");
+
+                        if (reader.IsDBNull(reader.GetOrdinal("Id_Lot")))
+                            eve.idLot = 0;
+                        else
+                            eve.idLot = reader.GetInt32("Id_Lot");
+
+                        evenements.Add(eve);
+>>>>>>> Stashed changes
                     }
                 }
             }

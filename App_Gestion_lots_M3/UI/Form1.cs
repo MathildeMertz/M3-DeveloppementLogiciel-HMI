@@ -33,16 +33,24 @@ namespace App_Gestion_lots_M3
         /// </summary>
         private void ChargerLots()
         {
-            dgvLots.Rows.Clear();
-            List<Lot> lots = DataManager.GetLots();
-            foreach (Lot lot in lots)
+            try
             {
-                dgvLots.Rows.Add(
-                    lot.LOT_Nom,
-                    lot.LOT_Quantite,
-                    lot.REC_Nom,
-                    lot.ETA_Libelle
-                );
+                dgvLots.Rows.Clear();
+                List<Lot> lots = DataManager.GetLots();
+                foreach (Lot lot in lots)
+                {
+                    dgvLots.Rows.Add(
+                        lot.LOT_Nom,
+                        lot.LOT_Quantite,
+                        lot.REC_Nom,
+                        lot.ETA_Libelle
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors du chargement des lots : " + ex.Message,
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -34,6 +34,18 @@
             txtMotDePasse = new MaskedTextBox();
             btnConnexion = new Button();
             btnAnnuler = new Button();
+<<<<<<< Updated upstream
+=======
+            txtServeur = new MaskedTextBox();
+            label3 = new Label();
+            txtPort = new MaskedTextBox();
+            label4 = new Label();
+            txtBaseDonnee = new MaskedTextBox();
+            label5 = new Label();
+            btnEnregistrer = new Button();
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+>>>>>>> Stashed changes
             SuspendLayout();
             // 
             // label1
@@ -93,11 +105,95 @@
             btnAnnuler.UseVisualStyleBackColor = true;
             btnAnnuler.Click += btnAnnuler_Click;
             // 
+<<<<<<< Updated upstream
+=======
+            // txtServeur
+            // 
+            txtServeur.Location = new Point(33, 46);
+            txtServeur.Name = "txtServeur";
+            txtServeur.Size = new Size(203, 23);
+            txtServeur.TabIndex = 7;
+            txtServeur.MaskInputRejected += txtServeur_MaskInputRejected_1;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(33, 28);
+            label3.Name = "label3";
+            label3.Size = new Size(52, 15);
+            label3.TabIndex = 6;
+            label3.Text = "Serveur :";
+            // 
+            // txtPort
+            // 
+            txtPort.Location = new Point(261, 46);
+            txtPort.Name = "txtPort";
+            txtPort.Size = new Size(84, 23);
+            txtPort.TabIndex = 9;
+            txtPort.MaskInputRejected += txtPort_MaskInputRejected;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(261, 28);
+            label4.Name = "label4";
+            label4.Size = new Size(35, 15);
+            label4.TabIndex = 8;
+            label4.Text = "Port :";
+            // 
+            // txtBaseDonnee
+            // 
+            txtBaseDonnee.Location = new Point(33, 142);
+            txtBaseDonnee.Name = "txtBaseDonnee";
+            txtBaseDonnee.Size = new Size(203, 23);
+            txtBaseDonnee.TabIndex = 11;
+            txtBaseDonnee.MaskInputRejected += txtBaseDonnee_MaskInputRejected_1;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(33, 124);
+            label5.Name = "label5";
+            label5.Size = new Size(96, 15);
+            label5.TabIndex = 10;
+            label5.Text = "Base de donnée :";
+            // 
+            // btnEnregistrer
+            // 
+            btnEnregistrer.Location = new Point(138, 375);
+            btnEnregistrer.Name = "btnEnregistrer";
+            btnEnregistrer.Size = new Size(101, 42);
+            btnEnregistrer.TabIndex = 12;
+            btnEnregistrer.Text = "Enregistrer";
+            btnEnregistrer.UseVisualStyleBackColor = true;
+            btnEnregistrer.Click += btnEnregistrer_Click_1;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(454, 100);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(213, 148);
+            pictureBox1.TabIndex = 13;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
+>>>>>>> Stashed changes
             // FormLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+<<<<<<< Updated upstream
+=======
+            Controls.Add(pictureBox1);
+            Controls.Add(btnEnregistrer);
+            Controls.Add(txtBaseDonnee);
+            Controls.Add(label5);
+            Controls.Add(txtPort);
+            Controls.Add(label4);
+            Controls.Add(txtServeur);
+            Controls.Add(label3);
+>>>>>>> Stashed changes
             Controls.Add(btnAnnuler);
             Controls.Add(btnConnexion);
             Controls.Add(txtMotDePasse);
@@ -107,6 +203,7 @@
             Name = "FormLogin";
             Text = "FormLogin";
             Load += FormLogin_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -119,5 +216,16 @@
         private MaskedTextBox txtMotDePasse;
         private Button btnConnexion;
         private Button btnAnnuler;
+<<<<<<< Updated upstream
+=======
+        private MaskedTextBox txtServeur;
+        private Label label3;
+        private MaskedTextBox txtPort;
+        private Label label4;
+        private MaskedTextBox txtBaseDonnee;
+        private Label label5;
+        private Button btnEnregistrer;
+        private PictureBox pictureBox1;
+>>>>>>> Stashed changes
     }
 }
