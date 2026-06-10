@@ -470,21 +470,40 @@ namespace App_Gestion_lots_M3.AccesDonnees
         }
 
         /// <summary>
-        /// Supprime une recette de la base de données
+        /// Supprime une recette et ses opérations associées de la base de données
         /// </summary>
+        /// <param name="idRecette">Id de la recette à supprimer</param>
         /// <param name="nomRecette">Nom de la recette à supprimer</param>
-        public static void SupprimerRecette(string nomRecette)
+        public static void SupprimerRecette(int idRecette, string nomRecette)
         {
             MySqlConnection conn = DbManager.GetDBConnection();
+            MySqlTransaction transaction = conn.BeginTransaction();
 
-            string sql = "DELETE FROM Recette WHERE REC_Nom = @nom";
-
-            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            try
             {
-                cmd.Parameters.AddWithValue("@nom", nomRecette);
-                cmd.ExecuteNonQuery();
+                // 1 — Supprimer les liens dans contenir
+                string sqlContenir = "DELETE FROM contenir WHERE Id_Recette = @idRecette";
+                using (MySqlCommand cmd = new MySqlCommand(sqlContenir, conn, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@idRecette", idRecette);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // 2 — Supprimer la recette
+                string sqlRecette = "DELETE FROM Recette WHERE REC_Nom = @nom";
+                using (MySqlCommand cmd = new MySqlCommand(sqlRecette, conn, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@nom", nomRecette);
+                    cmd.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
             }
         }
-
     }
 }

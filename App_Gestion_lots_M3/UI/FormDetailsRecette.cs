@@ -207,7 +207,7 @@ namespace App_Gestion_lots_M3.UI
 
             try
             {
-                DataManager.SupprimerRecette(recette.REC_Nom);
+                DataManager.SupprimerRecette(recette.Id_Recette, recette.REC_Nom);
 
                 MessageBox.Show("Recette supprimée avec succès.",
                     "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
