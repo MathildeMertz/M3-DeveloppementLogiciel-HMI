@@ -37,19 +37,27 @@ namespace App_Gestion_lots_M3.AccesDonnees
         }
 
         /// <summary>
-        /// Retourne la liste des événements pour un lot donné
+        /// Retourne uniquement les événements de début, fin et erreurs pour un lot donné
         /// </summary>
         /// <param name="idLot">Identifiant du lot</param>
-        /// <returns>Liste des événements</returns>
+        /// <returns>Liste des événements filtrés</returns>
         public static List<Evenement> GetEvenements(int idLot)
         {
             MySqlConnection conn = DbManager.GetDBConnection();
             List<Evenement> evenements = new List<Evenement>();
 
+            // Filtre uniquement début, fin et erreurs/alarmes
             string sql = @"SELECT Id_Evenement, EVE_DateHeure, EVE_Message, Id_Lot
-                   FROM Evenement
-                   WHERE Id_Lot = @idLot
-                   ORDER BY EVE_DateHeure DESC";
+               FROM Evenement
+               WHERE Id_Lot = @idLot
+               AND (
+                   EVE_Message LIKE '%début de la production du lot%'
+                   OR EVE_Message LIKE '%fin de la production du lot%'
+                   OR EVE_Message LIKE '%erreur%'
+                   OR EVE_Message LIKE '%alarme%'
+                   OR EVE_Message LIKE '%barrière%'
+               )
+               ORDER BY EVE_DateHeure DESC";
 
             using (MySqlCommand cmd = new MySqlCommand(sql, conn))
             {
@@ -61,22 +69,18 @@ namespace App_Gestion_lots_M3.AccesDonnees
                     {
                         Evenement eve = new Evenement();
 
-                        // Lecture de l'id
                         eve.idEve = reader.GetInt32("Id_Evenement");
 
-                        // Lecture de la date — peut être null dans la BDD
                         if (reader.IsDBNull(reader.GetOrdinal("EVE_DateHeure")))
                             eve.dateHeureEve = DateTime.MinValue;
                         else
                             eve.dateHeureEve = reader.GetDateTime("EVE_DateHeure");
 
-                        // Lecture du message — peut être null dans la BDD
                         if (reader.IsDBNull(reader.GetOrdinal("EVE_Message")))
                             eve.messageEve = "";
                         else
                             eve.messageEve = reader.GetString("EVE_Message");
 
-                        // Lecture de l'id du lot — peut être null dans la BDD
                         if (reader.IsDBNull(reader.GetOrdinal("Id_Lot")))
                             eve.idLot = 0;
                         else

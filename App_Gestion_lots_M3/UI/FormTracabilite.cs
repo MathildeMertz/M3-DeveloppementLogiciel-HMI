@@ -3,6 +3,9 @@ using App_Gestion_lots_M3.Model;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
 
 namespace App_Gestion_lots_M3.UI
 {
@@ -259,15 +262,94 @@ namespace App_Gestion_lots_M3.UI
         // ================================================
 
         /// <summary>
-        /// Bouton pour exporter en PDF — à implémenter
+        /// Bouton pour exporter les événements en PDF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnExporterPDF_Click(object sender, EventArgs e)
         {
-            // TODO : implémenter export PDF
-            MessageBox.Show("Export PDF pas encore implémenté.",
-                "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (dgvEvenements.Rows.Count == 0)
+            {
+                MessageBox.Show("Aucun événement à exporter.",
+                    "Export PDF", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Fichier PDF (*.pdf)|*.pdf";
+            saveDialog.FileName = "Tracabilite_" + cboSelectLot.SelectedItem.ToString() + "_" + DateTime.Now.ToString("yyyyMMdd");
+
+            if (saveDialog.ShowDialog() != DialogResult.OK) return;
+
+            try
+            {
+                // Licence communautaire gratuite
+                QuestPDF.Settings.License = LicenseType.Community;
+
+                string nomLot = cboSelectLot.SelectedItem.ToString();
+                string dateExport = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+
+                // Copie les lignes du tableau
+                List<string[]> lignes = new List<string[]>();
+                foreach (DataGridViewRow row in dgvEvenements.Rows)
+                {
+                    string date = row.Cells[0].Value?.ToString() ?? "";
+                    string heure = row.Cells[1].Value?.ToString() ?? "";
+                    string evenement = row.Cells[2].Value?.ToString() ?? "";
+                    lignes.Add(new string[] { date, heure, evenement });
+                }
+
+                Document.Create(container =>
+                {
+                    container.Page(page =>
+                    {
+                        page.Size(PageSizes.A4);
+                        page.Margin(40);
+
+                        page.Content().Column(col =>
+                        {
+                            // Titre
+                            col.Item().Text("Historique de Tracabilite - Lot : " + nomLot)
+                                .FontSize(16);
+
+                            col.Item().PaddingTop(5).Text("Exporte le : " + dateExport)
+                                .FontSize(10);
+
+                            col.Item().PaddingTop(15).Table(table =>
+                            {
+                                table.ColumnsDefinition(columns =>
+                                {
+                                    columns.RelativeColumn(2);
+                                    columns.RelativeColumn(2);
+                                    columns.RelativeColumn(6);
+                                });
+
+                                table.Header(header =>
+                                {
+                                    header.Cell().Background("#CCCCCC").Padding(5).Text("Date").FontSize(10);
+                                    header.Cell().Background("#CCCCCC").Padding(5).Text("Heure").FontSize(10);
+                                    header.Cell().Background("#CCCCCC").Padding(5).Text("Evenement").FontSize(10);
+                                });
+
+                                foreach (string[] ligne in lignes)
+                                {
+                                    table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(ligne[0]).FontSize(9);
+                                    table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(ligne[1]).FontSize(9);
+                                    table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(ligne[2]).FontSize(9);
+                                }
+                            });
+                        });
+                    });
+                }).GeneratePdf(saveDialog.FileName);
+
+                MessageBox.Show("PDF exporte avec succes !\n" + saveDialog.FileName,
+                    "Export PDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de l'export PDF : " + ex.Message,
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
