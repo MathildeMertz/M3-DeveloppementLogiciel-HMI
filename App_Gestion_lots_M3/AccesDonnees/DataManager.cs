@@ -21,25 +21,18 @@ namespace App_Gestion_lots_M3.AccesDonnees
             MySqlConnection conn = DbManager.GetDBConnection();
 
             string insertLot = @"INSERT INTO Lot (LOT_Nom, LOT_Quantite, LOT_DateHeureCreation, Id_Etat, Id_Recette) 
-                               VALUE (@nom, @quantite, @dateHeure, @idEtat, @idRecette)";
+                        VALUES (@nom, @quantite, @dateHeure, @idEtat, @idRecette)";
 
             using (MySqlCommand cmd = new MySqlCommand(insertLot, conn))
             {
                 cmd.Parameters.AddWithValue("@nom", nomLot);
                 cmd.Parameters.AddWithValue("@quantite", quantiteElementsLot);
                 cmd.Parameters.AddWithValue("@dateHeure", DateTime.Now);
+                cmd.Parameters.AddWithValue("@idEtat", idEtatLot);
                 cmd.Parameters.AddWithValue("@idRecette", idRecette);
 
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                    Console.WriteLine("Lot ajouté avec succès.");
-                }
-                catch (MySqlException ex)
-                {
-                    Console.WriteLine("Erreur lors de l'ajout du lot : " + ex.Message);
-                }
-
+                // L'exception remonte au formulaire qui affiche le MessageBox
+                cmd.ExecuteNonQuery();
             }
         }
 

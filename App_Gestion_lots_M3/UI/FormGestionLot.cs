@@ -9,14 +9,28 @@ namespace App_Gestion_lots_M3.UI
 {
     public partial class FormGestionLot : Form
     {
-        private Lot lotEnCours;
-        private bool estNouveauLot;
-
+        // ================================================
+        // VARIABLES
+        // ================================================
 
         /// <summary>
-        /// 
+        /// Lot en cours de modification, null si nouveau lot
         /// </summary>
-        /// <param name="lot"></param>
+        private Lot lotEnCours;
+
+        /// <summary>
+        /// Indique si on crée un nouveau lot ou si on modifie un existant
+        /// </summary>
+        private bool estNouveauLot;
+
+        // ================================================
+        // CONSTRUCTEUR
+        // ================================================
+
+        /// <summary>
+        /// Constructeur du formulaire de gestion de lot
+        /// </summary>
+        /// <param name="lot">Lot à modifier, null pour un nouveau lot</param>
         public FormGestionLot(Lot lot)
         {
             InitializeComponent();
@@ -25,22 +39,27 @@ namespace App_Gestion_lots_M3.UI
             estNouveauLot = (lot == null);
         }
 
+        // ================================================
+        // CHARGEMENT DU FORMULAIRE
+        // ================================================
 
         /// <summary>
-        /// 
+        /// Chargement du formulaire
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void FormGestionLot_Load(object sender, EventArgs e)
         {
             RemplirComboBoxRecette();
-            RemplirComboBoxEtat();
             ConfigurerFormulaire();
         }
 
+        // ================================================
+        // REMPLISSAGE DES COMBOBOX
+        // ================================================
 
         /// <summary>
-        /// 
+        /// Remplit le ComboBox des recettes disponibles
         /// </summary>
         private void RemplirComboBoxRecette()
         {
@@ -54,24 +73,12 @@ namespace App_Gestion_lots_M3.UI
                 cboRecette.SelectedIndex = 0;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private void RemplirComboBoxEtat()
-        {
-            cboEtat.Items.Clear();
-            List<Etat> etats = DataManager.GetEtats();
-            foreach (Etat etat in etats)
-            {
-                cboEtat.Items.Add(etat.libEtat);
-            }
-            if (cboEtat.Items.Count > 0)
-                cboEtat.SelectedIndex = 0;
-        }
-
+        // ================================================
+        // CONFIGURATION DU FORMULAIRE
+        // ================================================
 
         /// <summary>
-        /// 
+        /// Configure le formulaire selon le mode nouveau ou modification
         /// </summary>
         private void ConfigurerFormulaire()
         {
@@ -84,28 +91,29 @@ namespace App_Gestion_lots_M3.UI
                 txtNomLot.Text = "";
                 txtQuantite.Text = "";
                 txtDateCreation.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-                cboEtat.SelectedItem = "En attente";
                 btnModifier.Visible = false;
-                btnSupprimer.Visible = false;
             }
             else
             {
                 this.Text = "Modifier Lot - " + lotEnCours.LOT_Nom;
                 txtNomLot.Text = lotEnCours.LOT_Nom;
                 txtNomLot.ReadOnly = true;
+                txtNomLot.BackColor = Color.FromArgb(240, 240, 240);
                 txtQuantite.Text = lotEnCours.LOT_Quantite.ToString();
                 txtDateCreation.Text = lotEnCours.LOT_DateHeureCreation.ToString("dd/MM/yyyy HH:mm");
                 cboRecette.SelectedItem = lotEnCours.REC_Nom;
-                cboEtat.SelectedItem = lotEnCours.ETA_Libelle;
                 btnEnregistrer.Visible = false;
             }
         }
 
+        // ================================================
+        // VALIDATION
+        // ================================================
 
         /// <summary>
-        /// 
+        /// Valide les données du formulaire avant enregistrement
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True si les données sont valides, false sinon</returns>
         private bool ValiderFormulaire()
         {
             if (string.IsNullOrWhiteSpace(txtNomLot.Text))
@@ -133,14 +141,22 @@ namespace App_Gestion_lots_M3.UI
                 return false;
             }
 
+            if (cboRecette.SelectedItem == null)
+            {
+                MessageBox.Show("Veuillez sélectionner une recette.",
+                    "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboRecette.Focus();
+                return false;
+            }
+
             return true;
         }
 
         /// <summary>
-        /// 
+        /// Vérifie si un lot avec ce nom existe déjà dans la base de données
         /// </summary>
-        /// <param name="nomLot"></param>
-        /// <returns></returns>
+        /// <param name="nomLot">Nom à vérifier</param>
+        /// <returns>True si le nom existe déjà, false sinon</returns>
         private bool NomLotExisteDeja(string nomLot)
         {
             List<Lot> lots = DataManager.GetLots();
@@ -152,9 +168,12 @@ namespace App_Gestion_lots_M3.UI
             return false;
         }
 
- 
+        // ================================================
+        // ÉVÉNEMENTS BOUTONS
+        // ================================================
+
         /// <summary>
-        /// 
+        /// Bouton pour enregistrer un nouveau lot
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -170,20 +189,30 @@ namespace App_Gestion_lots_M3.UI
                 return;
             }
 
-            DataManager.AjouterLot(
-                txtNomLot.Text,
-                int.Parse(txtQuantite.Text),
-                DataManager.GetIdEtat(cboEtat.SelectedItem.ToString()),
-                DataManager.GetIdRecette(cboRecette.SelectedItem.ToString())
-            );
+            try
+            {
+                // L'état est toujours "En attente" à la création
+                // C'est la machine virtuelle qui gère l'état ensuite
+                DataManager.AjouterLot(
+                    txtNomLot.Text,
+                    int.Parse(txtQuantite.Text),
+                    DataManager.GetIdEtat("En attente"),
+                    DataManager.GetIdRecette(cboRecette.SelectedItem.ToString())
+                );
 
-            MessageBox.Show("Lot enregistré avec succès !",
-                "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
+                MessageBox.Show("Lot enregistré avec succès !",
+                    "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de l'enregistrement : " + ex.Message,
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
-        /// 
+        /// Bouton pour modifier un lot existant
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -191,54 +220,26 @@ namespace App_Gestion_lots_M3.UI
         {
             if (!ValiderFormulaire()) return;
 
-            DataManager.ModifierLot(
-                lotEnCours.LOT_Nom,
-                int.Parse(txtQuantite.Text),
-                DataManager.GetIdEtat(cboEtat.SelectedItem.ToString()),
-                DataManager.GetIdRecette(cboRecette.SelectedItem.ToString())
-            );
-
-            MessageBox.Show("Lot modifié avec succès !",
-                "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSupprimer_Click(object sender, EventArgs e)
-        {
-            DialogResult reponse = MessageBox.Show(
-                "Êtes-vous sûr de vouloir supprimer le lot " + lotEnCours.LOT_Nom + " ?",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (reponse == DialogResult.Yes)
+            try
             {
-                DataManager.SupprimerLot(lotEnCours.LOT_Nom);
-                MessageBox.Show("Lot supprimé avec succès.",
-                    "Suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // On garde l'état actuel du lot lors d'une modification
+                DataManager.ModifierLot(
+                    lotEnCours.LOT_Nom,
+                    int.Parse(txtQuantite.Text),
+                    lotEnCours.Id_Etat,
+                    DataManager.GetIdRecette(cboRecette.SelectedItem.ToString())
+                );
+
+                MessageBox.Show("Lot modifié avec succès !",
+                    "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la modification : " + ex.Message,
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
-        private void btnFermer_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        // ================================================
-        // ÉVÉNEMENTS NON UTILISÉS
-        // ================================================
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtNomLot_TextChanged(object sender, EventArgs e) { }
-
 
         /// <summary>
         /// Bouton pour créer une nouvelle recette sans perdre les données du lot
@@ -247,21 +248,33 @@ namespace App_Gestion_lots_M3.UI
         /// <param name="e"></param>
         private void btnNouvelleRecette_Click(object sender, EventArgs e)
         {
-            // Ouvre FormGestionRecette sans cacher le formulaire actuel
             FormGestionRecette formGestionRecette = new FormGestionRecette(null);
             formGestionRecette.ShowDialog();
 
-            // Recharge les recettes dans le ComboBox après fermeture
-            string recetteSelectionnee = cboRecette.SelectedItem?.ToString();
+            // Recharge les recettes et sélectionne la dernière créée
             cboRecette.Items.Clear();
             foreach (Recette recette in DataManager.GetRecettes())
             {
                 cboRecette.Items.Add(recette.REC_Nom);
             }
 
-            // Resélectionner la dernière recette créée (la dernière de la liste)
             if (cboRecette.Items.Count > 0)
                 cboRecette.SelectedIndex = cboRecette.Items.Count - 1;
         }
+
+        /// <summary>
+        /// Bouton pour fermer le formulaire sans enregistrer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFermer_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        // ================================================
+        // ÉVÉNEMENTS NON UTILISÉS
+        // ================================================
+        private void txtNomLot_TextChanged(object sender, EventArgs e) { }
     }
 }

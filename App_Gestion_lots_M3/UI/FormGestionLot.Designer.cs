@@ -21,15 +21,12 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
-            label5 = new Label();
             txtNomLot = new TextBox();
             txtQuantite = new TextBox();
             txtDateCreation = new TextBox();
             cboRecette = new ComboBox();
-            cboEtat = new ComboBox();
             btnEnregistrer = new Button();
             btnModifier = new Button();
-            btnSupprimer = new Button();
             btnFermer = new Button();
             btnNouvelleRecette = new Button();
             SuspendLayout();
@@ -70,15 +67,6 @@
             label4.TabIndex = 3;
             label4.Text = "Date de Création :";
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(216, 263);
-            label5.Name = "label5";
-            label5.Size = new Size(33, 15);
-            label5.TabIndex = 4;
-            label5.Text = "État :";
-            // 
             // txtNomLot
             // 
             txtNomLot.Location = new Point(329, 84);
@@ -111,18 +99,9 @@
             cboRecette.Size = new Size(121, 23);
             cboRecette.TabIndex = 8;
             // 
-            // cboEtat
-            // 
-            cboEtat.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboEtat.FormattingEnabled = true;
-            cboEtat.Location = new Point(329, 260);
-            cboEtat.Name = "cboEtat";
-            cboEtat.Size = new Size(121, 23);
-            cboEtat.TabIndex = 9;
-            // 
             // btnEnregistrer
             // 
-            btnEnregistrer.Location = new Point(85, 325);
+            btnEnregistrer.Location = new Point(156, 325);
             btnEnregistrer.Name = "btnEnregistrer";
             btnEnregistrer.Size = new Size(137, 55);
             btnEnregistrer.TabIndex = 10;
@@ -132,7 +111,7 @@
             // 
             // btnModifier
             // 
-            btnModifier.Location = new Point(250, 325);
+            btnModifier.Location = new Point(313, 325);
             btnModifier.Name = "btnModifier";
             btnModifier.Size = new Size(137, 55);
             btnModifier.TabIndex = 11;
@@ -140,19 +119,9 @@
             btnModifier.UseVisualStyleBackColor = true;
             btnModifier.Click += btnModifier_Click;
             // 
-            // btnSupprimer
-            // 
-            btnSupprimer.Location = new Point(416, 325);
-            btnSupprimer.Name = "btnSupprimer";
-            btnSupprimer.Size = new Size(137, 55);
-            btnSupprimer.TabIndex = 12;
-            btnSupprimer.Text = "Supprimer";
-            btnSupprimer.UseVisualStyleBackColor = true;
-            btnSupprimer.Click += btnSupprimer_Click;
-            // 
             // btnFermer
             // 
-            btnFermer.Location = new Point(580, 325);
+            btnFermer.Location = new Point(469, 325);
             btnFermer.Name = "btnFermer";
             btnFermer.Size = new Size(137, 55);
             btnFermer.TabIndex = 13;
@@ -177,15 +146,12 @@
             ClientSize = new Size(800, 450);
             Controls.Add(btnNouvelleRecette);
             Controls.Add(btnFermer);
-            Controls.Add(btnSupprimer);
             Controls.Add(btnModifier);
             Controls.Add(btnEnregistrer);
-            Controls.Add(cboEtat);
             Controls.Add(cboRecette);
             Controls.Add(txtDateCreation);
             Controls.Add(txtQuantite);
             Controls.Add(txtNomLot);
-            Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -204,15 +170,12 @@
         private Label label2;
         private Label label3;
         private Label label4;
-        private Label label5;
         private TextBox txtNomLot;
         private TextBox txtQuantite;
         private TextBox txtDateCreation;
         private ComboBox cboRecette;
-        private ComboBox cboEtat;
         private Button btnEnregistrer;
         private Button btnModifier;
-        private Button btnSupprimer;
         private Button btnFermer;
         private Button btnNouvelleRecette;
     }
