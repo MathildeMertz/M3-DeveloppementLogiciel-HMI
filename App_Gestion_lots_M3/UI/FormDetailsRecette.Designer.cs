@@ -36,6 +36,7 @@
             colQuittance = new DataGridViewTextBoxColumn();
             btnModifierRecette = new Button();
             btnFermer = new Button();
+            btnSupprimer = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvOperations).BeginInit();
             SuspendLayout();
             // 
@@ -195,7 +196,7 @@
             // btnFermer
             // 
             btnFermer.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnFermer.Location = new Point(170, 400);
+            btnFermer.Location = new Point(324, 400);
             btnFermer.Name = "btnFermer";
             btnFermer.Size = new Size(150, 40);
             btnFermer.TabIndex = 11;
@@ -203,11 +204,23 @@
             btnFermer.UseVisualStyleBackColor = true;
             btnFermer.Click += btnFermer_Click;
             // 
+            // btnSupprimer
+            // 
+            btnSupprimer.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnSupprimer.Location = new Point(168, 400);
+            btnSupprimer.Name = "btnSupprimer";
+            btnSupprimer.Size = new Size(150, 40);
+            btnSupprimer.TabIndex = 12;
+            btnSupprimer.Text = "Supprimer";
+            btnSupprimer.UseVisualStyleBackColor = true;
+            btnSupprimer.Click += btnSupprimer_Click;
+            // 
             // FormDetailsRecette
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnSupprimer);
             Controls.Add(btnFermer);
             Controls.Add(btnModifierRecette);
             Controls.Add(dgvOperations);
@@ -249,5 +262,6 @@
         private DataGridViewTextBoxColumn colQuittance;
         private Button btnModifierRecette;
         private Button btnFermer;
+        private Button btnSupprimer;
     }
 }

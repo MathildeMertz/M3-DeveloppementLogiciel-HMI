@@ -235,5 +235,15 @@ namespace App_Gestion_lots_M3.UI
                     "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void pictureEMT_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelTitre_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

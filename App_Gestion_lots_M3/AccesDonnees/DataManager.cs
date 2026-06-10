@@ -451,6 +451,40 @@ namespace App_Gestion_lots_M3.AccesDonnees
 
             return operations;
         }
+        /// <summary>
+        /// Vérifie si une recette est utilisée dans au moins un lot
+        /// </summary>
+        /// <param name="nomRecette">Nom de la recette à vérifier</param>
+        /// <returns>True si utilisée, false sinon</returns>
+        public static bool RecetteEstUtilisee(string nomRecette)
+        {
+            List<Lot> lots = GetLots();
+            foreach (Lot lot in lots)
+            {
+                if (lot.REC_Nom == nomRecette)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Supprime une recette de la base de données
+        /// </summary>
+        /// <param name="nomRecette">Nom de la recette à supprimer</param>
+        public static void SupprimerRecette(string nomRecette)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+
+            string sql = "DELETE FROM Recette WHERE REC_Nom = @nom";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nom", nomRecette);
+                cmd.ExecuteNonQuery();
+            }
+        }
 
     }
 }

@@ -41,6 +41,9 @@
             txtBaseDonnee = new MaskedTextBox();
             label5 = new Label();
             btnEnregistrer = new Button();
+            pictureEMT = new PictureBox();
+            labelTitre = new Label();
+            ((System.ComponentModel.ISupportInitialize)pictureEMT).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -161,11 +164,34 @@
             btnEnregistrer.UseVisualStyleBackColor = true;
             btnEnregistrer.Click += btnEnregistrer_Click_1;
             // 
+            // pictureEMT
+            // 
+            pictureEMT.Image = Properties.Resources.emt;
+            pictureEMT.Location = new Point(212, 86);
+            pictureEMT.Name = "pictureEMT";
+            pictureEMT.Size = new Size(629, 136);
+            pictureEMT.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureEMT.TabIndex = 13;
+            pictureEMT.TabStop = false;
+            pictureEMT.Click += pictureEMT_Click;
+            // 
+            // labelTitre
+            // 
+            labelTitre.AutoSize = true;
+            labelTitre.Font = new Font("Segoe UI Symbol", 27.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelTitre.Location = new Point(261, 247);
+            labelTitre.Name = "labelTitre";
+            labelTitre.Size = new Size(494, 50);
+            labelTitre.TabIndex = 14;
+            labelTitre.Text = "M3 - Application Gestion Lot";
+            labelTitre.Click += labelTitre_Click;
+            // 
             // FormLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(labelTitre);
             Controls.Add(btnEnregistrer);
             Controls.Add(txtBaseDonnee);
             Controls.Add(label5);
@@ -179,9 +205,11 @@
             Controls.Add(txtUtilisateur);
             Controls.Add(label2);
             Controls.Add(label1);
+            Controls.Add(pictureEMT);
             Name = "FormLogin";
             Text = "FormLogin";
             Load += FormLogin_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureEMT).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -201,5 +229,7 @@
         private MaskedTextBox txtBaseDonnee;
         private Label label5;
         private Button btnEnregistrer;
+        private PictureBox pictureEMT;
+        private Label labelTitre;
     }
 }

@@ -174,5 +174,67 @@ namespace App_Gestion_lots_M3.UI
         {
 
         }
+
+        /// <summary>
+        /// Supprime la recette sélectionnée si elle n'est pas utilisée dans un lot
+        /// </summary>
+        private void btnSupprimer_Click(object sender, EventArgs e)
+        {
+            int index = cboSelectRecette.SelectedIndex;
+            if (index < 0 || index >= listeRecettes.Count) return;
+
+            Recette recette = listeRecettes[index];
+
+            // Vérifier si la recette est utilisée dans un lot
+            if (DataManager.RecetteEstUtilisee(recette.REC_Nom))
+            {
+                MessageBox.Show(
+                    "Cette recette est utilisée dans un ou plusieurs lots.\nSuppression impossible.",
+                    "Suppression refusée",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Confirmation avant suppression
+            DialogResult reponse = MessageBox.Show(
+                "Voulez-vous vraiment supprimer la recette \"" + recette.REC_Nom + "\" ?",
+                "Confirmer la suppression",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (reponse != DialogResult.Yes) return;
+
+            try
+            {
+                DataManager.SupprimerRecette(recette.REC_Nom);
+
+                MessageBox.Show("Recette supprimée avec succès.",
+                    "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Recharger la liste
+                listeRecettes = DataManager.GetRecettes();
+                RemplirComboBox();
+
+                if (listeRecettes.Count > 0)
+                {
+                    int nouvelIndex = Math.Min(index, listeRecettes.Count - 1);
+                    AfficherRecette(nouvelIndex);
+                }
+                else
+                {
+                    // Plus aucune recette
+                    lblNomRecette.Text = "";
+                    lblDateCreation.Text = "";
+                    dgvOperations.Rows.Clear();
+                    lblNbOperation.Text = "0";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la suppression : " + ex.Message,
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
