@@ -154,6 +154,47 @@ namespace App_Gestion_lots_M3.UI
         {
             this.Close();
         }
+        /// <summary>
+        /// Supprime le lot seulement s'il est en attente
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSupprimer_Click(object sender, EventArgs e)
+        {
+            Lot lotActuel = listeLots[cboSelectLot.SelectedIndex];
+
+            // Vérifier que le lot est en attente
+            if (lotActuel.ETA_Libelle != "En attente")
+            {
+                MessageBox.Show("Seuls les lots en attente peuvent être supprimés.",
+                    "Suppression impossible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult reponse = MessageBox.Show(
+                "Êtes-vous sûr de vouloir supprimer le lot " + lotActuel.LOT_Nom + " ?",
+                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (reponse == DialogResult.Yes)
+            {
+                AccesDonnees.DataManager.SupprimerLot(lotActuel.LOT_Nom);
+
+                MessageBox.Show("Lot supprimé avec succès.",
+                    "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Recharger la liste
+                listeLots = AccesDonnees.DataManager.GetLots();
+
+                if (listeLots.Count == 0)
+                {
+                    this.Close();
+                    return;
+                }
+
+                RemplirComboBox();
+                AfficherLot(0);
+            }
+        }
 
         // ================================================
         // ÉVÉNEMENTS NON UTILISÉS

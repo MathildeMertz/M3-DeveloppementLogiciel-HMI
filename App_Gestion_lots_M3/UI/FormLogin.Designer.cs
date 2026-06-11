@@ -34,12 +34,22 @@
             txtMotDePasse = new MaskedTextBox();
             btnConnexion = new Button();
             btnAnnuler = new Button();
+            txtServeur = new MaskedTextBox();
+            label3 = new Label();
+            txtPort = new MaskedTextBox();
+            label4 = new Label();
+            txtBaseDonnee = new MaskedTextBox();
+            label5 = new Label();
+            btnEnregistrer = new Button();
+            pictureEMT = new PictureBox();
+            labelTitre = new Label();
+            ((System.ComponentModel.ISupportInitialize)pictureEMT).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(36, 26);
+            label1.Location = new Point(33, 207);
             label1.Name = "label1";
             label1.Size = new Size(66, 15);
             label1.TabIndex = 0;
@@ -49,7 +59,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(36, 108);
+            label2.Location = new Point(33, 282);
             label2.Name = "label2";
             label2.Size = new Size(83, 15);
             label2.TabIndex = 1;
@@ -58,7 +68,7 @@
             // 
             // txtUtilisateur
             // 
-            txtUtilisateur.Location = new Point(36, 65);
+            txtUtilisateur.Location = new Point(33, 225);
             txtUtilisateur.Name = "txtUtilisateur";
             txtUtilisateur.Size = new Size(203, 23);
             txtUtilisateur.TabIndex = 2;
@@ -66,7 +76,7 @@
             // 
             // txtMotDePasse
             // 
-            txtMotDePasse.Location = new Point(36, 142);
+            txtMotDePasse.Location = new Point(33, 312);
             txtMotDePasse.Name = "txtMotDePasse";
             txtMotDePasse.PasswordChar = '*';
             txtMotDePasse.Size = new Size(203, 23);
@@ -75,7 +85,7 @@
             // 
             // btnConnexion
             // 
-            btnConnexion.Location = new Point(36, 199);
+            btnConnexion.Location = new Point(33, 375);
             btnConnexion.Name = "btnConnexion";
             btnConnexion.Size = new Size(99, 42);
             btnConnexion.TabIndex = 4;
@@ -85,7 +95,7 @@
             // 
             // btnAnnuler
             // 
-            btnAnnuler.Location = new Point(141, 199);
+            btnAnnuler.Location = new Point(246, 375);
             btnAnnuler.Name = "btnAnnuler";
             btnAnnuler.Size = new Size(99, 42);
             btnAnnuler.TabIndex = 5;
@@ -93,20 +103,113 @@
             btnAnnuler.UseVisualStyleBackColor = true;
             btnAnnuler.Click += btnAnnuler_Click;
             // 
+            // txtServeur
+            // 
+            txtServeur.Location = new Point(33, 46);
+            txtServeur.Name = "txtServeur";
+            txtServeur.Size = new Size(203, 23);
+            txtServeur.TabIndex = 7;
+            txtServeur.MaskInputRejected += txtServeur_MaskInputRejected_1;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(33, 28);
+            label3.Name = "label3";
+            label3.Size = new Size(52, 15);
+            label3.TabIndex = 6;
+            label3.Text = "Serveur :";
+            // 
+            // txtPort
+            // 
+            txtPort.Location = new Point(261, 46);
+            txtPort.Name = "txtPort";
+            txtPort.Size = new Size(84, 23);
+            txtPort.TabIndex = 9;
+            txtPort.MaskInputRejected += txtPort_MaskInputRejected;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(261, 28);
+            label4.Name = "label4";
+            label4.Size = new Size(35, 15);
+            label4.TabIndex = 8;
+            label4.Text = "Port :";
+            // 
+            // txtBaseDonnee
+            // 
+            txtBaseDonnee.Location = new Point(33, 142);
+            txtBaseDonnee.Name = "txtBaseDonnee";
+            txtBaseDonnee.Size = new Size(203, 23);
+            txtBaseDonnee.TabIndex = 11;
+            txtBaseDonnee.MaskInputRejected += txtBaseDonnee_MaskInputRejected_1;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(33, 124);
+            label5.Name = "label5";
+            label5.Size = new Size(96, 15);
+            label5.TabIndex = 10;
+            label5.Text = "Base de donnée :";
+            // 
+            // btnEnregistrer
+            // 
+            btnEnregistrer.Location = new Point(138, 375);
+            btnEnregistrer.Name = "btnEnregistrer";
+            btnEnregistrer.Size = new Size(101, 42);
+            btnEnregistrer.TabIndex = 12;
+            btnEnregistrer.Text = "Enregistrer";
+            btnEnregistrer.UseVisualStyleBackColor = true;
+            btnEnregistrer.Click += btnEnregistrer_Click_1;
+            // 
+            // pictureEMT
+            // 
+            pictureEMT.Image = Properties.Resources.emt;
+            pictureEMT.Location = new Point(212, 86);
+            pictureEMT.Name = "pictureEMT";
+            pictureEMT.Size = new Size(629, 136);
+            pictureEMT.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureEMT.TabIndex = 13;
+            pictureEMT.TabStop = false;
+            pictureEMT.Click += pictureEMT_Click;
+            // 
+            // labelTitre
+            // 
+            labelTitre.AutoSize = true;
+            labelTitre.Font = new Font("Segoe UI Symbol", 27.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelTitre.Location = new Point(261, 247);
+            labelTitre.Name = "labelTitre";
+            labelTitre.Size = new Size(494, 50);
+            labelTitre.TabIndex = 14;
+            labelTitre.Text = "M3 - Application Gestion Lot";
+            labelTitre.Click += labelTitre_Click;
+            // 
             // FormLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(labelTitre);
+            Controls.Add(btnEnregistrer);
+            Controls.Add(txtBaseDonnee);
+            Controls.Add(label5);
+            Controls.Add(txtPort);
+            Controls.Add(label4);
+            Controls.Add(txtServeur);
+            Controls.Add(label3);
             Controls.Add(btnAnnuler);
             Controls.Add(btnConnexion);
             Controls.Add(txtMotDePasse);
             Controls.Add(txtUtilisateur);
             Controls.Add(label2);
             Controls.Add(label1);
+            Controls.Add(pictureEMT);
             Name = "FormLogin";
             Text = "FormLogin";
             Load += FormLogin_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureEMT).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -119,5 +222,14 @@
         private MaskedTextBox txtMotDePasse;
         private Button btnConnexion;
         private Button btnAnnuler;
+        private MaskedTextBox txtServeur;
+        private Label label3;
+        private MaskedTextBox txtPort;
+        private Label label4;
+        private MaskedTextBox txtBaseDonnee;
+        private Label label5;
+        private Button btnEnregistrer;
+        private PictureBox pictureEMT;
+        private Label labelTitre;
     }
 }
