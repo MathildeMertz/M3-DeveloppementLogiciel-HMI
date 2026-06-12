@@ -283,13 +283,28 @@ namespace App_Gestion_lots_M3.UI
 
             try
             {
-                // Licence communautaire gratuite
                 QuestPDF.Settings.License = LicenseType.Community;
 
                 string nomLot = cboSelectLot.SelectedItem.ToString();
                 string dateExport = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
-                // Copie les lignes du tableau
+                // Récupérer le lot pour avoir la recette
+                Lot lotActuel = null;
+                foreach (Lot l in LotManager.GetLots())
+                {
+                    if (l.LOT_Nom == nomLot)
+                    {
+                        lotActuel = l;
+                        break;
+                    }
+                }
+
+                // Récupérer les opérations de la recette du lot
+                List<Operation> operations = new List<Operation>();
+                if (lotActuel != null)
+                    operations = OperationManager.GetOperations(lotActuel.Id_Recette);
+
+                // Copie les lignes du tableau événements
                 List<string[]> lignes = new List<string[]>();
                 foreach (DataGridViewRow row in dgvEvenements.Rows)
                 {
@@ -308,7 +323,6 @@ namespace App_Gestion_lots_M3.UI
 
                         page.Content().Column(col =>
                         {
-                            // Titre
                             col.Item().Text("Historique de Tracabilite - Lot : " + nomLot)
                                 .FontSize(16);
 
@@ -338,6 +352,51 @@ namespace App_Gestion_lots_M3.UI
                                     table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(ligne[2]).FontSize(9);
                                 }
                             });
+
+                            if (lotActuel != null)
+                            {
+                                col.Item().PaddingTop(25).Text("Recette associee : " + lotActuel.REC_Nom)
+                                    .FontSize(13);
+
+                                col.Item().PaddingTop(5).Text("Nombre d'operations : " + operations.Count)
+                                    .FontSize(10);
+
+                                col.Item().PaddingTop(10).Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.RelativeColumn(1); // No
+                                        columns.RelativeColumn(3); // Nom
+                                        columns.RelativeColumn(2); // Position
+                                        columns.RelativeColumn(2); // Sens
+                                        columns.RelativeColumn(2); // Temps
+                                        columns.RelativeColumn(2); // Cycle vérin
+                                        columns.RelativeColumn(2); // Quittance
+                                    });
+
+                                    table.Header(header =>
+                                    {
+                                        header.Cell().Background("#CCCCCC").Padding(5).Text("No").FontSize(10);
+                                        header.Cell().Background("#CCCCCC").Padding(5).Text("Nom").FontSize(10);
+                                        header.Cell().Background("#CCCCCC").Padding(5).Text("Position").FontSize(10);
+                                        header.Cell().Background("#CCCCCC").Padding(5).Text("Sens").FontSize(10);
+                                        header.Cell().Background("#CCCCCC").Padding(5).Text("Temps (s)").FontSize(10);
+                                        header.Cell().Background("#CCCCCC").Padding(5).Text("Cycle verin").FontSize(10);
+                                        header.Cell().Background("#CCCCCC").Padding(5).Text("Quittance").FontSize(10);
+                                    });
+
+                                    foreach (Operation op in operations)
+                                    {
+                                        table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(op.noOpe.ToString()).FontSize(9);
+                                        table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(op.nomOpe).FontSize(9);
+                                        table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(op.posMoteurOpe.ToString()).FontSize(9);
+                                        table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(op.sensMoteurOpe.ToString()).FontSize(9);
+                                        table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(op.tempsAttenteOpe.ToString()).FontSize(9);
+                                        table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(op.cycleVerrinOpe.ToString()).FontSize(9);
+                                        table.Cell().BorderBottom(1).BorderColor("#DDDDDD").Padding(5).Text(op.quittanceOpe ? "Oui" : "Non").FontSize(9);
+                                    }
+                                });
+                            }
                         });
                     });
                 }).GeneratePdf(saveDialog.FileName);

@@ -28,6 +28,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
                    OR EVE_Message LIKE '%erreur%'
                    OR EVE_Message LIKE '%alarme%'
                    OR EVE_Message LIKE '%barrière%'
+                   OR EVE_Message LIKE '%supprimé%'
                )
                ORDER BY EVE_DateHeure DESC";
 
@@ -75,6 +76,25 @@ namespace App_Gestion_lots_M3.AccesDonnees
 
             return evenements;
         }
+        /// <summary>
+        /// Ajoute un événement de traçabilité pour un lot
+        /// </summary>
+        /// <param name="idLot">Identifiant du lot</param>
+        /// <param name="message">Message de l'événement</param>
+        public static void AjouterEvenement(int idLot, string message)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
 
+            string sql = @"INSERT INTO Evenement (EVE_DateHeure, EVE_Message, Id_Lot)
+                   VALUES (@dateHeure, @message, @idLot)";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@dateHeure", DateTime.Now);
+                cmd.Parameters.AddWithValue("@message", message);
+                cmd.Parameters.AddWithValue("@idLot", idLot);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
