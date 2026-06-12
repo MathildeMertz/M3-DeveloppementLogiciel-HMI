@@ -38,7 +38,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
         /// <summary>
         /// connection à la base de données, si elle n'est pas déjà établie, sinon retourne la connexion existante
         /// </summary>
-        /// <returns></returns>
+        /// <returns> Objet MySqlConnection représentant la connexion active à la base de données </returns>
         public static MySqlConnection GetDBConnection()
         {
             return _connection;
@@ -47,7 +47,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
         /// <summary>
         /// Vérifie si la connexion à la base de données est établie et ouverte
         /// </summary>
-        /// <returns></returns>
+        /// <returns> true si la connexion existe et est ouverte ; sinon false </returns>
         public static bool IsConnected()
         {
             return _connection != null && _connection.State == System.Data.ConnectionState.Open;

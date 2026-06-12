@@ -8,15 +8,16 @@ namespace App_Gestion_lots_M3.UI
 {
     public partial class FormDetailsRecette : Form
     {
-        // ================================================
-        // VARIABLES
-        // ================================================
+
         private List<Recette> listeRecettes;
         private string recetteInitiale;
 
-        // ================================================
-        // CONSTRUCTEUR
-        // ================================================
+        /// <summary>
+        /// Initialise le formulaire de consultation des recettes.
+        /// Charge la liste des recettes, positionne la sélection initiale
+        /// et affiche les informations correspondantes.
+        /// </summary>
+        /// <param name="nomRecette">Nom de la recette à sélectionner à l’ouverture</param>
         public FormDetailsRecette(string nomRecette)
         {
             InitializeComponent();
@@ -49,9 +50,9 @@ namespace App_Gestion_lots_M3.UI
             AfficherRecette(indexInitial);
         }
 
-        // ================================================
-        // INITIALISATION DU COMBOBOX
-        // ================================================
+        /// <summary>
+        /// Remplit la ComboBox avec la liste des noms de recettes disponibles.
+        /// </summary>
         private void RemplirComboBox()
         {
             cboSelectRecette.Items.Clear();
@@ -61,9 +62,12 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // AFFICHAGE D'UNE RECETTE
-        // ================================================
+        /// <summary>
+        /// Affiche les informations détaillées d’une recette sélectionnée
+        /// (nom, date de création, opérations associées).
+        /// Met également à jour les éléments de navigation.
+        /// </summary>
+        /// <param name="index">Index de la recette dans la liste</param>
         private void AfficherRecette(int index)
         {
             if (index < 0 || index >= listeRecettes.Count) return;
@@ -88,13 +92,12 @@ namespace App_Gestion_lots_M3.UI
             ChargerOperations(recette.Id_Recette);
         }
 
-        // ================================================
-        // CHARGEMENT DES OPÉRATIONS
-        // ================================================
+
         /// <summary>
-        /// Charge les opérations de la recette dans le DataGridView
+        /// Charge et affiche les opérations associées à une recette
+        /// dans le DataGridView.
         /// </summary>
-        /// <param name="idRecette">Identifiant de la recette</param>
+        /// <param name="idRecette">Identifiant unique de la recette</param>
         private void ChargerOperations(int idRecette)
         {
             dgvOperations.Rows.Clear();
@@ -116,29 +119,45 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // ÉVÉNEMENTS NAVIGATION
-        // ================================================
+        /// <summary>
+        /// Gère le changement de sélection dans la ComboBox.
+        /// Met à jour l’affichage de la recette correspondante.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cboSelectRecette_SelectedIndexChanged(object sender, EventArgs e)
         {
             AfficherRecette(cboSelectRecette.SelectedIndex);
         }
 
+        /// <summary>
+        /// Permet de naviguer vers la recette précédente dans la liste.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPrecedent_Click(object sender, EventArgs e)
         {
             if (cboSelectRecette.SelectedIndex > 0)
                 AfficherRecette(cboSelectRecette.SelectedIndex - 1);
         }
 
+        /// <summary>
+        /// Permet de naviguer vers la recette suivante dans la liste.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSuivant_Click(object sender, EventArgs e)
         {
             if (cboSelectRecette.SelectedIndex < listeRecettes.Count - 1)
                 AfficherRecette(cboSelectRecette.SelectedIndex + 1);
         }
 
-        // ================================================
-        // ÉVÉNEMENTS BOUTONS
-        // ================================================
+        /// <summary>
+        /// Ouvre le formulaire de modification de la recette sélectionnée.
+        /// Recharge ensuite les données après modification.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnModifierRecette_Click(object sender, EventArgs e)
         {
             Recette recetteActuelle = listeRecettes[cboSelectRecette.SelectedIndex];
@@ -153,15 +172,26 @@ namespace App_Gestion_lots_M3.UI
             this.Show();
         }
 
+        /// <summary>
+        /// Ferme le formulaire courant.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnFermer_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        // ================================================
-        // ÉVÉNEMENTS NON UTILISÉS
-        // ================================================
+        /// <summary>
+        /// Événement déclenché au chargement du formulaire.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FormDetailsRecette_Load(object sender, EventArgs e) { }
+
+        /// <summary>
+        /// Événements techniques liés à l’interface (non utilisés).
+        /// </summary>
         private void label1_Click(object sender, EventArgs e) { }
         private void label5_Click(object sender, EventArgs e) { }
         private void label6_Click(object sender, EventArgs e) { }
@@ -170,6 +200,11 @@ namespace App_Gestion_lots_M3.UI
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) { }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) { }
 
+        /// <summary>
+        /// Événement lié à l’interaction avec le DataGridView des opérations.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgvOperations_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
