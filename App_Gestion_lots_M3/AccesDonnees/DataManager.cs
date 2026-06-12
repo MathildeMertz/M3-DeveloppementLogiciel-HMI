@@ -31,8 +31,16 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 cmd.Parameters.AddWithValue("@idEtat", idEtatLot);
                 cmd.Parameters.AddWithValue("@idRecette", idRecette);
 
-                // L'exception remonte au formulaire qui affiche le MessageBox
-                cmd.ExecuteNonQuery();
+                try {
+                    // L'exception remonte au formulaire qui affiche le MessageBox
+                    cmd.ExecuteNonQuery();
+
+                } 
+                catch(Exception erreurInsertLot)
+                {
+                    Console.WriteLine("Erreur lors de l'insertion d'un lot : " + erreurInsertLot.Message);
+                }
+                
             }
         }
 
@@ -86,7 +94,15 @@ namespace App_Gestion_lots_M3.AccesDonnees
                         else
                             eve.idLot = reader.GetInt32("Id_Lot");
 
-                        evenements.Add(eve);
+                        try
+                        {
+                            evenements.Add(eve);
+
+                        } catch(Exception erreurLectureEven) {
+                            Console.WriteLine("Erreur lors de la lecture d’un événement : " + erreurLectureEven.Message);
+                        }
+
+                        
                     }
                 }
             }
