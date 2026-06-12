@@ -133,12 +133,12 @@ namespace App_Gestion_lots_M3.AccesDonnees
         }
 
         /// <summary>
-        /// 
+        /// permet de modifier les lots 
         /// </summary>
-        /// <param name="nomLot"></param>
-        /// <param name="quantite"></param>
-        /// <param name="idEtat"></param>
-        /// <param name="idRecette"></param>
+        /// <param name="nomLot"> nom du lot </param>
+        /// <param name="quantite"> quantité de pièces dans le lot</param>
+        /// <param name="idEtat"> identifiant de l'état </param>
+        /// <param name="idRecette"> identifiant de la recette </param>
         public static void ModifierLot(string nomLot, int quantite, int idEtat, int idRecette)
         {
             MySqlConnection conn = DbManager.GetDBConnection();
@@ -166,9 +166,9 @@ namespace App_Gestion_lots_M3.AccesDonnees
         }
 
         /// <summary>
-        /// 
+        /// supression d'un lot 
         /// </summary>
-        /// <param name="nomLot"></param>
+        /// <param name="nomLot"> nom du lot </param>
         public static void SupprimerLot(string nomLot)
         {
             MySqlConnection conn = DbManager.GetDBConnection();
