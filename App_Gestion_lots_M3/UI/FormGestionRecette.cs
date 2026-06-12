@@ -97,7 +97,7 @@ namespace App_Gestion_lots_M3.UI
         private void ChargerOperations()
         {
             dgvOperations.Rows.Clear();
-            List<Operation> operations = DataManager.GetOperations(recetteEnCours.Id_Recette);
+            List<Operation> operations = OperationManager.GetOperations(recetteEnCours.Id_Recette);
 
             foreach (Operation op in operations)
             {
