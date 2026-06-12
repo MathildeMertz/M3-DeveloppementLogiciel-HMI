@@ -105,5 +105,20 @@ namespace App_Gestion_lots_M3.AccesDonnees
 
             return operations;
         }
+        /// <summary>
+        /// Retourne le nombre d'opérations d'une recette
+        /// </summary>
+        /// <param name="idRecette">Id de la recette</param>
+        /// <returns>Nombre d'opérations</returns>
+        public static int GetNombreOperations(int idRecette)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+            string sql = "SELECT COUNT(*) FROM Contenir WHERE Id_Recette = @idRecette";
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idRecette", idRecette);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
     }
 }

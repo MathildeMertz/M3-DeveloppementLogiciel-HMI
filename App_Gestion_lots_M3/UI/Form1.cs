@@ -55,9 +55,11 @@ namespace App_Gestion_lots_M3
             List<Recette> recettes = RecetteManager.GetRecettes();
             foreach (Recette recette in recettes)
             {
+                int nbOperations = OperationManager.GetNombreOperations(recette.Id_Recette);
                 dgvRecettes.Rows.Add(
                     recette.REC_Nom,
-                    recette.REC_DateHeureCreation.ToString("dd/MM/yyyy HH:mm")
+                    recette.REC_DateHeureCreation.ToString("dd/MM/yyyy HH:mm"),
+                    nbOperations
                 );
             }
         }

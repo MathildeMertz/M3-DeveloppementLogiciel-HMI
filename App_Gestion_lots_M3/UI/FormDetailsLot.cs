@@ -160,12 +160,15 @@ namespace App_Gestion_lots_M3.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <summary>
+        /// Met le lot en état "En erreur" avec le message "Supprimé" pour conserver la traçabilité
+        /// </summary>
         private void btnSupprimer_Click(object sender, EventArgs e)
         {
             if (listeLots == null || listeLots.Count == 0 || cboSelectLot.SelectedIndex < 0)
             {
                 MessageBox.Show("Aucun lot sélectionné.",
-                    "Suppression impossible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    "Impossible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -175,32 +178,37 @@ namespace App_Gestion_lots_M3.UI
             if (lotActuel.ETA_Libelle != "En attente")
             {
                 MessageBox.Show("Seuls les lots en attente peuvent être supprimés.",
-                    "Suppression impossible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    "Impossible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             DialogResult reponse = MessageBox.Show(
-                "Êtes-vous sûr de vouloir supprimer le lot " + lotActuel.LOT_Nom + " ?",
+                "Voulez-vous vraiment supprimer le lot \"" + lotActuel.LOT_Nom + "\" ?\nLe lot sera marqué comme supprimé.",
                 "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if (reponse == DialogResult.Yes)
-            {
-                LotManager.SupprimerLot(lotActuel.LOT_Nom);
+            if (reponse != DialogResult.Yes) return;
 
-                MessageBox.Show("Lot supprimé avec succès.",
+            try
+            {
+                // Passer l'état à "En erreur"
+                int idErreur = EtatManager.GetIdEtat("En erreur");
+                LotManager.ModifierLot(lotActuel.LOT_Nom, lotActuel.LOT_Quantite, idErreur, lotActuel.Id_Recette);
+
+                // Ajouter un événement de traçabilité
+                EvenementManager.AjouterEvenement(lotActuel.idLot, "Supprimé");
+
+                MessageBox.Show("Lot marqué comme supprimé.",
                     "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Recharger la liste
+                // Recharger
                 listeLots = LotManager.GetLots();
-
-                if (listeLots.Count == 0)
-                {
-                    this.Close();
-                    return;
-                }
-
                 RemplirComboBox();
                 AfficherLot(0);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur : " + ex.Message,
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
