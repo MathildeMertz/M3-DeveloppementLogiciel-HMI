@@ -43,7 +43,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 }
 
                 // 2 — Lier l'opération à la recette via la table contenir
-                string sqlContenir = @"INSERT INTO contenir (Id_Operation_est_contenu_dans, Id_Recette, CON_NoOperation)
+                string sqlContenir = @"INSERT INTO Contenir (Id_Operation_est_contenu_dans, Id_Recette, CON_NoOperation)
                                 VALUES (@idOperation, @idRecette, @noOperation)";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlContenir, conn, transaction))
@@ -70,7 +70,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
             string sql = @"SELECT o.Id_Operation, o.OPE_Nom, o.OPE_PositionMoteur, o.OPE_SensMoteur,
                           o.OPE_TempsAttente, o.OPE_CycleVerin, o.OPE_Quittance, c.CON_NoOperation
                    FROM Operation o
-                   JOIN contenir c ON o.Id_Operation = c.Id_Operation_est_contenu_dans
+                   JOIN Contenir c ON o.Id_Operation = c.Id_Operation_est_contenu_dans
                    WHERE c.Id_Recette = @idRecette
                    ORDER BY c.CON_NoOperation";
 

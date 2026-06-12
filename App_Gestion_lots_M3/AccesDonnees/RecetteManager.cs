@@ -60,7 +60,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
             try
             {
                 // 1 — Supprimer les liens dans contenir
-                string deleteContenir = "DELETE FROM contenir WHERE Id_Recette = @idRecette";
+                string deleteContenir = "DELETE FROM Contenir WHERE Id_Recette = @idRecette";
                 using (MySqlCommand cmd = new MySqlCommand(deleteContenir, conn, transaction))
                 {
                     cmd.Parameters.AddWithValue("@idRecette", idRecette);
@@ -134,7 +134,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
             try
             {
                 // 1 — Supprimer les liens dans contenir
-                string sqlContenir = "DELETE FROM contenir WHERE Id_Recette = @idRecette";
+                string sqlContenir = "DELETE FROM Contenir WHERE Id_Recette = @idRecette";
                 using (MySqlCommand cmd = new MySqlCommand(sqlContenir, conn, transaction))
                 {
                     cmd.Parameters.AddWithValue("@idRecette", idRecette);

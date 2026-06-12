@@ -45,6 +45,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
         {
             MySqlConnection conn = DbManager.GetDBConnection();
             string sql = "SELECT Id_Etat FROM Etat WHERE ETA_Libelle = @libelle LIMIT 1";
+
             using (MySqlCommand cmd = new MySqlCommand(sql, conn))
             {
                 cmd.Parameters.AddWithValue("@libelle", libelleEtat);

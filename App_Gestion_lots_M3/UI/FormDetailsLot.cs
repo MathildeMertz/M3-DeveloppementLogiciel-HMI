@@ -162,6 +162,13 @@ namespace App_Gestion_lots_M3.UI
         /// <param name="e"></param>
         private void btnSupprimer_Click(object sender, EventArgs e)
         {
+            if (listeLots == null || listeLots.Count == 0 || cboSelectLot.SelectedIndex < 0)
+            {
+                MessageBox.Show("Aucun lot sélectionné.",
+                    "Suppression impossible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Lot lotActuel = listeLots[cboSelectLot.SelectedIndex];
 
             // Vérifier que le lot est en attente
