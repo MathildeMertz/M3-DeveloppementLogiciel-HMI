@@ -23,7 +23,7 @@ namespace App_Gestion_lots_M3.UI
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
             recetteInitiale = nomRecette;
-            listeRecettes = DataManager.GetRecettes();
+            listeRecettes = RecetteManager.GetRecettes();
 
             // Désactiver l'événement pendant le chargement
             cboSelectRecette.SelectedIndexChanged -= cboSelectRecette_SelectedIndexChanged;
@@ -101,7 +101,7 @@ namespace App_Gestion_lots_M3.UI
         private void ChargerOperations(int idRecette)
         {
             dgvOperations.Rows.Clear();
-            List<Operation> operations = DataManager.GetOperations(idRecette);
+            List<Operation> operations = OperationManager.GetOperations(idRecette);
             lblNbOperation.Text = operations.Count.ToString();
 
             foreach (Operation op in operations)
@@ -167,7 +167,7 @@ namespace App_Gestion_lots_M3.UI
             formGestionRecette.WindowState = FormWindowState.Maximized;
             formGestionRecette.ShowDialog();
 
-            listeRecettes = DataManager.GetRecettes();
+            listeRecettes = RecetteManager.GetRecettes();
             AfficherRecette(cboSelectRecette.SelectedIndex);
             this.Show();
         }
@@ -221,7 +221,7 @@ namespace App_Gestion_lots_M3.UI
             Recette recette = listeRecettes[index];
 
             // Vérifier si la recette est utilisée dans un lot
-            if (DataManager.RecetteEstUtilisee(recette.REC_Nom))
+            if (RecetteManager.RecetteEstUtilisee(recette.REC_Nom))
             {
                 MessageBox.Show(
                     "Cette recette est utilisée dans un ou plusieurs lots.\nSuppression impossible.",
@@ -242,13 +242,13 @@ namespace App_Gestion_lots_M3.UI
 
             try
             {
-                DataManager.SupprimerRecette(recette.Id_Recette, recette.REC_Nom);
+                RecetteManager.SupprimerRecette(recette.Id_Recette, recette.REC_Nom);
 
                 MessageBox.Show("Recette supprimée avec succès.",
                     "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Recharger la liste
-                listeRecettes = DataManager.GetRecettes();
+                listeRecettes = RecetteManager.GetRecettes();
                 RemplirComboBox();
 
                 if (listeRecettes.Count > 0)

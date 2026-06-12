@@ -74,7 +74,7 @@ namespace App_Gestion_lots_M3.UI
         /// </summary>
         private void CalculerStatistiques()
         {
-            List<Lot> lots = DataManager.GetLots();
+            List<Lot> lots = LotManager.GetLots();
 
             _enAttente = 0;
             _enProduction = 0;

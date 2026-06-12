@@ -95,7 +95,7 @@ namespace App_Gestion_lots_M3.UI
         private void ChargerComboBoxLots()
         {
             cboSelectLot.Items.Clear();
-            List<Lot> lots = DataManager.GetLots();
+            List<Lot> lots = LotManager.GetLots();
             foreach (Lot lot in lots)
             {
                 cboSelectLot.Items.Add(lot.LOT_Nom);
@@ -117,7 +117,7 @@ namespace App_Gestion_lots_M3.UI
             string nomLot = cboSelectLot.SelectedItem.ToString();
 
             // Trouver le lot correspondant
-            List<Lot> lots = DataManager.GetLots();
+            List<Lot> lots = LotManager.GetLots();
             Lot lotTrouve = null;
             foreach (Lot lot in lots)
             {
@@ -131,7 +131,7 @@ namespace App_Gestion_lots_M3.UI
             if (lotTrouve == null) return;
 
             // Charger tous les événements du lot
-            tousEvenements = DataManager.GetEvenements(lotTrouve.idLot);
+            tousEvenements = EvenementManager.GetEvenements(lotTrouve.idLot);
 
             // Appliquer les filtres
             AppliquerFiltres();

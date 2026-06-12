@@ -1,4 +1,5 @@
-﻿using App_Gestion_lots_M3.Model;
+﻿using App_Gestion_lots_M3.AccesDonnees;
+using App_Gestion_lots_M3.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +20,7 @@ namespace App_Gestion_lots_M3.UI
         public FormDetailsLot(string nomLot = null)
         {
             InitializeComponent();
-            listeLots = AccesDonnees.DataManager.GetLots();
+            listeLots = LotManager.GetLots();
             RemplirComboBox();
 
             if (listeLots.Count == 0) return;
@@ -83,7 +84,7 @@ namespace App_Gestion_lots_M3.UI
         {
             dataGridView1.Rows.Clear();
 
-            List<Evenement> evenements = AccesDonnees.DataManager.GetEvenements(idLot);
+            List<Evenement> evenements = EvenementManager.GetEvenements(idLot);
             foreach (Evenement evt in evenements)
             {
                 dataGridView1.Rows.Add(
@@ -145,7 +146,7 @@ namespace App_Gestion_lots_M3.UI
             formGestionLot.ShowDialog();
 
             // Recharger les lots après modification
-            listeLots = AccesDonnees.DataManager.GetLots();
+            listeLots = LotManager.GetLots();
             AfficherLot(cboSelectLot.SelectedIndex);
             this.Show();
         }
@@ -177,13 +178,13 @@ namespace App_Gestion_lots_M3.UI
 
             if (reponse == DialogResult.Yes)
             {
-                AccesDonnees.DataManager.SupprimerLot(lotActuel.LOT_Nom);
+                LotManager.SupprimerLot(lotActuel.LOT_Nom);
 
                 MessageBox.Show("Lot supprimé avec succès.",
                     "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Recharger la liste
-                listeLots = AccesDonnees.DataManager.GetLots();
+                listeLots = LotManager.GetLots();
 
                 if (listeLots.Count == 0)
                 {
