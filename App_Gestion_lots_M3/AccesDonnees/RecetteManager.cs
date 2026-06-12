@@ -68,7 +68,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 }
 
                 // 2 — Insérer les nouvelles opérations
-                InsererOperations(idRecette, operations, conn, transaction);
+                OperationManager.InsererOperations(idRecette, operations, conn, transaction);
 
                 transaction.Commit();
             }
@@ -165,7 +165,7 @@ namespace App_Gestion_lots_M3.AccesDonnees
         /// <returns>True si utilisée, false sinon</returns>
         public static bool RecetteEstUtilisee(string nomRecette)
         {
-            List<Lot> lots = GetLots();
+            List<Lot> lots = LotManager.GetLots();
             foreach (Lot lot in lots)
             {
                 if (lot.REC_Nom == nomRecette)
