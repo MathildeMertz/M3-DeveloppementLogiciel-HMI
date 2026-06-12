@@ -34,7 +34,7 @@ namespace App_Gestion_lots_M3
         private void ChargerLots()
         {
             dgvLots.Rows.Clear();
-            List<Lot> lots = DataManager.GetLots();
+            List<Lot> lots = LotManager.GetLots();
             foreach (Lot lot in lots)
             {
                 dgvLots.Rows.Add(
@@ -52,7 +52,7 @@ namespace App_Gestion_lots_M3
         private void ChargerRecettes()
         {
             dgvRecettes.Rows.Clear();
-            List<Recette> recettes = DataManager.GetRecettes();
+            List<Recette> recettes = RecetteManager.GetRecettes();
             foreach (Recette recette in recettes)
             {
                 dgvRecettes.Rows.Add(
@@ -71,10 +71,10 @@ namespace App_Gestion_lots_M3
 
             // Récupère tous les événements de tous les lots
             List<Evenement> tousEvenements = new List<Evenement>();
-            List<Lot> lots = DataManager.GetLots();
+            List<Lot> lots = LotManager.GetLots();
             foreach (Lot lot in lots)
             {
-                List<Evenement> evts = DataManager.GetEvenements(lot.idLot);
+                List<Evenement> evts = EvenementManager.GetEvenements(lot.idLot);
                 foreach (Evenement evt in evts)
                     tousEvenements.Add(evt);
             }

@@ -97,7 +97,7 @@ namespace App_Gestion_lots_M3.UI
         private void ChargerOperations()
         {
             dgvOperations.Rows.Clear();
-            List<Operation> operations = DataManager.GetOperations(recetteEnCours.Id_Recette);
+            List<Operation> operations = OperationManager.GetOperations(recetteEnCours.Id_Recette);
 
             foreach (Operation op in operations)
             {
@@ -166,7 +166,7 @@ namespace App_Gestion_lots_M3.UI
         /// <returns>True si le nom existe déjà, false sinon</returns>
         private bool NomRecetteExisteDeja(string nomRecette)
         {
-            List<Recette> recettes = DataManager.GetRecettes();
+            List<Recette> recettes = RecetteManager.GetRecettes();
             foreach (Recette r in recettes)
             {
                 if (r.REC_Nom.ToLower() == nomRecette.ToLower())
@@ -374,13 +374,13 @@ namespace App_Gestion_lots_M3.UI
 
                 if (estNouvelleRecette)
                 {
-                    DataManager.AjouterRecette(txtNomRecette.Text.Trim(), operations);
+                    RecetteManager.AjouterRecette(txtNomRecette.Text.Trim(), operations);
                     MessageBox.Show("Recette enregistrée avec succès.",
                         "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    DataManager.ModifierRecette(recetteEnCours.Id_Recette, operations);
+                    RecetteManager.ModifierRecette(recetteEnCours.Id_Recette, operations);
                     MessageBox.Show("Recette modifiée avec succès.",
                         "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

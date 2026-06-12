@@ -1,3 +1,4 @@
+using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.UI;
 
 namespace App_Gestion_lots_M3
@@ -9,6 +10,8 @@ namespace App_Gestion_lots_M3
         {
             ApplicationConfiguration.Initialize();
 
+            Application.ApplicationExit += (s, e) => DbManager.CloseDBConnection();
+
             // Ouvre le login d'abord
             FormLogin formLogin = new FormLogin();
             if (formLogin.ShowDialog() == DialogResult.OK)
@@ -16,6 +19,8 @@ namespace App_Gestion_lots_M3
                 // Login réussi → ouvre Form1
                 Application.Run(new Form1());
             }
+
+            
         }
     }
 }

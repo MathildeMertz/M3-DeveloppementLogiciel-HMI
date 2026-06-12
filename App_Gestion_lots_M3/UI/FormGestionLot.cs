@@ -64,7 +64,7 @@ namespace App_Gestion_lots_M3.UI
         private void RemplirComboBoxRecette()
         {
             cboRecette.Items.Clear();
-            List<Recette> recettes = DataManager.GetRecettes();
+            List<Recette> recettes = RecetteManager.GetRecettes();
             foreach (Recette recette in recettes)
             {
                 cboRecette.Items.Add(recette.REC_Nom);
@@ -159,7 +159,7 @@ namespace App_Gestion_lots_M3.UI
         /// <returns>True si le nom existe déjà, false sinon</returns>
         private bool NomLotExisteDeja(string nomLot)
         {
-            List<Lot> lots = DataManager.GetLots();
+            List<Lot> lots = LotManager.GetLots();
             foreach (Lot lot in lots)
             {
                 if (lot.LOT_Nom.ToLower() == nomLot.ToLower())
@@ -193,11 +193,11 @@ namespace App_Gestion_lots_M3.UI
             {
                 // L'état est toujours "En attente" à la création
                 // C'est la machine virtuelle qui gère l'état ensuite
-                DataManager.AjouterLot(
+                LotManager.AjouterLot(
                     txtNomLot.Text,
                     int.Parse(txtQuantite.Text),
-                    DataManager.GetIdEtat("En attente"),
-                    DataManager.GetIdRecette(cboRecette.SelectedItem.ToString())
+                    EtatManager.GetIdEtat("En attente"),
+                    RecetteManager.GetIdRecette(cboRecette.SelectedItem.ToString())
                 );
 
                 MessageBox.Show("Lot enregistré avec succès !",
@@ -223,11 +223,11 @@ namespace App_Gestion_lots_M3.UI
             try
             {
                 // On garde l'état actuel du lot lors d'une modification
-                DataManager.ModifierLot(
+                LotManager.ModifierLot(
                     lotEnCours.LOT_Nom,
                     int.Parse(txtQuantite.Text),
                     lotEnCours.Id_Etat,
-                    DataManager.GetIdRecette(cboRecette.SelectedItem.ToString())
+                    RecetteManager.GetIdRecette(cboRecette.SelectedItem.ToString())
                 );
 
                 MessageBox.Show("Lot modifié avec succès !",
@@ -253,7 +253,7 @@ namespace App_Gestion_lots_M3.UI
 
             // Recharge les recettes et sélectionne la dernière créée
             cboRecette.Items.Clear();
-            foreach (Recette recette in DataManager.GetRecettes())
+            foreach (Recette recette in RecetteManager.GetRecettes())
             {
                 cboRecette.Items.Add(recette.REC_Nom);
             }
