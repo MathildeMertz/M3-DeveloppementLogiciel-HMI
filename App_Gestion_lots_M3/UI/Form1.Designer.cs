@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             tabControl1 = new TabControl();
             Lots = new TabPage();
             btnDetailLot = new Button();
@@ -261,6 +262,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(960, 366);
             Controls.Add(tabControl1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(2);
             Name = "Form1";
             Text = "Accueil";

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStatistiques));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -181,6 +182,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(panelDonut);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormStatistiques";
             Text = "Statistiques";
             Load += FormStatistiques_Load;

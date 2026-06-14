@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             label1 = new Label();
             label2 = new Label();
             txtUtilisateur = new MaskedTextBox();
@@ -206,6 +207,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(pictureEMT);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormLogin";
             Text = "FormLogin";
             Load += FormLogin_Load;

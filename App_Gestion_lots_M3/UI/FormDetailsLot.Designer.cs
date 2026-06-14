@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDetailsLot));
             label1 = new Label();
             lblRecette = new Label();
             label3 = new Label();
@@ -303,6 +304,7 @@
             Controls.Add(label3);
             Controls.Add(lblRecette);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormDetailsLot";
             Text = "Détails du Lot";
             WindowState = FormWindowState.Maximized;
