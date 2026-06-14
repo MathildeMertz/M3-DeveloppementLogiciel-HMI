@@ -249,6 +249,35 @@ namespace App_Gestion_lots_M3
             this.Show();
         }
 
+        /// <summary>
+        /// Colorie la cellule de l'état selon sa valeur
+        /// </summary>
+        private void dgvLots_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvLots.Columns[e.ColumnIndex].Name != "colEtat") return;
+            if (e.Value == null) return;
+
+            switch (e.Value.ToString())
+            {
+                case "En attente":
+                    e.CellStyle.BackColor = Color.FromArgb(255, 200, 50);
+                    e.CellStyle.ForeColor = Color.FromArgb(100, 70, 0);
+                    break;
+                case "En production":
+                    e.CellStyle.BackColor = Color.FromArgb(50, 130, 210);
+                    e.CellStyle.ForeColor = Color.White;
+                    break;
+                case "Terminé":
+                    e.CellStyle.BackColor = Color.FromArgb(80, 190, 120);
+                    e.CellStyle.ForeColor = Color.White;
+                    break;
+                case "En erreur":
+                    e.CellStyle.BackColor = Color.FromArgb(220, 70, 70);
+                    e.CellStyle.ForeColor = Color.White;
+                    break;
+            }
+        }
+
         // ================================================
         // ÉVÉNEMENTS NON UTILISÉS
         // ================================================

@@ -110,6 +110,7 @@
             dgvLots.TabIndex = 0;
             dgvLots.CellContentClick += dgvLots_CellContentClick;
             dgvLots.CellDoubleClick += dgvLots_CellDoubleClick;
+            dgvLots.CellFormatting += dgvLots_CellFormatting;
             // 
             // colNomLot
             // 
@@ -248,7 +249,7 @@
             // btnVoirTracabilite
             // 
             btnVoirTracabilite.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnVoirTracabilite.Location = new Point(8, 296);
+            btnVoirTracabilite.Location = new Point(8, 296);    
             btnVoirTracabilite.Name = "btnVoirTracabilite";
             btnVoirTracabilite.Size = new Size(120, 36);
             btnVoirTracabilite.TabIndex = 5;
