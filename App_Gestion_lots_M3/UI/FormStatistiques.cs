@@ -10,32 +10,26 @@ namespace App_Gestion_lots_M3.UI
 {
     public partial class FormStatistiques : Form
     {
-        // ================================================
-        // VARIABLES
-        // ================================================
-
-        /// <summary>
-        /// Données calculées, gardées en mémoire pour le Paint
-        /// </summary>
+        /// <summary>Nombre de lots en attente</summary>
         private int _enAttente = 0;
+
+        /// <summary>Nombre de lots en production</summary>
         private int _enProduction = 0;
+
+        /// <summary>Nombre de lots terminés</summary>
         private int _termines = 0;
+
+        /// <summary>Nombre de lots en erreur</summary>
         private int _enErreur = 0;
+
+        /// <summary>Total de lots dans la période</summary>
         private int _total = 0;
 
-        /// <summary>
-        /// Données pour le graphique des lots par jour
-        /// </summary>
+        /// <summary>Nombre de lots créés par jour</summary>
         private Dictionary<string, int> _lotsParJour = new Dictionary<string, int>();
 
-        /// <summary>
-        /// Données pour le graphique des recettes
-        /// </summary>
+        /// <summary>Nombre de lots par recette</summary>
         private Dictionary<string, int> _lotsParRecette = new Dictionary<string, int>();
-
-        // ================================================
-        // CONSTRUCTEUR
-        // ================================================
 
         /// <summary>
         /// Constructeur du formulaire de statistiques
@@ -45,10 +39,6 @@ namespace App_Gestion_lots_M3.UI
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
         }
-
-        // ================================================
-        // CHARGEMENT DU FORMULAIRE
-        // ================================================
 
         /// <summary>
         /// Chargement du formulaire
@@ -65,12 +55,8 @@ namespace App_Gestion_lots_M3.UI
             CalculerStatistiques();
         }
 
-        // ================================================
-        // CALCUL DES STATISTIQUES
-        // ================================================
-
         /// <summary>
-        /// Calcule les statistiques et déclenche le redessin des graphiques
+        /// Calcule les statistiques selon la période et déclenche le redessin
         /// </summary>
         private void CalculerStatistiques()
         {
@@ -94,58 +80,45 @@ namespace App_Gestion_lots_M3.UI
 
                 _total++;
 
-                // Comptage par état
                 switch (lot.ETA_Libelle)
                 {
-                    case "En attente":
-                        _enAttente++;
-                        break;
-                    case "En production":
-                        _enProduction++;
-                        break;
-                    case "Terminé":
-                        _termines++;
-                        break;
-                    case "En erreur":
-                        _enErreur++;
-                        break;
+                    case "En attente": _enAttente++; break;
+                    case "En production": _enProduction++; break;
+                    case "Terminé": _termines++; break;
+                    case "En erreur": _enErreur++; break;
                 }
 
-                // Comptage par jour
                 string jour = lot.LOT_DateHeureCreation.ToString("dd/MM");
                 if (_lotsParJour.ContainsKey(jour))
-                {
                     _lotsParJour[jour]++;
-                }
                 else
-                {
                     _lotsParJour[jour] = 1;
-                }
 
-                // Comptage par recette
                 if (!string.IsNullOrEmpty(lot.REC_Nom))
                 {
                     if (_lotsParRecette.ContainsKey(lot.REC_Nom))
-                    {
                         _lotsParRecette[lot.REC_Nom]++;
-                    }
                     else
-                    {
                         _lotsParRecette[lot.REC_Nom] = 1;
-                    }
                 }
             }
 
-            // Redessiner les 4 panels
+            // Garder uniquement le Top 5 des recettes les plus utilisées
+            List<KeyValuePair<string, int>> triees = new List<KeyValuePair<string, int>>(_lotsParRecette);
+            triees.Sort((a, b) => b.Value.CompareTo(a.Value));
+
+            _lotsParRecette.Clear();
+            int limite = Math.Min(5, triees.Count);
+            for (int i = 0; i < limite; i++)
+            {
+                _lotsParRecette[triees[i].Key] = triees[i].Value;
+            }
+
             panelDonut.Invalidate();
             panelLegende.Invalidate();
             panelBarresJours.Invalidate();
             panelBarresRecettes.Invalidate();
         }
-
-        // ================================================
-        // DESSIN — DONUT
-        // ================================================
 
         /// <summary>
         /// Dessine le graphique donut des lots par état
@@ -163,10 +136,10 @@ namespace App_Gestion_lots_M3.UI
 
             Color[] couleurs = new Color[]
             {
-                Color.FromArgb(240, 180, 50),  // En attente — orange
-                Color.FromArgb(50, 130, 210),  // En production — bleu
-                Color.FromArgb(80, 190, 120),  // Terminés — vert
-                Color.FromArgb(220, 70, 70)    // En erreur — rouge
+                Color.FromArgb(240, 180, 50),
+                Color.FromArgb(50, 130, 210),
+                Color.FromArgb(80, 190, 120),
+                Color.FromArgb(220, 70, 70)
             };
 
             int[] valeurs = new int[] { _enAttente, _enProduction, _termines, _enErreur };
@@ -193,7 +166,6 @@ namespace App_Gestion_lots_M3.UI
                 angleDepart += angle;
             }
 
-            // Trou central pour faire le donut
             int trou = taille / 3;
             int xTrou = x + (taille - trou) / 2;
             int yTrou = y + (taille - trou) / 2;
@@ -203,27 +175,23 @@ namespace App_Gestion_lots_M3.UI
                 g.FillEllipse(brushBlanc, xTrou, yTrou, trou, trou);
             }
 
-            // Texte total au centre
-            string texteTotal = _total.ToString();
             Font fontTotal = new Font("Segoe UI", 14, FontStyle.Bold);
             Font fontLabel = new Font("Segoe UI", 8);
+            string texteTotal = _total.ToString();
             SizeF tailleTexte = g.MeasureString(texteTotal, fontTotal);
+            SizeF tailleLabel = g.MeasureString("Total", fontLabel);
 
             g.DrawString(texteTotal, fontTotal, Brushes.Black,
                 xTrou + (trou - tailleTexte.Width) / 2,
                 yTrou + trou / 2 - tailleTexte.Height);
 
             g.DrawString("Total", fontLabel, Brushes.Gray,
-                xTrou + (trou - g.MeasureString("Total", fontLabel).Width) / 2,
+                xTrou + (trou - tailleLabel.Width) / 2,
                 yTrou + trou / 2);
         }
 
-        // ================================================
-        // DESSIN — LÉGENDE
-        // ================================================
-
         /// <summary>
-        /// Dessine la légende des états
+        /// Dessine la légende des états avec couleurs, valeurs et pourcentages
         /// </summary>
         private void panelLegende_Paint(object sender, PaintEventArgs e)
         {
@@ -246,21 +214,17 @@ namespace App_Gestion_lots_M3.UI
 
             for (int i = 0; i < noms.Length; i++)
             {
-                // Cercle de couleur
                 using (SolidBrush brush = new SolidBrush(couleurs[i]))
                 {
                     g.FillEllipse(brush, 10, yPos + 2, 14, 14);
                 }
 
-                // Pourcentage
                 string pct = _total > 0
-                    ? $"{(int)((float)valeurs[i] / _total * 100)}%"
+                    ? $"{(int)Math.Round((float)valeurs[i] / _total * 100)}%"
                     : "0%";
 
-                // Texte nom
                 g.DrawString(noms[i], font, Brushes.Black, 32, yPos);
 
-                // Texte valeur + pourcentage
                 string valTexte = $"{valeurs[i]} ({pct})";
                 SizeF tailleVal = g.MeasureString(valTexte, font);
                 g.DrawString(valTexte, font, Brushes.Gray,
@@ -270,12 +234,8 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // DESSIN — BARRES PAR JOUR
-        // ================================================
-
         /// <summary>
-        /// Dessine le graphique en barres des lots terminés par jour
+        /// Dessine le graphique en barres verticales des lots par jour
         /// </summary>
         private void panelBarresJours_Paint(object sender, PaintEventArgs e)
         {
@@ -286,9 +246,12 @@ namespace App_Gestion_lots_M3.UI
             int h = panelBarresJours.Height;
             int margeGauche = 30;
             int margeBas = 30;
-            int margeHaut = 20;
+            int margeHaut = 40;
             int largeurZone = w - margeGauche - 10;
             int hauteurZone = h - margeBas - margeHaut;
+
+            Font fontTitre = new Font("Segoe UI", 10, FontStyle.Bold);
+            g.DrawString("Lots par jour", fontTitre, Brushes.Black, margeGauche, 5);
 
             if (_lotsParJour.Count == 0)
             {
@@ -296,7 +259,6 @@ namespace App_Gestion_lots_M3.UI
                 return;
             }
 
-            // Valeur max pour l'échelle
             int max = 1;
             foreach (int v in _lotsParJour.Values)
             {
@@ -308,10 +270,9 @@ namespace App_Gestion_lots_M3.UI
             float largeurBarre = (float)largeurZone / nbBarres * 0.6f;
             float espaceEntreBarres = (float)largeurZone / nbBarres;
 
-            Font fontAxe = new Font("Segoe UI", 7);
             Pen axe = new Pen(Color.FromArgb(180, 180, 180));
+            Font fontAxe = new Font("Segoe UI", 7);
 
-            // Axe horizontal
             g.DrawLine(axe, margeGauche, h - margeBas, w - 10, h - margeBas);
 
             for (int i = 0; i < nbBarres; i++)
@@ -321,31 +282,26 @@ namespace App_Gestion_lots_M3.UI
                 float xBarre = margeGauche + i * espaceEntreBarres + (espaceEntreBarres - largeurBarre) / 2;
                 float yBarre = margeHaut + (hauteurZone - hauteurBarre);
 
-                // Barre bleue
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, 130, 210)))
                 {
                     g.FillRectangle(brush, xBarre, yBarre, largeurBarre, hauteurBarre);
                 }
 
-                // Valeur au-dessus
                 string val = valeur.ToString();
                 SizeF tailleVal = g.MeasureString(val, fontAxe);
                 g.DrawString(val, fontAxe, Brushes.Black,
-                    xBarre + (largeurBarre - tailleVal.Width) / 2, yBarre - tailleVal.Height);
+                    xBarre + (largeurBarre - tailleVal.Width) / 2,
+                    yBarre - tailleVal.Height - 2);
 
-                // Label jour en bas
                 SizeF tailleLabel = g.MeasureString(jours[i], fontAxe);
                 g.DrawString(jours[i], fontAxe, Brushes.Gray,
-                    xBarre + (largeurBarre - tailleLabel.Width) / 2, h - margeBas + 3);
+                    xBarre + (largeurBarre - tailleLabel.Width) / 2,
+                    h - margeBas + 3);
             }
         }
 
-        // ================================================
-        // DESSIN — BARRES RECETTES
-        // ================================================
-
         /// <summary>
-        /// Dessine le graphique en barres horizontales des recettes utilisées
+        /// Dessine le graphique en barres horizontales des recettes les plus utilisées
         /// </summary>
         private void panelBarresRecettes_Paint(object sender, PaintEventArgs e)
         {
@@ -354,6 +310,13 @@ namespace App_Gestion_lots_M3.UI
 
             int w = panelBarresRecettes.Width;
             int h = panelBarresRecettes.Height;
+            int margeGauche = 110;
+            int margeDroite = 90;
+            int margeHaut = 40;
+            int largeurZone = w - margeGauche - margeDroite;
+
+            Font fontTitre = new Font("Segoe UI", 10, FontStyle.Bold);
+            g.DrawString("Top recettes utilisées", fontTitre, Brushes.Black, 5, 5);
 
             if (_lotsParRecette.Count == 0)
             {
@@ -361,7 +324,6 @@ namespace App_Gestion_lots_M3.UI
                 return;
             }
 
-            // Valeur max
             int max = 1;
             foreach (int v in _lotsParRecette.Values)
             {
@@ -370,12 +332,8 @@ namespace App_Gestion_lots_M3.UI
 
             List<string> recettes = new List<string>(_lotsParRecette.Keys);
             int nbBarres = recettes.Count;
-            int margeGauche = 70;
-            int margeDroite = 60;
-            int largeurZone = w - margeGauche - margeDroite;
             int hauteurBarre = 18;
-            int espacement = (h - 20) / (nbBarres > 0 ? nbBarres : 1);
-            int yDepart = 15;
+            int espacement = Math.Max(hauteurBarre + 8, (h - margeHaut - 10) / (nbBarres > 0 ? nbBarres : 1));
 
             Font fontNom = new Font("Segoe UI", 9);
             Font fontVal = new Font("Segoe UI", 8);
@@ -383,21 +341,25 @@ namespace App_Gestion_lots_M3.UI
             for (int i = 0; i < nbBarres; i++)
             {
                 int valeur = _lotsParRecette[recettes[i]];
-                float largeurBarre = (float)valeur / max * largeurZone;
-                int yBarre = yDepart + i * espacement;
+                float largeurBarre = largeurZone > 0 ? (float)valeur / max * largeurZone : 0;
+                int yBarre = margeHaut + i * espacement;
 
-                // Nom recette à gauche
-                g.DrawString(recettes[i], fontNom, Brushes.Black, 5, yBarre + 2);
+                // Nom tronqué si trop long
+                string nomAffiche = recettes[i].Length > 14
+                    ? recettes[i].Substring(0, 14) + "..."
+                    : recettes[i];
 
-                // Barre bleue
+                SizeF tailleNom = g.MeasureString(nomAffiche, fontNom);
+                g.DrawString(nomAffiche, fontNom, Brushes.Black,
+                    margeGauche - tailleNom.Width - 5, yBarre + 2);
+
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, 130, 210)))
                 {
                     g.FillRectangle(brush, margeGauche, yBarre, largeurBarre, hauteurBarre);
                 }
 
-                // Valeur + pourcentage à droite
                 string pct = _total > 0
-                    ? $"{valeur} ({(int)((float)valeur / _total * 100)}%)"
+                    ? $"{valeur} ({(int)Math.Round((float)valeur / _total * 100)}%)"
                     : $"{valeur}";
 
                 g.DrawString(pct, fontVal, Brushes.Gray,
@@ -405,12 +367,8 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // ÉVÉNEMENTS FILTRES
-        // ================================================
-
         /// <summary>
-        /// Changement de période
+        /// Changement de période — met à jour les dates et recalcule
         /// </summary>
         private void cboPeriode_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -449,44 +407,20 @@ namespace App_Gestion_lots_M3.UI
             CalculerStatistiques();
         }
 
-        /// <summary>
-        /// Changement date début
-        /// </summary>
-        private void dtpDu_ValueChanged(object sender, EventArgs e)
-        {
-            CalculerStatistiques();
-        }
+        /// <summary>Changement date début</summary>
+        private void dtpDu_ValueChanged(object sender, EventArgs e) { CalculerStatistiques(); }
 
-        /// <summary>
-        /// Changement date fin
-        /// </summary>
-        private void dtpAu_ValueChanged(object sender, EventArgs e)
-        {
-            CalculerStatistiques();
-        }
+        /// <summary>Changement date fin</summary>
+        private void dtpAu_ValueChanged(object sender, EventArgs e) { CalculerStatistiques(); }
 
-        /// <summary>
-        /// Bouton actualiser
-        /// </summary>
-        private void btnActualiser_Click(object sender, EventArgs e)
-        {
-            CalculerStatistiques();
-        }
+        /// <summary>Bouton actualiser</summary>
+        private void btnActualiser_Click(object sender, EventArgs e) { CalculerStatistiques(); }
 
-        /// <summary>
-        /// Bouton fermer
-        /// </summary>
-        private void btnFermer_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        /// <summary>Bouton fermer</summary>
+        private void btnFermer_Click(object sender, EventArgs e) { this.Close(); }
 
-        // ================================================
-        // ÉVÉNEMENTS NON UTILISÉS
-        // ================================================
         private void label2_Click(object sender, EventArgs e) { }
         private void label1_Click(object sender, EventArgs e) { }
         private void label3_Click(object sender, EventArgs e) { }
-
     }
 }
