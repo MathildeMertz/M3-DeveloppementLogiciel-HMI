@@ -64,8 +64,15 @@ namespace App_Gestion_lots_M3.UI
             lblQuantite.Text = lot.LOT_Quantite + " pièces";
             lblEtat.Text = lot.ETA_Libelle;
             lblDateCreation.Text = lot.LOT_DateHeureCreation.ToString("dd/MM/yyyy HH:mm");
-            lblDateDebut.Text = "-";
-            lblDateFin.Text = "-";
+            DateTime? dateDebut = EvenementManager.GetDateDebut(lot.idLot);
+            lblDateDebut.Text = dateDebut.HasValue
+                ? dateDebut.Value.ToString("dd/MM/yyyy HH:mm")
+                : "-";
+
+            DateTime? dateFin = EvenementManager.GetDateFin(lot.idLot);
+            lblDateFin.Text = dateFin.HasValue
+                ? dateFin.Value.ToString("dd/MM/yyyy HH:mm")
+                : "-";
 
             // Mettre à jour le titre
             this.Text = "Détails du Lot - " + lot.LOT_Nom;
@@ -254,6 +261,36 @@ namespace App_Gestion_lots_M3.UI
         }
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void lblDateDebut_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDateFin_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDateCreation_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblEtat_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblQuantite_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblRecette_Click(object sender, EventArgs e)
         {
 
         }

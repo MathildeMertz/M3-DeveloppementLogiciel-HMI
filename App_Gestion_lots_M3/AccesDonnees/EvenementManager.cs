@@ -97,5 +97,56 @@ namespace App_Gestion_lots_M3.AccesDonnees
                 cmd.ExecuteNonQuery();
             }
         }
+        /// <summary>
+        /// Retourne la date de début de production d'un lot
+        /// null si aucun événement de début trouvé
+        /// </summary>
+        /// <param name="idLot">Identifiant du lot</param>
+        /// <returns>Date de début ou null</returns>
+        public static DateTime? GetDateDebut(int idLot)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+
+            string sql = @"SELECT EVE_DateHeure FROM Evenement
+                   WHERE Id_Lot = @idLot
+                   AND EVE_Message LIKE '%début de la production du lot%'
+                   ORDER BY EVE_DateHeure ASC
+                   LIMIT 1";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idLot", idLot);
+                object result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    return null;
+                return Convert.ToDateTime(result);
+            }
+        }
+
+        /// <summary>
+        /// Retourne la date de fin de production d'un lot
+        /// null si aucun événement de fin trouvé
+        /// </summary>
+        /// <param name="idLot">Identifiant du lot</param>
+        /// <returns>Date de fin ou null</returns>
+        public static DateTime? GetDateFin(int idLot)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+
+            string sql = @"SELECT EVE_DateHeure FROM Evenement
+                   WHERE Id_Lot = @idLot
+                   AND EVE_Message LIKE '%fin de la production du lot%'
+                   ORDER BY EVE_DateHeure DESC
+                   LIMIT 1";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idLot", idLot);
+                object result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    return null;
+                return Convert.ToDateTime(result);
+            }
+        }
     }
 }

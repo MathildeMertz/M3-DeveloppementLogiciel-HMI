@@ -63,6 +63,7 @@
             lblRecette.Size = new Size(12, 15);
             lblRecette.TabIndex = 1;
             lblRecette.Text = "-";
+            lblRecette.Click += lblRecette_Click;
             // 
             // label3
             // 
@@ -81,6 +82,7 @@
             lblQuantite.Size = new Size(12, 15);
             lblQuantite.TabIndex = 3;
             lblQuantite.Text = "-";
+            lblQuantite.Click += lblQuantite_Click;
             // 
             // label5
             // 
@@ -99,6 +101,7 @@
             lblEtat.Size = new Size(12, 15);
             lblEtat.TabIndex = 5;
             lblEtat.Text = "-";
+            lblEtat.Click += lblEtat_Click;
             // 
             // label7
             // 
@@ -117,6 +120,7 @@
             lblDateCreation.Size = new Size(12, 15);
             lblDateCreation.TabIndex = 7;
             lblDateCreation.Text = "-";
+            lblDateCreation.Click += lblDateCreation_Click;
             // 
             // label9
             // 
@@ -135,15 +139,16 @@
             lblDateDebut.Size = new Size(12, 15);
             lblDateDebut.TabIndex = 9;
             lblDateDebut.Text = "-";
+            lblDateDebut.Click += lblDateDebut_Click;
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Location = new Point(12, 200);
             label11.Name = "label11";
-            label11.Size = new Size(109, 15);
+            label11.Size = new Size(70, 15);
             label11.TabIndex = 10;
-            label11.Text = "Date de fin prévue :";
+            label11.Text = "Date de fin :";
             // 
             // lblDateFin
             // 
@@ -153,6 +158,7 @@
             lblDateFin.Size = new Size(12, 15);
             lblDateFin.TabIndex = 11;
             lblDateFin.Text = "-";
+            lblDateFin.Click += lblDateFin_Click;
             // 
             // dataGridView1
             // 
