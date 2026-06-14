@@ -81,6 +81,15 @@ namespace App_Gestion_lots_M3.UI
                 txtDateCreation.Text = lotEnCours.LOT_DateHeureCreation.ToString("dd/MM/yyyy HH:mm");
                 cboRecette.SelectedItem = lotEnCours.REC_Nom;
                 btnEnregistrer.Visible = false;
+
+                bool enAttente = lotEnCours.ETA_Libelle == "En attente";
+
+                btnModifier.Enabled = enAttente;
+                cboRecette.Enabled = enAttente;
+                btnNouvelleRecette.Enabled = enAttente;
+                txtQuantite.ReadOnly = !enAttente;
+                txtQuantite.BackColor = enAttente ? Color.White : Color.FromArgb(240, 240, 240);
+                cboRecette.BackColor = enAttente ? Color.White : Color.FromArgb(240, 240, 240);
             }
 
             ChargerOperationsRecette();
