@@ -41,6 +41,7 @@
             btnSuivant = new Button();
             cboSelectLot = new ComboBox();
             btnSupprimer = new Button();
+            btnDetailRecette = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -266,11 +267,22 @@
             btnSupprimer.UseVisualStyleBackColor = true;
             btnSupprimer.Click += btnSupprimer_Click;
             // 
+            // btnDetailRecette
+            // 
+            btnDetailRecette.Location = new Point(288, 46);
+            btnDetailRecette.Name = "btnDetailRecette";
+            btnDetailRecette.Size = new Size(121, 23);
+            btnDetailRecette.TabIndex = 20;
+            btnDetailRecette.Text = "Voir Recette";
+            btnDetailRecette.UseVisualStyleBackColor = true;
+            btnDetailRecette.Click += btnDetailRecette_Click;
+            // 
             // FormDetailsLot
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 460);
+            Controls.Add(btnDetailRecette);
             Controls.Add(btnSupprimer);
             Controls.Add(cboSelectLot);
             Controls.Add(btnSuivant);
@@ -326,5 +338,6 @@
         private ComboBox cboSelectLot;
         private Button button1;
         private Button btnSupprimer;
+        private Button btnDetailRecette;
     }
 }

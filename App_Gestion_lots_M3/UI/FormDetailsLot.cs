@@ -17,6 +17,10 @@ namespace App_Gestion_lots_M3.UI
         private List<Lot> listeLots;
         private int indexCourant;
 
+        /// <summary>
+        /// Concepteur
+        /// </summary>
+        /// <param name="nomLot"></param>
         public FormDetailsLot(string nomLot = null)
         {
             InitializeComponent();
@@ -34,9 +38,9 @@ namespace App_Gestion_lots_M3.UI
         }
 
 
-        // ================================================
-        // INITIALISATION DU COMBOBOX
-        // ================================================
+        /// <summary>
+        /// Initialisation du combo box
+        /// </summary>
         private void RemplirComboBox()
         {
             cboSelectLot.Items.Clear();
@@ -46,9 +50,10 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // AFFICHAGE D'UN LOT
-        // ================================================
+        /// <summary>
+        /// Affiche les lots
+        /// </summary>
+        /// <param name="index"></param>
         private void AfficherLot(int index)
         {
             if (index < 0 || index >= listeLots.Count) return;
@@ -77,9 +82,10 @@ namespace App_Gestion_lots_M3.UI
             ChargerEvenements(lot.idLot);
         }
 
-        // ================================================
-        // CHARGEMENT DES ÉVÉNEMENTS
-        // ================================================
+        /// <summary>
+        /// Permet de chargé les évenement pour les afffichées par la suite
+        /// </summary>
+        /// <param name="idLot"></param>
         private void ChargerEvenements(int idLot)
         {
             dataGridView1.Rows.Clear();
@@ -96,20 +102,32 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // ÉVÉNEMENTS NAVIGATION
-        // ================================================
+        /// <summary>
+        /// Panel de navigation pour choisir le lot qu'on désir
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cboSelectLot_SelectedIndexChanged(object sender, EventArgs e)
         {
             AfficherLot(cboSelectLot.SelectedIndex);
         }
 
+        /// <summary>
+        /// Passe au lot précédent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPrecedent_Click(object sender, EventArgs e)
         {
             if (cboSelectLot.SelectedIndex > 0)
                 AfficherLot(cboSelectLot.SelectedIndex - 1);
         }
 
+        /// <summary>
+        /// Passe au lot suivant
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSuivant_Click(object sender, EventArgs e)
         {
             if (cboSelectLot.SelectedIndex < listeLots.Count - 1)
@@ -135,6 +153,11 @@ namespace App_Gestion_lots_M3.UI
             this.Show();
         }
 
+        /// <summary>
+        /// bouton qui permet de modifier le lot sous certaines conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnModifierLot_Click(object sender, EventArgs e)
         {
             // Récupérer le lot actuellement affiché
@@ -151,10 +174,16 @@ namespace App_Gestion_lots_M3.UI
             this.Show();
         }
 
+        /// <summary>
+        /// bouton qui ferme cette page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnFermer_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
         /// <summary>
         /// Supprime le lot seulement s'il est en attente
         /// </summary>
@@ -211,19 +240,18 @@ namespace App_Gestion_lots_M3.UI
                     "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        /// <summary>
+        /// Ouvre les détails de la recette associée au lot affiché
+        /// </summary>
+        private void btnDetailRecette_Click(object sender, EventArgs e)
+        {
+            Lot lotActuel = listeLots[cboSelectLot.SelectedIndex];
 
-        // ================================================
-        // ÉVÉNEMENTS NON UTILISÉS
-        // ================================================
-        private void lblEtat_Click(object sender, EventArgs e) { }
-        private void label5_Click(object sender, EventArgs e) { }
-        private void label7_Click(object sender, EventArgs e) { }
-        private void lblDateCreation_Click(object sender, EventArgs e) { }
-        private void label9_Click(object sender, EventArgs e) { }
-        private void lblDateDebut_Click(object sender, EventArgs e) { }
-        private void label11_Click(object sender, EventArgs e) { }
-        private void lblDateFin_Click(object sender, EventArgs e) { }
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+            this.Hide();
+            FormDetailsRecette formDetailsRecette = new FormDetailsRecette(lotActuel.REC_Nom);
+            formDetailsRecette.ShowDialog();
+            this.Show();
+        }
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
