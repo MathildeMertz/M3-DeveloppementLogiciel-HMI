@@ -249,7 +249,7 @@
             // btnVoirTracabilite
             // 
             btnVoirTracabilite.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnVoirTracabilite.Location = new Point(8, 296);    
+            btnVoirTracabilite.Location = new Point(8, 296);
             btnVoirTracabilite.Name = "btnVoirTracabilite";
             btnVoirTracabilite.Size = new Size(120, 36);
             btnVoirTracabilite.TabIndex = 5;
