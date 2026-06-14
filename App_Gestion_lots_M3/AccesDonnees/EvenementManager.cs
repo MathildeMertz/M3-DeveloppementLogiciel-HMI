@@ -23,13 +23,14 @@ namespace App_Gestion_lots_M3.AccesDonnees
                FROM Evenement
                WHERE Id_Lot = @idLot
                AND (
-                   EVE_Message LIKE '%début de la production du lot%'
-                   OR EVE_Message LIKE '%fin de la production du lot%'
-                   OR EVE_Message LIKE '%erreur%'
-                   OR EVE_Message LIKE '%alarme%'
-                   OR EVE_Message LIKE '%barrière%'
-                   OR EVE_Message LIKE '%supprimé%'
-               )
+                    EVE_Message LIKE '%début de la production du lot%'
+                    OR EVE_Message LIKE '%fin de la production du lot%'
+                    OR EVE_Message LIKE '%erreur%'
+                    OR EVE_Message LIKE '%alarme%'
+                    OR EVE_Message LIKE '%barrière%'
+                    OR EVE_Message LIKE '%supprimé%'
+                    OR EVE_Message LIKE '%Création%'
+                )
                ORDER BY EVE_DateHeure DESC";
 
             using (MySqlCommand cmd = new MySqlCommand(sql, conn))

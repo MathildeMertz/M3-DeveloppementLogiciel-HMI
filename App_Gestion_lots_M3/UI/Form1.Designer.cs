@@ -263,7 +263,7 @@
             Controls.Add(tabControl1);
             Margin = new Padding(2);
             Name = "Form1";
-            Text = "Gestion Lots";
+            Text = "Accueil";
             tabControl1.ResumeLayout(false);
             Lots.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvLots).EndInit();
