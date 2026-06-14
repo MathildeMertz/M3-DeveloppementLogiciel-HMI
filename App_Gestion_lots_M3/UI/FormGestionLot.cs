@@ -276,7 +276,20 @@ namespace App_Gestion_lots_M3.UI
             this.Close();
         }
 
-        private void txtNomLot_TextChanged(object sender, EventArgs e) { }
+        /// <summary>
+        /// Bloque les caractères spéciaux dans le nom du lot
+        /// Autorise uniquement lettres, chiffres, tiret et underscore
+        /// </summary>
+        private void txtNomLot_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            bool estAutorise = char.IsLetterOrDigit(e.KeyChar)
+                            || e.KeyChar == '-'
+                            || e.KeyChar == '_'
+                            || e.KeyChar == (char)Keys.Back;
+
+            if (!estAutorise)
+                e.Handled = true;
+        }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void dgvOperationsRecette_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
     }
