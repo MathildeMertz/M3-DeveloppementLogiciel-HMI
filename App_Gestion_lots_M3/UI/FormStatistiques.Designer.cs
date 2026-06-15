@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStatistiques));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -41,8 +42,6 @@
             panelBarresRecettes = new Panel();
             panelBarresJours = new Panel();
             panelLegende = new Panel();
-            label5 = new Label();
-            label6 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -113,10 +112,10 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.Location = new Point(12, 103);
             label4.Name = "label4";
-            label4.Size = new Size(96, 21);
+            label4.Size = new Size(98, 20);
             label4.TabIndex = 7;
             label4.Text = "Lots par état";
             // 
@@ -142,9 +141,9 @@
             // panelBarresRecettes
             // 
             panelBarresRecettes.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            panelBarresRecettes.Location = new Point(12, 394);
+            panelBarresRecettes.Location = new Point(12, 366);
             panelBarresRecettes.Name = "panelBarresRecettes";
-            panelBarresRecettes.Size = new Size(681, 233);
+            panelBarresRecettes.Size = new Size(681, 261);
             panelBarresRecettes.TabIndex = 22;
             panelBarresRecettes.Paint += panelBarresRecettes_Paint;
             // 
@@ -165,35 +164,11 @@
             panelLegende.TabIndex = 22;
             panelLegende.Paint += panelLegende_Paint;
             // 
-            // label5
-            // 
-            label5.Anchor = AnchorStyles.Bottom;
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(504, 93);
-            label5.Name = "label5";
-            label5.Size = new Size(98, 21);
-            label5.TabIndex = 23;
-            label5.Text = "Lots par jour";
-            // 
-            // label6
-            // 
-            label6.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(12, 370);
-            label6.Name = "label6";
-            label6.Size = new Size(152, 21);
-            label6.TabIndex = 24;
-            label6.Text = "Top recettes utilisées";
-            // 
             // FormStatistiques
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1264, 681);
-            Controls.Add(label6);
-            Controls.Add(label5);
             Controls.Add(panelBarresJours);
             Controls.Add(panelLegende);
             Controls.Add(panelBarresRecettes);
@@ -207,6 +182,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(panelDonut);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormStatistiques";
             Text = "Statistiques";
             Load += FormStatistiques_Load;
@@ -229,7 +205,5 @@
         private Panel panelBarresRecettes;
         private Panel panelBarresJours;
         private Panel panelLegende;
-        private Label label5;
-        private Label label6;
     }
 }

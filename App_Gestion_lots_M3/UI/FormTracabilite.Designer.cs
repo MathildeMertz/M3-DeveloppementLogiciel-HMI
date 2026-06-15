@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTracabilite));
             label1 = new Label();
             cboSelectLot = new ComboBox();
             groupBox1 = new GroupBox();
@@ -26,10 +27,10 @@
             dtpDu = new DateTimePicker();
             label2 = new Label();
             groupBox2 = new GroupBox();
-            rbDebut = new RadioButton();
-            rbAlarmes = new RadioButton();
-            rbFin = new RadioButton();
             rbTous = new RadioButton();
+            rbDebut = new RadioButton();
+            rbFin = new RadioButton();
+            rbAlarmes = new RadioButton();
             dgvEvenements = new DataGridView();
             colDate = new DataGridViewTextBoxColumn();
             colHeure = new DataGridViewTextBoxColumn();
@@ -40,21 +41,28 @@
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEvenements).BeginInit();
             SuspendLayout();
+            // 
             // label1
+            // 
             label1.AutoSize = true;
             label1.Location = new Point(12, 12);
             label1.Name = "label1";
+            label1.Size = new Size(110, 15);
             label1.TabIndex = 0;
             label1.Text = "Sélectionner le Lot :";
+            // 
             // cboSelectLot
-            cboSelectLot.FormattingEnabled = true;
+            // 
             cboSelectLot.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboSelectLot.FormattingEnabled = true;
             cboSelectLot.Location = new Point(130, 9);
             cboSelectLot.Name = "cboSelectLot";
             cboSelectLot.Size = new Size(150, 23);
             cboSelectLot.TabIndex = 1;
-            cboSelectLot.SelectedIndexChanged += new System.EventHandler(this.cboSelectLot_SelectedIndexChanged);
+            cboSelectLot.SelectedIndexChanged += cboSelectLot_SelectedIndexChanged;
+            // 
             // groupBox1
+            // 
             groupBox1.Controls.Add(chkToutesLesDates);
             groupBox1.Controls.Add(dtpAu);
             groupBox1.Controls.Add(label3);
@@ -66,39 +74,54 @@
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Filtrer par Date :";
+            // 
             // chkToutesLesDates
+            // 
             chkToutesLesDates.AutoSize = true;
             chkToutesLesDates.Location = new Point(10, 22);
             chkToutesLesDates.Name = "chkToutesLesDates";
+            chkToutesLesDates.Size = new Size(92, 19);
             chkToutesLesDates.TabIndex = 4;
             chkToutesLesDates.Text = "Tout afficher";
             chkToutesLesDates.UseVisualStyleBackColor = true;
-            chkToutesLesDates.CheckedChanged += new System.EventHandler(this.chkToutesLesDates_CheckedChanged);
-            // label2
-            label2.AutoSize = true;
-            label2.Location = new Point(10, 55);
-            label2.Name = "label2";
-            label2.TabIndex = 0;
-            label2.Text = "Du :";
-            // dtpDu
-            dtpDu.Location = new Point(50, 52);
-            dtpDu.Name = "dtpDu";
-            dtpDu.Size = new Size(130, 23);
-            dtpDu.TabIndex = 1;
-            dtpDu.ValueChanged += new System.EventHandler(this.dtpDu_ValueChanged);
-            // label3
-            label3.AutoSize = true;
-            label3.Location = new Point(10, 90);
-            label3.Name = "label3";
-            label3.TabIndex = 2;
-            label3.Text = "Au :";
+            chkToutesLesDates.CheckedChanged += chkToutesLesDates_CheckedChanged;
+            // 
             // dtpAu
+            // 
             dtpAu.Location = new Point(50, 87);
             dtpAu.Name = "dtpAu";
             dtpAu.Size = new Size(130, 23);
             dtpAu.TabIndex = 3;
-            dtpAu.ValueChanged += new System.EventHandler(this.dtpAu_ValueChanged);
+            dtpAu.ValueChanged += dtpAu_ValueChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(10, 90);
+            label3.Name = "label3";
+            label3.Size = new Size(28, 15);
+            label3.TabIndex = 2;
+            label3.Text = "Au :";
+            // 
+            // dtpDu
+            // 
+            dtpDu.Location = new Point(50, 52);
+            dtpDu.Name = "dtpDu";
+            dtpDu.Size = new Size(130, 23);
+            dtpDu.TabIndex = 1;
+            dtpDu.ValueChanged += dtpDu_ValueChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(10, 55);
+            label2.Name = "label2";
+            label2.Size = new Size(28, 15);
+            label2.TabIndex = 0;
+            label2.Text = "Du :";
+            // 
             // groupBox2
+            // 
             groupBox2.Controls.Add(rbTous);
             groupBox2.Controls.Add(rbDebut);
             groupBox2.Controls.Add(rbFin);
@@ -109,7 +132,9 @@
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             groupBox2.Text = "Filtrer par Evenement :";
+            // 
             // rbTous
+            // 
             rbTous.AutoSize = true;
             rbTous.Location = new Point(15, 25);
             rbTous.Name = "rbTous";
@@ -117,8 +142,10 @@
             rbTous.TabIndex = 0;
             rbTous.Text = "Tous";
             rbTous.UseVisualStyleBackColor = true;
-            rbTous.CheckedChanged += new System.EventHandler(this.rbTous_CheckedChanged);
+            rbTous.CheckedChanged += rbTous_CheckedChanged;
+            // 
             // rbDebut
+            // 
             rbDebut.AutoSize = true;
             rbDebut.Location = new Point(15, 55);
             rbDebut.Name = "rbDebut";
@@ -126,8 +153,10 @@
             rbDebut.TabIndex = 1;
             rbDebut.Text = "Début";
             rbDebut.UseVisualStyleBackColor = true;
-            rbDebut.CheckedChanged += new System.EventHandler(this.rbDebut_CheckedChanged);
+            rbDebut.CheckedChanged += rbDebut_CheckedChanged;
+            // 
             // rbFin
+            // 
             rbFin.AutoSize = true;
             rbFin.Location = new Point(15, 85);
             rbFin.Name = "rbFin";
@@ -135,8 +164,10 @@
             rbFin.TabIndex = 2;
             rbFin.Text = "Fin";
             rbFin.UseVisualStyleBackColor = true;
-            rbFin.CheckedChanged += new System.EventHandler(this.rbFin_CheckedChanged);
+            rbFin.CheckedChanged += rbFin_CheckedChanged;
+            // 
             // rbAlarmes
+            // 
             rbAlarmes.AutoSize = true;
             rbAlarmes.Location = new Point(15, 115);
             rbAlarmes.Name = "rbAlarmes";
@@ -144,31 +175,44 @@
             rbAlarmes.TabIndex = 3;
             rbAlarmes.Text = "Alarmes";
             rbAlarmes.UseVisualStyleBackColor = true;
-            rbAlarmes.CheckedChanged += new System.EventHandler(this.rbAlarmes_CheckedChanged);
+            rbAlarmes.CheckedChanged += rbAlarmes_CheckedChanged;
+            // 
             // dgvEvenements
+            // 
+            dgvEvenements.AllowUserToAddRows = false;
             dgvEvenements.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvEvenements.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvEvenements.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvEvenements.Columns.AddRange(new DataGridViewColumn[] { colDate, colHeure, colEvenement });
             dgvEvenements.Location = new Point(225, 40);
             dgvEvenements.Name = "dgvEvenements";
-            dgvEvenements.Size = new Size(550, 380);
-            dgvEvenements.TabIndex = 5;
             dgvEvenements.ReadOnly = true;
-            dgvEvenements.AllowUserToAddRows = false;
             dgvEvenements.RowHeadersVisible = false;
             dgvEvenements.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEvenements.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvEvenements.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEvenements_CellContentClick);
+            dgvEvenements.Size = new Size(550, 380);
+            dgvEvenements.TabIndex = 5;
+            dgvEvenements.CellContentClick += dgvEvenements_CellContentClick;
+            // 
             // colDate
+            // 
             colDate.HeaderText = "Date";
             colDate.Name = "colDate";
+            colDate.ReadOnly = true;
+            // 
             // colHeure
+            // 
             colHeure.HeaderText = "Heure";
             colHeure.Name = "colHeure";
+            colHeure.ReadOnly = true;
+            // 
             // colEvenement
+            // 
             colEvenement.HeaderText = "Événement";
             colEvenement.Name = "colEvenement";
+            colEvenement.ReadOnly = true;
+            // 
             // btnExporterPDF
+            // 
             btnExporterPDF.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnExporterPDF.Location = new Point(12, 440);
             btnExporterPDF.Name = "btnExporterPDF";
@@ -176,8 +220,10 @@
             btnExporterPDF.TabIndex = 6;
             btnExporterPDF.Text = "Exporter PDF";
             btnExporterPDF.UseVisualStyleBackColor = true;
-            btnExporterPDF.Click += new System.EventHandler(this.btnExporterPDF_Click);
+            btnExporterPDF.Click += btnExporterPDF_Click;
+            // 
             // btnFermer
+            // 
             btnFermer.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnFermer.Location = new Point(170, 440);
             btnFermer.Name = "btnFermer";
@@ -185,8 +231,10 @@
             btnFermer.TabIndex = 7;
             btnFermer.Text = "Fermer";
             btnFermer.UseVisualStyleBackColor = true;
-            btnFermer.Click += new System.EventHandler(this.btnFermer_Click);
+            btnFermer.Click += btnFermer_Click;
+            // 
             // FormTracabilite
+            // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 490);
@@ -197,10 +245,11 @@
             Controls.Add(groupBox1);
             Controls.Add(cboSelectLot);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormTracabilite";
             Text = "Historique de Traçabilité";
             WindowState = FormWindowState.Maximized;
-            Load += new System.EventHandler(this.FormTracabilite_Load);
+            Load += FormTracabilite_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);

@@ -23,12 +23,14 @@ namespace App_Gestion_lots_M3.AccesDonnees
                FROM Evenement
                WHERE Id_Lot = @idLot
                AND (
-                   EVE_Message LIKE '%début de la production du lot%'
-                   OR EVE_Message LIKE '%fin de la production du lot%'
-                   OR EVE_Message LIKE '%erreur%'
-                   OR EVE_Message LIKE '%alarme%'
-                   OR EVE_Message LIKE '%barrière%'
-               )
+                    EVE_Message LIKE '%début de la production du lot%'
+                    OR EVE_Message LIKE '%fin de la production du lot%'
+                    OR EVE_Message LIKE '%erreur%'
+                    OR EVE_Message LIKE '%alarme%'
+                    OR EVE_Message LIKE '%barrière%'
+                    OR EVE_Message LIKE '%supprimé%'
+                    OR EVE_Message LIKE '%Création%'
+                )
                ORDER BY EVE_DateHeure DESC";
 
             using (MySqlCommand cmd = new MySqlCommand(sql, conn))
@@ -75,6 +77,76 @@ namespace App_Gestion_lots_M3.AccesDonnees
 
             return evenements;
         }
+        /// <summary>
+        /// Ajoute un événement de traçabilité pour un lot
+        /// </summary>
+        /// <param name="idLot">Identifiant du lot</param>
+        /// <param name="message">Message de l'événement</param>
+        public static void AjouterEvenement(int idLot, string message)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
 
+            string sql = @"INSERT INTO Evenement (EVE_DateHeure, EVE_Message, Id_Lot)
+                   VALUES (@dateHeure, @message, @idLot)";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@dateHeure", DateTime.Now);
+                cmd.Parameters.AddWithValue("@message", message);
+                cmd.Parameters.AddWithValue("@idLot", idLot);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        /// <summary>
+        /// Retourne la date de début de production d'un lot
+        /// null si aucun événement de début trouvé
+        /// </summary>
+        /// <param name="idLot">Identifiant du lot</param>
+        /// <returns>Date de début ou null</returns>
+        public static DateTime? GetDateDebut(int idLot)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+
+            string sql = @"SELECT EVE_DateHeure FROM Evenement
+                   WHERE Id_Lot = @idLot
+                   AND EVE_Message LIKE '%début de la production du lot%'
+                   ORDER BY EVE_DateHeure ASC
+                   LIMIT 1";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idLot", idLot);
+                object result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    return null;
+                return Convert.ToDateTime(result);
+            }
+        }
+
+        /// <summary>
+        /// Retourne la date de fin de production d'un lot
+        /// null si aucun événement de fin trouvé
+        /// </summary>
+        /// <param name="idLot">Identifiant du lot</param>
+        /// <returns>Date de fin ou null</returns>
+        public static DateTime? GetDateFin(int idLot)
+        {
+            MySqlConnection conn = DbManager.GetDBConnection();
+
+            string sql = @"SELECT EVE_DateHeure FROM Evenement
+                   WHERE Id_Lot = @idLot
+                   AND EVE_Message LIKE '%fin de la production du lot%'
+                   ORDER BY EVE_DateHeure DESC
+                   LIMIT 1";
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idLot", idLot);
+                object result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    return null;
+                return Convert.ToDateTime(result);
+            }
+        }
     }
 }

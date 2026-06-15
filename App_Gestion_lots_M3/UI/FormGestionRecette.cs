@@ -66,13 +66,11 @@ namespace App_Gestion_lots_M3.UI
         /// </summary>
         private void ConfigurerFormulaire()
         {
-            // La date est toujours en lecture seule
             txtDateCreation.ReadOnly = true;
             txtDateCreation.BackColor = Color.FromArgb(240, 240, 240);
 
             if (estNouvelleRecette)
             {
-                // Mode nouvelle recette : champs vides
                 this.Text = "Nouvelle Recette";
                 txtNomRecette.Text = "";
                 txtDateCreation.Text = DateTime.Now.ToString("dd/MM/yyyy");
@@ -80,7 +78,6 @@ namespace App_Gestion_lots_M3.UI
             }
             else
             {
-                // Mode modification : champs pré-remplis
                 this.Text = "Modifier Recette - " + recetteEnCours.REC_Nom;
                 txtNomRecette.Text = recetteEnCours.REC_Nom;
                 txtNomRecette.ReadOnly = true;
@@ -88,7 +85,36 @@ namespace App_Gestion_lots_M3.UI
                 txtDateCreation.Text = recetteEnCours.REC_DateHeureCreation.ToString("dd/MM/yyyy");
                 btnEnregistrerRecette.Text = "Enregistrer modifications";
                 ChargerOperations();
+
+                // Bloquer si la recette est utilisée dans un lot qui n'est pas en attente
+                bool modifiable = EstRecetteModifiable();
+                btnEnregistrerRecette.Enabled = modifiable;
+                btnAjouterOperation.Enabled = modifiable;
+                btnSupprimerOperation.Enabled = modifiable;
+
+                if (!modifiable)
+                {
+                    MessageBox.Show(
+                        "Cette recette est utilisée dans un lot en cours ou terminé.\nModification impossible.",
+                        "Lecture seule", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
+        }
+
+        /// <summary>
+        /// Vérifie si la recette peut être modifiée.
+        /// Une recette est bloquée si elle est utilisée dans un lot qui n'est pas en attente.
+        /// </summary>
+        /// <returns>True si modifiable, false sinon</returns>
+        private bool EstRecetteModifiable()
+        {
+            List<Lot> lots = LotManager.GetLots();
+            foreach (Lot lot in lots)
+            {
+                if (lot.REC_Nom == recetteEnCours.REC_Nom && lot.ETA_Libelle != "En attente")
+                    return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -175,9 +201,6 @@ namespace App_Gestion_lots_M3.UI
             return false;
         }
 
-        // ================================================
-        // DIALOG AJOUTER OPÉRATION
-        // ================================================
 
         /// <summary>
         /// Affiche une boîte de dialogue pour ajouter une nouvelle opération
@@ -321,9 +344,6 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // ÉVÉNEMENTS BOUTONS
-        // ================================================
 
         /// <summary>
         /// Bouton pour ajouter une opération à la recette
@@ -434,9 +454,6 @@ namespace App_Gestion_lots_M3.UI
             this.Close();
         }
 
-        // ================================================
-        // ÉVÉNEMENTS NON UTILISÉS
-        // ================================================
         private void label1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void textBox1_TextChanged(object sender, EventArgs e) { }

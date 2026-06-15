@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGestionLot));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -29,6 +30,15 @@
             btnModifier = new Button();
             btnFermer = new Button();
             btnNouvelleRecette = new Button();
+            dgvOperationsRecette = new DataGridView();
+            colOpeNo = new DataGridViewTextBoxColumn();
+            colOpeNom = new DataGridViewTextBoxColumn();
+            colOpePosition = new DataGridViewTextBoxColumn();
+            colOpeSens = new DataGridViewTextBoxColumn();
+            colOpeTemps = new DataGridViewTextBoxColumn();
+            colOpeCycleVerin = new DataGridViewTextBoxColumn();
+            colOpeQuittance = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dgvOperationsRecette).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -73,7 +83,7 @@
             txtNomLot.Name = "txtNomLot";
             txtNomLot.Size = new Size(121, 23);
             txtNomLot.TabIndex = 5;
-            txtNomLot.TextChanged += txtNomLot_TextChanged;
+            txtNomLot.KeyPress += txtNomLot_KeyPress;
             // 
             // txtQuantite
             // 
@@ -98,6 +108,7 @@
             cboRecette.Name = "cboRecette";
             cboRecette.Size = new Size(121, 23);
             cboRecette.TabIndex = 8;
+            cboRecette.SelectedIndexChanged += cboRecette_SelectedIndexChanged;
             // 
             // btnEnregistrer
             // 
@@ -139,11 +150,59 @@
             btnNouvelleRecette.UseVisualStyleBackColor = true;
             btnNouvelleRecette.Click += btnNouvelleRecette_Click;
             // 
+            // dgvOperationsRecette
+            // 
+            dgvOperationsRecette.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvOperationsRecette.Columns.AddRange(new DataGridViewColumn[] { colOpeNo, colOpeNom, colOpePosition, colOpeSens, colOpeTemps, colOpeCycleVerin, colOpeQuittance });
+            dgvOperationsRecette.Location = new Point(489, 12);
+            dgvOperationsRecette.Name = "dgvOperationsRecette";
+            dgvOperationsRecette.Size = new Size(763, 657);
+            dgvOperationsRecette.TabIndex = 15;
+            dgvOperationsRecette.CellContentClick += dgvOperationsRecette_CellContentClick;
+            // 
+            // colOpeNo
+            // 
+            colOpeNo.HeaderText = "No";
+            colOpeNo.Name = "colOpeNo";
+            // 
+            // colOpeNom
+            // 
+            colOpeNom.HeaderText = "Nom";
+            colOpeNom.Name = "colOpeNom";
+            // 
+            // colOpePosition
+            // 
+            colOpePosition.HeaderText = "Position";
+            colOpePosition.Name = "colOpePosition";
+            // 
+            // colOpeSens
+            // 
+            colOpeSens.HeaderText = "Sens Rotation";
+            colOpeSens.MinimumWidth = 120;
+            colOpeSens.Name = "colOpeSens";
+            colOpeSens.Width = 120;
+            // 
+            // colOpeTemps
+            // 
+            colOpeTemps.HeaderText = "Temps (s)";
+            colOpeTemps.Name = "colOpeTemps";
+            // 
+            // colOpeCycleVerin
+            // 
+            colOpeCycleVerin.HeaderText = "Cycle vérin";
+            colOpeCycleVerin.Name = "colOpeCycleVerin";
+            // 
+            // colOpeQuittance
+            // 
+            colOpeQuittance.HeaderText = "Quittance";
+            colOpeQuittance.Name = "colOpeQuittance";
+            // 
             // FormGestionLot
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1264, 681);
+            Controls.Add(dgvOperationsRecette);
             Controls.Add(btnNouvelleRecette);
             Controls.Add(btnFermer);
             Controls.Add(btnModifier);
@@ -156,10 +215,12 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormGestionLot";
             Text = "Gestion du Lot";
             WindowState = FormWindowState.Maximized;
             Load += FormGestionLot_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvOperationsRecette).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -178,5 +239,13 @@
         private Button btnModifier;
         private Button btnFermer;
         private Button btnNouvelleRecette;
+        private DataGridView dgvOperationsRecette;
+        private DataGridViewTextBoxColumn colOpeNo;
+        private DataGridViewTextBoxColumn colOpeNom;
+        private DataGridViewTextBoxColumn colOpePosition;
+        private DataGridViewTextBoxColumn colOpeSens;
+        private DataGridViewTextBoxColumn colOpeTemps;
+        private DataGridViewTextBoxColumn colOpeCycleVerin;
+        private DataGridViewTextBoxColumn colOpeQuittance;
     }
 }

@@ -104,39 +104,41 @@ namespace App_Gestion_lots_M3.AccesDonnees
         }
 
         /// <summary>
-        /// Requete permettant d'ajouter un lot à la DB, en précisant son nom,
-        /// sa quantité d'éléments, son état et la recette associée
+        /// Ajoute un lot à la base de données et enregistre les événements de création
         /// </summary>
-        /// <param name="nomLot"> nom du lot </param> 
-        /// <param name="quantiteElementsLot"> quantité d'éléments dans le lot </param>
-        /// <param name="idEtatLot"> id de l'état du lot généré automatiquement </param>
-        /// <param name="idRecette"> id de la recette choisis par utilisateur </param>
+        /// <param name="nomLot">Nom du lot</param>
+        /// <param name="quantiteElementsLot">Quantité de pièces à produire</param>
+        /// <param name="idEtatLot">Id de l'état initial</param>
+        /// <param name="idRecette">Id de la recette associée</param>
         public static void AjouterLot(string nomLot, int quantiteElementsLot, int idEtatLot, int idRecette)
         {
             MySqlConnection conn = DbManager.GetDBConnection();
 
             string insertLot = @"INSERT INTO Lot (LOT_Nom, LOT_Quantite, LOT_DateHeureCreation, Id_Etat, Id_Recette) 
-                        VALUES (@nom, @quantite, @dateHeure, @idEtat, @idRecette)";
+                VALUES (@nom, @quantite, @dateHeure, @idEtat, @idRecette)";
 
-            using (MySqlCommand cmd = new MySqlCommand(insertLot, conn))
+            int idLot;
+
+            try
             {
-                cmd.Parameters.AddWithValue("@nom", nomLot);
-                cmd.Parameters.AddWithValue("@quantite", quantiteElementsLot);
-                cmd.Parameters.AddWithValue("@dateHeure", DateTime.Now);
-                cmd.Parameters.AddWithValue("@idEtat", idEtatLot);
-                cmd.Parameters.AddWithValue("@idRecette", idRecette);
-
-                try
+                using (MySqlCommand cmd = new MySqlCommand(insertLot, conn))
                 {
-                    // L'exception remonte au formulaire qui affiche le MessageBox
+                    cmd.Parameters.AddWithValue("@nom", nomLot);
+                    cmd.Parameters.AddWithValue("@quantite", quantiteElementsLot);
+                    cmd.Parameters.AddWithValue("@dateHeure", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@idEtat", idEtatLot);
+                    cmd.Parameters.AddWithValue("@idRecette", idRecette);
                     cmd.ExecuteNonQuery();
-
-                }
-                catch (Exception erreurInsertLot)
-                {
-                    Console.WriteLine("Erreur lors de l'insertion d'un lot : " + erreurInsertLot.Message);
+                    idLot = (int)cmd.LastInsertedId;
                 }
 
+                // Événement création du lot
+                EvenementManager.AjouterEvenement(idLot, "Création du lot — état : En attente");
+            }
+            catch (Exception erreurInsertLot)
+            {
+                Console.WriteLine("Erreur lors de l'insertion d'un lot : " + erreurInsertLot.Message);
+                throw;
             }
         }
     }

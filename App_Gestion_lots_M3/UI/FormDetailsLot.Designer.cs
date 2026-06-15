@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDetailsLot));
             label1 = new Label();
             lblRecette = new Label();
             label3 = new Label();
@@ -41,6 +42,7 @@
             btnSuivant = new Button();
             cboSelectLot = new ComboBox();
             btnSupprimer = new Button();
+            btnDetailRecette = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -61,6 +63,7 @@
             lblRecette.Size = new Size(12, 15);
             lblRecette.TabIndex = 1;
             lblRecette.Text = "-";
+            lblRecette.Click += lblRecette_Click;
             // 
             // label3
             // 
@@ -79,6 +82,7 @@
             lblQuantite.Size = new Size(12, 15);
             lblQuantite.TabIndex = 3;
             lblQuantite.Text = "-";
+            lblQuantite.Click += lblQuantite_Click;
             // 
             // label5
             // 
@@ -97,6 +101,7 @@
             lblEtat.Size = new Size(12, 15);
             lblEtat.TabIndex = 5;
             lblEtat.Text = "-";
+            lblEtat.Click += lblEtat_Click;
             // 
             // label7
             // 
@@ -115,6 +120,7 @@
             lblDateCreation.Size = new Size(12, 15);
             lblDateCreation.TabIndex = 7;
             lblDateCreation.Text = "-";
+            lblDateCreation.Click += lblDateCreation_Click;
             // 
             // label9
             // 
@@ -133,15 +139,16 @@
             lblDateDebut.Size = new Size(12, 15);
             lblDateDebut.TabIndex = 9;
             lblDateDebut.Text = "-";
+            lblDateDebut.Click += lblDateDebut_Click;
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Location = new Point(12, 200);
             label11.Name = "label11";
-            label11.Size = new Size(109, 15);
+            label11.Size = new Size(70, 15);
             label11.TabIndex = 10;
-            label11.Text = "Date de fin prévue :";
+            label11.Text = "Date de fin :";
             // 
             // lblDateFin
             // 
@@ -151,6 +158,7 @@
             lblDateFin.Size = new Size(12, 15);
             lblDateFin.TabIndex = 11;
             lblDateFin.Text = "-";
+            lblDateFin.Click += lblDateFin_Click;
             // 
             // dataGridView1
             // 
@@ -266,11 +274,22 @@
             btnSupprimer.UseVisualStyleBackColor = true;
             btnSupprimer.Click += btnSupprimer_Click;
             // 
+            // btnDetailRecette
+            // 
+            btnDetailRecette.Location = new Point(288, 46);
+            btnDetailRecette.Name = "btnDetailRecette";
+            btnDetailRecette.Size = new Size(121, 23);
+            btnDetailRecette.TabIndex = 20;
+            btnDetailRecette.Text = "Voir Recette";
+            btnDetailRecette.UseVisualStyleBackColor = true;
+            btnDetailRecette.Click += btnDetailRecette_Click;
+            // 
             // FormDetailsLot
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 460);
+            Controls.Add(btnDetailRecette);
             Controls.Add(btnSupprimer);
             Controls.Add(cboSelectLot);
             Controls.Add(btnSuivant);
@@ -291,6 +310,7 @@
             Controls.Add(label3);
             Controls.Add(lblRecette);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormDetailsLot";
             Text = "Détails du Lot";
             WindowState = FormWindowState.Maximized;
@@ -326,5 +346,6 @@
         private ComboBox cboSelectLot;
         private Button button1;
         private Button btnSupprimer;
+        private Button btnDetailRecette;
     }
 }

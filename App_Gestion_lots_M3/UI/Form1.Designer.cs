@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             tabControl1 = new TabControl();
             Lots = new TabPage();
             btnDetailLot = new Button();
@@ -109,6 +110,7 @@
             dgvLots.TabIndex = 0;
             dgvLots.CellContentClick += dgvLots_CellContentClick;
             dgvLots.CellDoubleClick += dgvLots_CellDoubleClick;
+            dgvLots.CellFormatting += dgvLots_CellFormatting;
             // 
             // colNomLot
             // 
@@ -261,9 +263,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(960, 366);
             Controls.Add(tabControl1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(2);
             Name = "Form1";
-            Text = "Gestion Lots";
+            Text = "Accueil";
             tabControl1.ResumeLayout(false);
             Lots.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvLots).EndInit();

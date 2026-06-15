@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDetailsRecette));
             btnPrecedent = new Button();
             btnSuivant = new Button();
             cboSelectRecette = new ComboBox();
@@ -233,6 +234,7 @@
             Controls.Add(cboSelectRecette);
             Controls.Add(btnSuivant);
             Controls.Add(btnPrecedent);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormDetailsRecette";
             Text = "Détails de la Recette";
             WindowState = FormWindowState.Maximized;
