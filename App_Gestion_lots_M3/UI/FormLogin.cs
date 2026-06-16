@@ -1,4 +1,15 @@
-﻿using App_Gestion_lots_M3.AccesDonnees;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : FormLogin.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    Date            : 16 juin 2026
+    But             : Fenêtre pour se connecté
+*/
+
+using App_Gestion_lots_M3.AccesDonnees;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Drawing;

@@ -73,6 +73,7 @@
             label3.Size = new Size(118, 15);
             label3.TabIndex = 2;
             label3.Text = "Quantité demandée :";
+            label3.Click += label3_Click;
             // 
             // lblQuantite
             // 

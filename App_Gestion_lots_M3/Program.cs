@@ -1,3 +1,14 @@
+/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : Program.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    Date            : 16 juin 2026
+    But             : programme de base qui permet de geré la première page et la connexion
+*/
+
 using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.UI;
 

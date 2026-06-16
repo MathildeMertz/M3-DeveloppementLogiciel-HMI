@@ -1,4 +1,15 @@
-﻿using App_Gestion_lots_M3.AccesDonnees;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : FormDetailRecette.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    Date            : 16 juin 2026
+    But             : Fenêtre du détail des recettes
+*/
+
+using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.Model;
 using System;
 using System.Collections.Generic;

@@ -83,6 +83,7 @@
             txtNomLot.Name = "txtNomLot";
             txtNomLot.Size = new Size(121, 23);
             txtNomLot.TabIndex = 5;
+            txtNomLot.TextChanged += txtNomLot_TextChanged;
             txtNomLot.KeyPress += txtNomLot_KeyPress;
             // 
             // txtQuantite

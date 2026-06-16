@@ -1,4 +1,15 @@
-﻿using App_Gestion_lots_M3.AccesDonnees;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : FormGestionLot.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    Date            : 16 juin 2026
+    But             : Fenêtre pour la création et la modification d'un lot
+*/
+
+using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.Model;
 using System;
 using System.Collections.Generic;
@@ -292,5 +303,10 @@ namespace App_Gestion_lots_M3.UI
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void dgvOperationsRecette_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+
+        private void txtNomLot_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
