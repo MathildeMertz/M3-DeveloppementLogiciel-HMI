@@ -1,4 +1,12 @@
-﻿using Mysqlx.Expr;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : Recette.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    But             : Classe modèle représentant une recette
+*/
 
 namespace App_Gestion_lots_M3.Model
 {

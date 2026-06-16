@@ -5,7 +5,6 @@
     Nom du fichier  : FormLogin.cs
     Type de fichier : Programme C#
     Auteur          : Ryf Frédéric / Mertz Mathilde
-    Date            : 16 juin 2026
     But             : Fenêtre pour se connecté
 */
 
@@ -20,9 +19,6 @@ namespace App_Gestion_lots_M3.UI
 {
     public partial class FormLogin : Form
     {
-        // ================================================
-        // CONSTRUCTEUR
-        // ================================================
 
         /// <summary>
         /// Constructeur du formulaire de login
@@ -32,10 +28,6 @@ namespace App_Gestion_lots_M3.UI
             InitializeComponent();
         }
 
-
-        // ================================================
-        // CHARGEMENT DU FORMULAIRE
-        // ================================================
 
         /// <summary>
         /// Chargement du formulaire
@@ -85,10 +77,6 @@ namespace App_Gestion_lots_M3.UI
             txtMotDePasse.Focus();
         }
 
-        // ================================================
-        // GESTION DU STATUT
-        // ================================================
-
         /// <summary>
         /// Affiche le statut connecté avec le cercle vert
         /// </summary>
@@ -105,9 +93,6 @@ namespace App_Gestion_lots_M3.UI
             btnConnexion.Enabled = true;
         }
 
-        // ================================================
-        // ÉVÉNEMENTS BOUTONS
-        // ================================================
 
         /// <summary>
         /// Bouton de connexion — se connecte à la base de données
@@ -184,9 +169,7 @@ namespace App_Gestion_lots_M3.UI
                 "Enregistrement", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // ================================================
-        // ÉVÉNEMENTS NON UTILISÉS
-        // ================================================
+
         private void label1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void txtUtilisateur_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) { }

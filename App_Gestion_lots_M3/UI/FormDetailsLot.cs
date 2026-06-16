@@ -5,7 +5,6 @@
     Nom du fichier  : FormDetailLot.cs
     Type de fichier : Programme C#
     Auteur          : Ryf Frédéric / Mertz Mathilde
-    Date            : 16 juin 2026
     But             : Fenêtre du détail des lots
 */
 
