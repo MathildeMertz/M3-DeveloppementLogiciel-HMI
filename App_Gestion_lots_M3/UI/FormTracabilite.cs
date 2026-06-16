@@ -1,4 +1,14 @@
-﻿using App_Gestion_lots_M3.AccesDonnees;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : FormTracabilite.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    But             : Fenêtre pour voir l'historique du projet
+*/
+
+using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.Model;
 using System;
 using System.Collections.Generic;
@@ -11,10 +21,6 @@ namespace App_Gestion_lots_M3.UI
 {
     public partial class FormTracabilite : Form
     {
-        // ================================================
-        // VARIABLES
-        // ================================================
-
         /// <summary>
         /// Liste de tous les événements chargés pour le lot sélectionné
         /// </summary>
@@ -24,10 +30,6 @@ namespace App_Gestion_lots_M3.UI
         /// Nom du lot à présélectionner au chargement
         /// </summary>
         private string lotInitial = null;
-
-        // ================================================
-        // CONSTRUCTEUR
-        // ================================================
 
         /// <summary>
         /// Constructeur du formulaire de traçabilité
@@ -47,9 +49,6 @@ namespace App_Gestion_lots_M3.UI
             lotInitial = nomLot;
         }
 
-        // ================================================
-        // CHARGEMENT DU FORMULAIRE
-        // ================================================
 
         /// <summary>
         /// Chargement du formulaire — remplit le ComboBox des lots
@@ -84,10 +83,6 @@ namespace App_Gestion_lots_M3.UI
                 }
             }
         }
-
-        // ================================================
-        // CHARGEMENT DES DONNÉES
-        // ================================================
 
         /// <summary>
         /// Remplit le ComboBox avec la liste des lots disponibles
@@ -170,9 +165,6 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // ÉVÉNEMENTS FILTRES
-        // ================================================
 
         /// <summary>
         /// Sélection d'un lot dans le ComboBox
@@ -257,9 +249,6 @@ namespace App_Gestion_lots_M3.UI
             AppliquerFiltres();
         }
 
-        // ================================================
-        // ÉVÉNEMENTS BOUTONS
-        // ================================================
 
         /// <summary>
         /// Bouton pour exporter les événements en PDF

@@ -1,4 +1,14 @@
-﻿using App_Gestion_lots_M3.AccesDonnees;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : FormDetailRecette.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    But             : Fenêtre du détail des recettes
+*/
+
+using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.Model;
 using System;
 using System.Collections.Generic;
@@ -8,15 +18,10 @@ namespace App_Gestion_lots_M3.UI
 {
     public partial class FormDetailsRecette : Form
     {
-        // ================================================
-        // VARIABLES
-        // ================================================
+
         private List<Recette> listeRecettes;
         private string recetteInitiale;
 
-        // ================================================
-        // CONSTRUCTEUR
-        // ================================================
         public FormDetailsRecette(string nomRecette)
         {
             InitializeComponent();
@@ -48,10 +53,9 @@ namespace App_Gestion_lots_M3.UI
 
             AfficherRecette(indexInitial);
         }
-
-        // ================================================
-        // INITIALISATION DU COMBOBOX
-        // ================================================
+        /// <summary>
+        /// Initialisation du combox
+        /// </summary>
         private void RemplirComboBox()
         {
             cboSelectRecette.Items.Clear();
@@ -61,9 +65,10 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // AFFICHAGE D'UNE RECETTE
-        // ================================================
+        /// <summary>
+        /// Affichage d'une recette
+        /// </summary>
+        /// <param name="index"></param>
         private void AfficherRecette(int index)
         {
             if (index < 0 || index >= listeRecettes.Count) return;
@@ -88,9 +93,6 @@ namespace App_Gestion_lots_M3.UI
             ChargerOperations(recette.Id_Recette);
         }
 
-        // ================================================
-        // CHARGEMENT DES OPÉRATIONS
-        // ================================================
         /// <summary>
         /// Charge les opérations de la recette dans le DataGridView
         /// </summary>
@@ -116,9 +118,7 @@ namespace App_Gestion_lots_M3.UI
             }
         }
 
-        // ================================================
-        // ÉVÉNEMENTS NAVIGATION
-        // ================================================
+  
         private void cboSelectRecette_SelectedIndexChanged(object sender, EventArgs e)
         {
             AfficherRecette(cboSelectRecette.SelectedIndex);
@@ -136,9 +136,6 @@ namespace App_Gestion_lots_M3.UI
                 AfficherRecette(cboSelectRecette.SelectedIndex + 1);
         }
 
-        // ================================================
-        // ÉVÉNEMENTS BOUTONS
-        // ================================================
         private void btnModifierRecette_Click(object sender, EventArgs e)
         {
             Recette recetteActuelle = listeRecettes[cboSelectRecette.SelectedIndex];
@@ -158,9 +155,6 @@ namespace App_Gestion_lots_M3.UI
             this.Close();
         }
 
-        // ================================================
-        // ÉVÉNEMENTS NON UTILISÉS
-        // ================================================
         private void FormDetailsRecette_Load(object sender, EventArgs e) { }
         private void label1_Click(object sender, EventArgs e) { }
         private void label5_Click(object sender, EventArgs e) { }

@@ -1,4 +1,15 @@
-﻿using System;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : DbManager.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    Date            : 16 juin 2026
+    But             : Connexion à la base de donnée
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using MySql.Data.MySqlClient;

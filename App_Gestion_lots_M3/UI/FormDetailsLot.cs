@@ -1,4 +1,14 @@
-﻿using App_Gestion_lots_M3.AccesDonnees;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : FormDetailLot.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    But             : Fenêtre du détail des lots
+*/
+
+using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.Model;
 using System;
 using System.Collections.Generic;
@@ -291,6 +301,11 @@ namespace App_Gestion_lots_M3.UI
         }
 
         private void lblRecette_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

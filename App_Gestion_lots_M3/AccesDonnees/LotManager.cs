@@ -1,4 +1,15 @@
-﻿using App_Gestion_lots_M3.Model;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : LotManager.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    Date            : 16 juin 2026
+    But             : Requête des lots
+*/
+
+using App_Gestion_lots_M3.Model;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;

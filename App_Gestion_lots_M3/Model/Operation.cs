@@ -1,4 +1,14 @@
-﻿namespace App_Gestion_lots_M3.Model
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : Etat.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    But             : Classe modèle représentant une opération
+*/
+
+namespace App_Gestion_lots_M3.Model
 {
     public class Operation
     {

@@ -1,4 +1,14 @@
-﻿using App_Gestion_lots_M3.AccesDonnees;
+﻿/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : FormStatistiques.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    But             : Fenêtre pour voir les statistiques du projet
+*/
+
+using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.Model;
 using System;
 using System.Collections.Generic;

@@ -1,3 +1,14 @@
+/* ECOLE TECHNIQUE PORRENTRUY          
+   Département informatique            
+   Enseignant responsable : D. Montavon
+   _____________________________________
+    Nom du fichier  : Form1.cs
+    Type de fichier : Programme C#
+    Auteur          : Ryf Frédéric / Mertz Mathilde
+    Date            : 16 juin 2026
+    But             : Page principale de la interface utilisateur
+*/
+
 using App_Gestion_lots_M3.AccesDonnees;
 using App_Gestion_lots_M3.Model;
 using App_Gestion_lots_M3.UI;
